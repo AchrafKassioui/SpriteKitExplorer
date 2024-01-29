@@ -1,9 +1,12 @@
-//
-//  SpriteKitExplorerApp.swift
-//  SpriteKitExplorer
-//
-//  Created by Achraf Kassioui on 19/1/2024.
-//
+/**
+ 
+ # Sprite Explorer
+ 
+ Exploring SpriteKit features with SwiftUI.
+ 
+ Created: 19 January 2024
+ 
+ */
 
 import SwiftUI
 
@@ -11,7 +14,7 @@ import SwiftUI
 struct SpriteKitExplorerApp: App {
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            MainMenu()
         }
     }
 }
