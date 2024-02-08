@@ -2,11 +2,13 @@
 
 ## Core Image API
 
-```
+```swift
 // Ask the settings supported by a filter
 let myFilter = CIFilter(name: "CIColorControls")
 print(myFilter.inputKeys) // returns ["inputImage", "inputSaturation", "inputBrightness", "inputContrast"]
 ```
+
+Apple old documentation: https://developer.apple.com/library/archive/documentation/GraphicsImaging/Reference/CoreImageFilterReference/
 
 ## Gaussian Blur
 

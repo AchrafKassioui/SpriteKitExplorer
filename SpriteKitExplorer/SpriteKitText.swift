@@ -1,23 +1,8 @@
-//
-//  Text.swift
-//  SpriteKitExplorer
-//
-//  Created by Achraf Kassioui on 28/1/2024.
-//
-
 /**
  
  # Text
  
- A basic setup for throwing object with inertia.
- Drag and throw the ball to try. The inertia after release uses physics.
- Uses SpriteKit touch event handling abd the update loop. Does not use UIKit gesture recognizer
- 
- Drawbacks:
- - Uses a hardcoded framerate value to calculate the time the object took to travel a distance.
- - Assumes the object has a physicsBody, and overwrites its velocity.
- 
- Created: 26 January 2024
+ Created: 28 January 2024
  
  */
 

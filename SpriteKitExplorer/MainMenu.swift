@@ -3,7 +3,7 @@
  # Main menu
  
  Created: 19 January 2024
- Updated: 19 January 2024
+ Updated: 29 January 2024
  
  */
 
@@ -17,7 +17,7 @@ struct MainMenu: View {
                 NavigationLink("Simulation Speed", destination: SimulationSpeed())
                 NavigationLink("Lighting", destination: Lighting())
                 NavigationLink("Fling Drag", destination: FlingDrag())
-                NavigationLink("Store and Reset", destination: StoreAndReset())
+                NavigationLink("Filters", destination: ImageFilters())
             }
             .navigationTitle("SpriteKit Explorer")
             .navigationBarTitleDisplayMode(.automatic)

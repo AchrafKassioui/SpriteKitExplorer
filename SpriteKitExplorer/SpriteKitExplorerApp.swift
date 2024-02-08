@@ -1,10 +1,11 @@
 /**
  
- # Sprite Explorer
+ # SpriteKit Explorer
  
  Exploring SpriteKit features with SwiftUI.
  
- Created: 19 January 2024
+ Author: Achraf Kassioui
+ Started: 19 January 2024
  
  */
 

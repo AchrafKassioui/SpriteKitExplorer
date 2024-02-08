@@ -2,13 +2,16 @@
  
  # ChainCIFilter.swift
  
- By default, a SpriteKit's SKEffectNode only takes one filter at a time. And if the filter produces an image larger than Metal's texture size limit, SpriteKit renderer will crash.
+ In Apple SpriteKit, you can use Core Image filters to add effects to any node of type `SKEffectNode`, including the scene itself.
+ But by default, an SKEffectNode only takes one filter. Moreover, the output from a filter can crash SpriteKit's Metal renderer if it exceeds a size limit.
  
- This custom CIFilter class allows to:
+ This custom `CIFilter` sub-class provides a solution for both of those concerns:
  - Run multiple filters on the same effect node
- - Check the filter result before sending it to SpriteKit renderer and thus prevent a crash if the result exceeds Metal texture size limit
+ - Check the size of the output image of a filter, and only send it to SpriteKit if it does not exceed Metal's texture size limit of the host device
  
  Based on code from "zekel":  https://stackoverflow.com/questions/55553869/on-ios-can-you-add-multiple-cifilters-to-a-spritekit-node?noredirect=1&lq=1
+ 
+ ## Usage
  
  Long form usage in SpriteKit:
  
@@ -18,7 +21,7 @@
     CIFilter(name: "CIPixellate", parameters: ["inputScale": 8])
  ]
  
- let appliedFilters = ChainFilters(filters: myFilters)
+ let appliedFilters = ChainCIFilter(filters: myFilters)
  
  myEffectNode.filter = appliedFilters
  ```
@@ -26,11 +29,14 @@
  Short form usage in SpriteKit:
  
  ```
- myEffectNode.filter = CIFilter(name: "CIDither", parameters: ["inputIntensity": 0.6])
+ myEffectNode.filter = ChainCIFilter(filters: [
+    CIFilter(name: "CIDither", parameters: ["inputIntensity": 0.6])
+ ])
  ```
  
+ Author: Achraf Kassioui https://www.achrafkassioui.com
  Created: 4 January 2024
- Updated: 28 January 2024
+ Updated: 3 February 2024
  
  */
 
@@ -81,6 +87,7 @@ class ChainCIFilter: CIFilter {
                 
                 if (result.extent.size.width > textureSizeLimit || result.extent.size.height > textureSizeLimit) {
                     print("ChainCIFilter.swift > Metal Texture Size Limit exceeded: \(result.extent.size)")
+                    /// if the limit is exceeded, return the unmodified input image
                     return workingImage
                 }
                 /// End Metal limit test
