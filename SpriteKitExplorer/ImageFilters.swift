@@ -2,8 +2,7 @@
  
  # Core Image filters in SpriteKit
  
- We can use Core Image filters to apply post-processing effects to the rendered view or to individual nodes.
- 
+ We can use Core Image filters to apply post-processing effects in SpriteKit.
  Filters can be applied to any node of type `SKEffectNode` using the `filter` property.
  A SpriteKit scene is itself of type SKEffectNode. Therefore filters can be applied to it, provided we enable filtering, which is disabled by default (see the `didMove` method below).
  One or many nodes can be made children of an SKEffectNode in order to receive filters.
@@ -39,7 +38,7 @@
  - A list of CIFilter (has more filters than Apple's old reference) https://gist.github.com/Umity/c42920a236ad4fdd950492678a9136fa
  
  Created: 3 January 2024
- Updated: 3 February 2024
+ Updated: 8 February 2024
  
  */
 
@@ -52,12 +51,31 @@ import CoreImage
 
 struct CustomSliderView: View {
     let filterName: String
-    let parameterDisplayName: String
     let parameterName: String
+    let parameterDisplayName: String
     let range: ClosedRange<CGFloat>
-    @Binding var sliderValue: CGFloat
     let effectNode: SKEffectNode
     let updateFilterParameter: (String, String, CGFloat) -> Void
+    
+    @State private var sliderValue: CGFloat
+    
+    init(
+        filterName: String,
+        parameterName: String,
+        parameterDisplayName: String,
+        range: ClosedRange<CGFloat>,
+        effectNode: SKEffectNode,
+        updateFilterParameter: @escaping (String, String, CGFloat) -> Void,
+        initialValue: CGFloat
+    ) {
+        self.filterName = filterName
+        self.parameterName = parameterName
+        self.parameterDisplayName = parameterDisplayName
+        self.range = range
+        self.effectNode = effectNode
+        self.updateFilterParameter = updateFilterParameter
+        self._sliderValue = State(initialValue: initialValue) // Use _ to directly initialize @State
+    }
     
     var body: some View {
         HStack {
@@ -74,15 +92,25 @@ struct CustomSliderView: View {
     }
 }
 
+
 struct ImageFilters: View {
     @State var myScene = FiltersScene()
     
-    @State var selectedFilter: Int = 0
+    @State var selectedFilterName: String = ""
     @State var isFilterEnabled: Bool = false
-    @State var filterOrder: Int = 0
     
     @State var isUIVisible: Bool = true
     @State var UIOffset: Double = 100
+    
+    init() {
+        if let firstFilterName = myScene.filterManager.catalog.first?.name {
+            /// Directly access the underlying storage of the state variable and initialize it with the name of the first filter in the catalog
+            _selectedFilterName = State(initialValue: firstFilterName)
+        } else {
+            /// If there are no filters, initialize the state variable with an empty string or a default value.
+            _selectedFilterName = State(initialValue: "")
+        }
+    }
     
     var body: some View {
         ZStack {
@@ -103,74 +131,38 @@ struct ImageFilters: View {
                 
                 VStack {
                     
-                    ForEach(myScene.imageFilterManager.list[selectedFilter].parameters ?? [], id: \.name) { parameter in
-                        if case let .scalar(defaultValue, range) = parameter.type {
-                            let bindingValue = Binding<CGFloat>(
-                                get: {
-                                    // Fetch the current value from the sceneFilters or use the default value
-                                    let currentParameter = myScene.imageFilterManager.getInfo(filterName: myScene.imageFilterManager.list[selectedFilter].name, for: myScene.scene!)?.parameters[parameter.name.rawValue] as? ImageFilterManager.ParameterType
-                                    if case let .scalar(currentValue, _) = currentParameter {
-                                        return currentValue
-                                    } else {
-                                        return defaultValue
-                                    }
-                                },
-                                set: { newValue in
-                                    myScene.imageFilterManager.apply(
-                                        filterName: myScene.imageFilterManager.list[selectedFilter].name,
-                                        to: myScene.scene!,
-                                        parameters: [.init(rawValue: parameter.name.rawValue)!: .scalar(value: newValue, range: range)]
-                                    )
-                                }
-                            )
-                            
-                            CustomSliderView(
-                                filterName: myScene.imageFilterManager.list[selectedFilter].name,
-                                parameterDisplayName: parameter.name.displayName,
-                                parameterName: parameter.name.rawValue,
-                                range: range,
-                                sliderValue: bindingValue,
-                                effectNode: myScene.scene!,
-                                updateFilterParameter: { filterName, parameterName, newValue in
-                                    myScene.imageFilterManager.apply(
-                                        filterName: filterName,
-                                        to: myScene.scene!,
-                                        parameters: [.init(rawValue: parameterName)!: .scalar(value: newValue, range: range)]
-                                    )
-                                }
-                            )
+                    /**
+                     
+                     For each parameter of the selected filter:
+                     - If the parameter is scalar, create a slider
+                        - initial value: default value from filter definition, or current value from applied filters
+                        - range
+                        - label with display name
+                     - if the parameter is vector
+                        - label with text "tap the screen to change filter center"
+                     
+                     */
+                    
+                    Toggle("", isOn: $isFilterEnabled)
+                        .onChange(of: isFilterEnabled) {
+                            myScene.filterManager.apply(filterName: selectedFilterName, effectNode: myScene.scene!, isEnabled: isFilterEnabled)
                         }
-                    }
                     
                     HStack {
-                        Toggle("", isOn: $isFilterEnabled)
-                            .onChange(of: isFilterEnabled) {
-                                let filterName = myScene.imageFilterManager.list[selectedFilter].name
-                                let filterTarget = myScene.scene!
-                                myScene.imageFilterManager.apply(filterName: filterName, to: filterTarget, isEnabled: isFilterEnabled)
-                            }
                         
-                        Picker("Select a filter", selection: $selectedFilter) {
-                            ForEach(0..<myScene.imageFilterManager.list.count, id: \.self) {index in
-                                Text(myScene.imageFilterManager.list[index].displayName).tag(index)
+                        Picker("Select a filter", selection: $selectedFilterName) {
+                            ForEach(myScene.filterManager.catalog, id: \.name) { filter in
+                                Text(filter.displayName).tag(filter.name)
                             }
                         }
-                        .onChange(of: selectedFilter) {
-                            let filterName = myScene.imageFilterManager.list[selectedFilter].name
-                            let filterTarget = myScene.scene!
-                            let filterState = (myScene.imageFilterManager.getInfo(filterName: filterName, for: filterTarget)?.isEnabled as? Bool) ?? false
+                        .onChange(of: selectedFilterName) {
+                            let filterState = (myScene.filterManager.getInfo(filterName: selectedFilterName, for: myScene.scene!)?.isEnabled as? Bool) ?? false
                             isFilterEnabled = filterState
-                        }
-                        
-                        Picker("Order", selection: $filterOrder) {
-                            ForEach(0..<myScene.imageFilterManager.list.count, id: \.self) {index in
-                                Text(String(filterOrder))
-                            }
+                            myScene.filterManager.selectedFilter = selectedFilterName
                         }
                     }
                     
                     Button("Print info") {
-                        
                     }
                     .buttonStyle(.borderedProminent)
                 }
@@ -183,40 +175,51 @@ struct ImageFilters: View {
     }
 }
 
+// MARK: - Filter Manager
 
-// MARK: - Scene model
+class FilterManager {
 
-class SceneState {
-    var selectedNodes: [SKNode] = []
-}
-
-// MARK: - Image Filters Model
-
-class ImageFilterManager {
-
-    // MARK: Filter definition
-    struct Filter {
+    // MARK: Types
+    struct FilterDefinition: Hashable {
         let name: String
         let displayName: String
-        let parameters: [FilterParameter]?
+        let defaultParameters: [FilterParameter]?
     }
     
     struct FilterParameter: Hashable {
-        let name: FilterParameterName
+        let name: ParameterName
         let type: ParameterType
+        let range: ClosedRange<CGFloat>?
         
         func hash(into hasher: inout Hasher) {
             hasher.combine(name)
         }
     }
-
-    enum ParameterType: Equatable {
-        case scalar(value: CGFloat, range: ClosedRange<CGFloat>)
-        case vector(value: CIVector)
-        case color(value: CIColor)
+    
+    // FilterName is not used. I'll see if it's worth implementing as I go
+    enum FilterName: String, CaseIterable {
+        case motionBlur = "CIMotionBlur"
+        case xRay = "CIXRay"
+        case dither = "CIDither"
+        case gaussianBlur = "CIGaussianBlur"
+        case zoomBlur = "CIZoomBlur"
+        case vignette = "CIVignette"
+        case CMYKHalftone = "CICMYKHalftone"
+        
+        var displayName: String {
+            switch self{
+            case .motionBlur: return "Motion Blur"
+            case .xRay: return "X-Ray"
+            case .dither: return "Dither"
+            case .gaussianBlur: return "Gaussian Blur"
+            case .zoomBlur: return "Zoom Blur"
+            case .vignette: return "Vignette"
+            case .CMYKHalftone: return "CMYK Halftone"
+            }
+        }
     }
     
-    enum FilterParameterName: String, CaseIterable {
+    enum ParameterName: String, CaseIterable {
         case inputAmount = "inputAmount"
         case inputRadius = "inputRadius"
         case inputAngle = "inputAngle"
@@ -242,81 +245,135 @@ class ImageFilterManager {
         }
     }
     
-    let list: [Filter] = [
-        Filter(name: "CIMotionBlur", displayName: "Motion Blur", parameters: [
-            FilterParameter(name: .inputRadius, type: .scalar(value: 20, range: 0...100)),
-            FilterParameter(name: .inputAngle, type: .scalar(value: 0, range: (-.pi)...(.pi)))
+    enum ParameterType: Equatable {
+        case scalar(value: CGFloat)
+        case vector(value: CIVector)
+        case color(value: CIColor)
+    }
+    
+    // MARK: Curated list of Core Image filters
+    let catalog: [FilterDefinition] = [
+        FilterDefinition(name: "CIMotionBlur", displayName: "Motion Blur", defaultParameters: [
+            FilterParameter(name: .inputRadius, type: .scalar(value: 20), range: 0...500),
+            FilterParameter(name: .inputAngle, type: .scalar(value: 0), range: (-.pi)...(.pi))
         ]),
         
-        Filter(name: "CIXRay", displayName: "X-Ray", parameters: nil),
+        FilterDefinition(name: "CIXRay", displayName: "X-Ray", defaultParameters: nil),
         
-        Filter(name: "CIDither", displayName: "Dither", parameters: [
-            FilterParameter(name: .inputIntensity, type: .scalar(value: 0.5, range: 0...3))
+        FilterDefinition(name: "CIDither", displayName: "Dither", defaultParameters: [
+            FilterParameter(name: .inputIntensity, type: .scalar(value: 0.5), range: 0...3)
         ]),
         
-        Filter(name: "CIGaussianBlur", displayName: "Gaussian Blur", parameters: [
-            FilterParameter(name: .inputRadius, type: .scalar(value: 10, range: 0...100))
+        FilterDefinition(name: "CIGaussianBlur", displayName: "Gaussian Blur", defaultParameters: [
+            FilterParameter(name: .inputRadius, type: .scalar(value: 10), range: 0...100)
         ]),
         
-        Filter(name: "CIZoomBlur", displayName: "Zoom Blur", parameters: [
-            FilterParameter(name: .inputAmount, type: .scalar(value: 10, range: -60...60)),
-            FilterParameter(name: .inputCenter, type: .vector(value: CIVector(x: 150, y: 150)))
+        FilterDefinition(name: "CIZoomBlur", displayName: "Zoom Blur", defaultParameters: [
+            FilterParameter(name: .inputAmount, type: .scalar(value: 10), range: -60...60),
+            FilterParameter(name: .inputCenter, type: .vector(value: CIVector(x: 150, y: 150)), range: nil)
         ]),
         
-        Filter(name: "CIVignette", displayName: "Vignette", parameters: [
-            FilterParameter(name: .inputIntensity, type: .scalar(value: 1, range: 0...3))
+        FilterDefinition(name: "CIVignette", displayName: "Vignette", defaultParameters: [
+            FilterParameter(name: .inputIntensity, type: .scalar(value: 1), range: 0...3)
         ]),
         
-        Filter(name: "CICMYKHalftone", displayName: "CMYK Halftone", parameters: [
-            FilterParameter(name: .inputCenter, type: .vector(value: CIVector(x: 150, y: 150))),
-            FilterParameter(name: .inputWidth, type: .scalar(value: 6, range: -2...100)),
-            FilterParameter(name: .inputAngle, type: .scalar(value: 0, range: (-.pi)...(.pi))),
-            FilterParameter(name: .inputSharpness, type: .scalar(value: 0.7, range: 0...1)),
-            FilterParameter(name: .inputGCR, type: .scalar(value: 0.5, range: 0...1)),
-            FilterParameter(name: .inputUCR, type: .scalar(value: 0.5, range: 0...1))
+        FilterDefinition(name: "CICMYKHalftone", displayName: "CMYK Halftone", defaultParameters: [
+            FilterParameter(name: .inputCenter, type: .vector(value: CIVector(x: 150, y: 150)), range: nil),
+            FilterParameter(name: .inputWidth, type: .scalar(value: 6), range: -2...100),
+            FilterParameter(name: .inputAngle, type: .scalar(value: 0), range: (-.pi)...(.pi)),
+            FilterParameter(name: .inputSharpness, type: .scalar(value: 0.7), range: 0...1),
+            FilterParameter(name: .inputGCR, type: .scalar(value: 0.5), range: 0...1),
+            FilterParameter(name: .inputUCR, type: .scalar(value: 0.5), range: 0...1)
         ])
     ]
     
     // MARK: State
-    struct AddedFilter {
-        let filter: Filter
+    struct AppliedFilter {
+        let name: String
         var parameters: [String: ParameterType]
         var isEnabled: Bool
     }
     
-    var sceneFilters: [SKEffectNode: [AddedFilter]] = [:] {
+    var sceneFilters: [SKEffectNode: [AppliedFilter]] = [:] {
         didSet {
             render()
         }
     }
     
-    var selectedFilter: [SKEffectNode: Filter] = [:]
+    var selectedFilter: String?
     
     // MARK: API
     
-    func apply(filterName: String, to effectNode: SKEffectNode, parameters: [FilterParameterName: ParameterType]? = nil, isEnabled: Bool? = nil, order: Int? = nil) {
-        guard let filter = list.first(where: { $0.name == filterName }) else {
-            print("🚨 ImageFilterManager.apply - Invalid filter name: \(filterName)"); return
+    // currently used in touchesMoved
+    func getSelectedFilter() -> FilterDefinition? {
+        guard let selectedFilterName = selectedFilter else { return nil }
+        return catalog.first { $0.name == selectedFilterName }
+    }
+    // currently used in touchesMoved, should be removed and using an improved get function
+    func supportsParameter(filter: FilterDefinition?, parameterName: ParameterName) -> Bool {
+        guard let filter = filter else { return false }
+        return filter.defaultParameters?.contains(where: { $0.name == parameterName }) ?? false
+    }
+    
+    // MARK: -
+    
+    /**
+     
+     I want to rewrite getFilterDefinition such as:
+     - I can write getFilterDefinition(filterName).defaultParameters -> returns the array of default parameters, from which I can get a count and whether or not the filter has parameters
+     - I can write getFilterDefinition(filterName).defaultParameters.type -> returns all types supported (scalar, vector, color)
+     - I can write getFilterDefinition(filterName).defaultParameters.type.scalar -> returns all scalar parameters
+     - I can write getFilterDefinition(filterName).defaultParameters.type.vector -> returns all vector paramters
+     - I can write getFilterDefinition(filterName).defaultParameters[name] -> returns the type, default value, and range of the parameter (nil if no range)
+     
+     Do you see what I mean? It is a kind of reverse reconstruction of the work we've done defining the filters with proper types
+     
+     */
+    
+    func getFilterDefinition(filterName: String) -> (displayName: String, hasParameters: Bool, scalarParameters: [(name: String, displayName: String, defaultValue: CGFloat, range: ClosedRange<CGFloat>?)], vectorParameters: [(name: String, displayName: String, defaultValue: CIVector)]) {
+        guard let filterDefinition = catalog.first(where: { $0.name == filterName }) else {
+            return ("❌ FilterManager.getFilterDefinition -  Filter not in the catalog: \(filterName)", false, [], [])
         }
         
+        let hasParameters = filterDefinition.defaultParameters != nil
+        var scalarParameters = [(name: String, displayName: String, defaultValue: CGFloat, range: ClosedRange<CGFloat>?)]()
+        var vectorParameters = [(name: String, displayName: String, defaultValue: CIVector)]()
+        
+        filterDefinition.defaultParameters?.forEach { param in
+            switch param.type {
+            case .scalar(let value):
+                scalarParameters.append((name: param.name.rawValue, displayName: param.name.displayName, defaultValue: value, range: param.range))
+            case .vector(let value):
+                vectorParameters.append((name: param.name.rawValue, displayName: param.name.displayName, defaultValue: value))
+            default:
+                // Handle other parameter types if necessary
+                break
+            }
+        }
+        
+        return (filterDefinition.displayName, hasParameters, scalarParameters, vectorParameters)
+    }
+    
+    // MARK: -
+    
+    func apply(filterName: String, effectNode: SKEffectNode, parameters: [ParameterName: ParameterType]? = nil, isEnabled: Bool? = nil, order: Int? = nil) {
+        guard let filter = catalog.first(where: { $0.name == filterName }) else {
+            print("❌ FilterManager.apply - Invalid filter name: \(filterName)"); return
+        }
         /// get the array of filters added to this node. If none, create an empty array
         var associatedFilters = sceneFilters[effectNode] ?? []
-        
         /// check if the filter already exists within the associated filters
-        if let index = associatedFilters.firstIndex(where: { $0.filter.name == filterName }) {
-            /// Filter exists, update its properties
+        if let index = associatedFilters.firstIndex(where: { $0.name == filterName }) {
+            /// Filter exists
             var currentFilter = associatedFilters[index]
-            
             /// Update parameters if provided, merging new with existing ones
             parameters?.forEach { key, value in
                 currentFilter.parameters[key.rawValue] = value
             }
-            
             /// Update isEnabled if provided
             if let newIsEnabled = isEnabled {
                 currentFilter.isEnabled = newIsEnabled
             }
-            
             /// Assign the modified filter back to the array
             associatedFilters[index] = currentFilter
         } else {
@@ -326,45 +383,38 @@ class ImageFilterManager {
             parameters?.forEach { key, value in
                 newParameters[key.rawValue] = value
             }
-            
             /// If no parameters are provided, use default values
             if newParameters.isEmpty {
-                filter.parameters?.forEach { param in
+                filter.defaultParameters?.forEach { param in
                     newParameters[param.name.rawValue] = param.type
                 }
             }
-            let newFilter = AddedFilter(filter: filter, parameters: newParameters, isEnabled: isEnabled ?? true)
+            let newFilter = AppliedFilter(name: filterName, parameters: newParameters, isEnabled: isEnabled ?? true)
             associatedFilters.append(newFilter)
         }
-        
         sceneFilters[effectNode] = associatedFilters
     }
     
-    func getInfo(filterName: String, for effectNode: SKEffectNode) -> AddedFilter? {
-        guard list.contains(where: { $0.name == filterName }) else {
-            print("🚨 ImageFilterManager.getState - Invalid filter name: \(filterName)"); return nil
+    // old getInfo method that I will probably remove
+    func getInfo(filterName: String, for effectNode: SKEffectNode) -> AppliedFilter? {
+        guard catalog.contains(where: { $0.name == filterName }) else {
+            print("❌ FilterManager.getState - Invalid filter name: \(filterName)"); return nil
         }
         
-        return sceneFilters[effectNode]?.first(where: { $0.filter.name == filterName })
-    }
-    
-    func remove(filterName: String, from effectNode: SKEffectNode) {
-        guard var filters = sceneFilters[effectNode] else { return }
-        filters.removeAll { $0.filter.name == filterName }
-        sceneFilters[effectNode] = filters
+        return sceneFilters[effectNode]?.first(where: { $0.name == filterName })
     }
     
     func render() {
         for (effectNode, associatedFilters) in sceneFilters {
-            let ciFilters = associatedFilters.filter { $0.isEnabled }.compactMap { filterInfo -> CIFilter? in
-                guard let ciFilter = CIFilter(name: filterInfo.filter.name) else {
-                    print("🚨 ImageFilterManager.render - Filter with name \(filterInfo.filter.name) is not valid \n")
+            let ciFilters = associatedFilters.filter { $0.isEnabled }.compactMap { appliedFilter -> CIFilter? in
+                guard let ciFilter = CIFilter(name: appliedFilter.name) else {
+                    print("❌ FilterManager.render - Filter with name \(appliedFilter.name) is not valid \n")
                     return nil
                 }
                 
-                filterInfo.parameters.forEach { key, value in
+                appliedFilter.parameters.forEach { key, value in
                     switch value {
-                    case .scalar(let scalarValue, _):
+                    case .scalar(let scalarValue):
                         ciFilter.setValue(scalarValue, forKey: key)
                     case .vector(let vectorValue):
                         ciFilter.setValue(vectorValue, forKey: key)
@@ -385,9 +435,7 @@ class ImageFilterManager {
 
 @Observable class FiltersScene: SKScene {
     
-    var sceneState = SceneState()
-    var imageFilterManager = ImageFilterManager()
-    var effectNode: SKEffectNode!
+    var filterManager = FilterManager()
     
     // MARK: scene setup
     
@@ -405,7 +453,6 @@ class ImageFilterManager {
         
         let scalarParam = ["inputAmount": 10]
         let vectorParam = ["inputCenter": CIVector(x: 1000, y: 1000)]
-        
         // Merge the scalar and vector parameters into a single dictionary
         var combinedParams: [String: Any] = [:]
         combinedParams.merge(scalarParam) { (current, _) in current }
@@ -433,7 +480,7 @@ class ImageFilterManager {
         let sprite02 = SKSpriteNode(texture: texture02)
         sprite02.zPosition = 2
         sprite02.position = CGPoint(x: -100, y: 270)
-        //sprite02.physicsBody = SKPhysicsBody(texture: texture02, size: texture02.size())
+        sprite02.physicsBody = SKPhysicsBody(texture: texture02, size: texture02.size())
         sprite02.physicsBody?.restitution = 1
         sprite02.setScale(0.5)
         addChild(sprite02)
@@ -464,7 +511,7 @@ class ImageFilterManager {
         emitterNode.position = CGPoint.zero
         emitterNode.particlePositionRange = CGVector(dx: 1000, dy: 300)
         
-        effectNode = SKEffectNode()
+        let effectNode = SKEffectNode()
         effectNode.zPosition = 10
         effectNode.addChild(emitterNode)
         addChild(effectNode)
@@ -473,19 +520,24 @@ class ImageFilterManager {
     
     // MARK: Touch
     
-//    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-//        for t in touches {
-//            
-//            let touchLocation = t.location(in: view)
-//            
-//            /// Used to define a value for the inputCenter parameter of some CI filters
-//            
-//            let inputCenter = CIVector(
-//                x: touchLocation.x * 2,
-//                y: -touchLocation.y * 2 + (size.height * 2)
-//            )
-//        }
-//    }
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for t in touches {
+            
+            let touchLocation = t.location(in: view)
+            
+            /// Used to define a value for the inputCenter parameter of some CI filters
+            let inputCenter = CIVector(
+                x: touchLocation.x * 2,
+                y: -touchLocation.y * 2 + (size.height * 2)
+            )
+            
+            if let filter = filterManager.getSelectedFilter(),
+               filterManager.supportsParameter(filter: filter, parameterName: .inputCenter) {
+                let parameters: [FilterManager.ParameterName: FilterManager.ParameterType] = [.inputCenter: .vector(value: inputCenter)]
+                filterManager.apply(filterName: filter.name, effectNode: scene!, parameters: parameters)
+            }
+        }
+    }
     
 }
 
