@@ -7,12 +7,32 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */; };
+		DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B222B9FC760006D75CB /* ColorWheel.swift */; };
 		DE16D1362B67E3FB0076836A /* AppIcon.pxd in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1332B67E3FB0076836A /* AppIcon.pxd */; };
 		DE16D1372B67E3FB0076836A /* SpriteKit_128x128_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */; };
 		DE16D1382B67E3FB0076836A /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1352B67E3FB0076836A /* AppIcon.png */; };
+		DE22B9EC2B95956400CC6BCB /* easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9E92B95956400CC6BCB /* easing.swift */; };
+		DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9EA2B95956400CC6BCB /* EasingDeclarations.swift */; };
+		DE22B9EE2B95956400CC6BCB /* SKEase.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9EB2B95956400CC6BCB /* SKEase.swift */; };
+		DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F22B95AA7300CC6BCB /* SKColor+Extensions.swift */; };
+		DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F32B95AA7300CC6BCB /* CGVector+Extensions.swift */; };
+		DE22BA002B95AA7300CC6BCB /* Int+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F42B95AA7300CC6BCB /* Int+Extensions.swift */; };
+		DE22BA012B95AA7300CC6BCB /* SKTTimingFunctions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F52B95AA7300CC6BCB /* SKTTimingFunctions.swift */; };
+		DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F62B95AA7300CC6BCB /* SKAction+Extensions.swift */; };
+		DE22BA032B95AA7300CC6BCB /* SKAction+SpecialEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F72B95AA7300CC6BCB /* SKAction+SpecialEffects.swift */; };
+		DE22BA042B95AA7300CC6BCB /* SKNode+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F82B95AA7300CC6BCB /* SKNode+Extensions.swift */; };
+		DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9F92B95AA7300CC6BCB /* CGPoint+Extensions.swift */; };
+		DE22BA062B95AA7300CC6BCB /* SKTEffects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9FA2B95AA7300CC6BCB /* SKTEffects.swift */; };
+		DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9FB2B95AA7300CC6BCB /* SKTAudio.swift */; };
+		DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9FC2B95AA7300CC6BCB /* Vector3.swift */; };
+		DE22BA092B95AA7300CC6BCB /* CGFloat+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9FD2B95AA7300CC6BCB /* CGFloat+Extensions.swift */; };
+		DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA0A2B966AEF00CC6BCB /* SpriteKitUI.swift */; };
+		DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */; };
+		DE22BA162B98380D00CC6BCB /* ShapeNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */; };
+		DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA172B99091B00CC6BCB /* ToolButton.swift */; };
 		DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */; };
 		DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263D2B5A2873004003C3 /* MainMenu.swift */; };
-		DE2F26402B5A2875004003C3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2F263F2B5A2875004003C3 /* Assets.xcassets */; };
 		DE2F26432B5A2875004003C3 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2F26422B5A2875004003C3 /* Preview Assets.xcassets */; };
 		DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F26492B5A29AF004003C3 /* Combine.swift */; };
 		DE3607402B6411070005BDE4 /* ImageFilters.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36073F2B6411070005BDE4 /* ImageFilters.swift */; };
@@ -21,17 +41,45 @@
 		DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */; };
 		DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */; };
 		DE4292FC2B5BAEC0004326C9 /* firstButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */; };
+		DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */; };
 		DE61D76A2B66E4C400086378 /* SpriteKitText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61D7692B66E4C400086378 /* SpriteKitText.swift */; };
 		DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */; };
 		DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D32B623BB00023B79B /* SpringDrag.swift */; };
 		DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D72B6380B40023B79B /* FlingDrag.swift */; };
+		DEACDF652B9FE88B00D496D2 /* HexUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */; };
+		DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */; };
+		DEACDF6A2BA132DD00D496D2 /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF692BA132DD00D496D2 /* FontHelper.swift */; };
+		DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2F263F2B5A2875004003C3 /* Assets.xcassets */; };
+		DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */; };
+		DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteNodes.swift; sourceTree = "<group>"; };
+		DE0B6B222B9FC760006D75CB /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		DE16D1332B67E3FB0076836A /* AppIcon.pxd */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppIcon.pxd; sourceTree = "<group>"; };
 		DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpriteKit_128x128_2x.png; sourceTree = "<group>"; };
 		DE16D1352B67E3FB0076836A /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		DE16D1392B67E42B0076836A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		DE22B9E92B95956400CC6BCB /* easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = easing.swift; sourceTree = "<group>"; };
+		DE22B9EA2B95956400CC6BCB /* EasingDeclarations.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EasingDeclarations.swift; sourceTree = "<group>"; };
+		DE22B9EB2B95956400CC6BCB /* SKEase.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKEase.swift; sourceTree = "<group>"; };
+		DE22B9F22B95AA7300CC6BCB /* SKColor+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKColor+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9F32B95AA7300CC6BCB /* CGVector+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGVector+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9F42B95AA7300CC6BCB /* Int+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "Int+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9F52B95AA7300CC6BCB /* SKTTimingFunctions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTTimingFunctions.swift; sourceTree = "<group>"; };
+		DE22B9F62B95AA7300CC6BCB /* SKAction+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKAction+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9F72B95AA7300CC6BCB /* SKAction+SpecialEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKAction+SpecialEffects.swift"; sourceTree = "<group>"; };
+		DE22B9F82B95AA7300CC6BCB /* SKNode+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "SKNode+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9F92B95AA7300CC6BCB /* CGPoint+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGPoint+Extensions.swift"; sourceTree = "<group>"; };
+		DE22B9FA2B95AA7300CC6BCB /* SKTEffects.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTEffects.swift; sourceTree = "<group>"; };
+		DE22B9FB2B95AA7300CC6BCB /* SKTAudio.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SKTAudio.swift; sourceTree = "<group>"; };
+		DE22B9FC2B95AA7300CC6BCB /* Vector3.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Vector3.swift; sourceTree = "<group>"; };
+		DE22B9FD2B95AA7300CC6BCB /* CGFloat+Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "CGFloat+Extensions.swift"; sourceTree = "<group>"; };
+		DE22BA0A2B966AEF00CC6BCB /* SpriteKitUI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitUI.swift; sourceTree = "<group>"; };
+		DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldRender.swift; sourceTree = "<group>"; };
+		DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeNodes.swift; sourceTree = "<group>"; };
+		DE22BA172B99091B00CC6BCB /* ToolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolButton.swift; sourceTree = "<group>"; };
 		DE2F26382B5A2873004003C3 /* SpriteKitExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitExplorerApp.swift; sourceTree = "<group>"; };
 		DE2F263D2B5A2873004003C3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -45,10 +93,17 @@
 		DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationSpeed.swift; sourceTree = "<group>"; };
 		DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAndReset.swift; sourceTree = "<group>"; };
 		DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstButtonStyle.swift; sourceTree = "<group>"; };
+		DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBinding.swift; sourceTree = "<group>"; };
 		DE61D7692B66E4C400086378 /* SpriteKitText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitText.swift; sourceTree = "<group>"; };
 		DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreImageFilters.json; sourceTree = "<group>"; };
 		DEABB9D32B623BB00023B79B /* SpringDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDrag.swift; sourceTree = "<group>"; };
 		DEABB9D72B6380B40023B79B /* FlingDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingDrag.swift; sourceTree = "<group>"; };
+		DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexUIColor.swift; sourceTree = "<group>"; };
+		DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelNodes.swift; sourceTree = "<group>"; };
+		DEACDF692BA132DD00D496D2 /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
+		DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CormorantGaramond-Regular.ttf"; sourceTree = "<group>"; };
+		DEACDF6F2BA135CD00D496D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
+		DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizeNode.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -72,6 +127,45 @@
 			path = "Assets Source";
 			sourceTree = "<group>";
 		};
+		DE22B9F02B95967800CC6BCB /* SpriteKitEasing */ = {
+			isa = PBXGroup;
+			children = (
+				DE22B9E92B95956400CC6BCB /* easing.swift */,
+				DE22B9EA2B95956400CC6BCB /* EasingDeclarations.swift */,
+				DE22B9EB2B95956400CC6BCB /* SKEase.swift */,
+			);
+			path = SpriteKitEasing;
+			sourceTree = "<group>";
+		};
+		DE22B9F12B95AA7300CC6BCB /* SKTUtils */ = {
+			isa = PBXGroup;
+			children = (
+				DE22B9F22B95AA7300CC6BCB /* SKColor+Extensions.swift */,
+				DE22B9F32B95AA7300CC6BCB /* CGVector+Extensions.swift */,
+				DE22B9F42B95AA7300CC6BCB /* Int+Extensions.swift */,
+				DE22B9F52B95AA7300CC6BCB /* SKTTimingFunctions.swift */,
+				DE22B9F62B95AA7300CC6BCB /* SKAction+Extensions.swift */,
+				DE22B9F72B95AA7300CC6BCB /* SKAction+SpecialEffects.swift */,
+				DE22B9F82B95AA7300CC6BCB /* SKNode+Extensions.swift */,
+				DE22B9F92B95AA7300CC6BCB /* CGPoint+Extensions.swift */,
+				DE22B9FA2B95AA7300CC6BCB /* SKTEffects.swift */,
+				DE22B9FB2B95AA7300CC6BCB /* SKTAudio.swift */,
+				DE22B9FC2B95AA7300CC6BCB /* Vector3.swift */,
+				DE22B9FD2B95AA7300CC6BCB /* CGFloat+Extensions.swift */,
+			);
+			path = SKTUtils;
+			sourceTree = "<group>";
+		};
+		DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */ = {
+			isa = PBXGroup;
+			children = (
+				DE22BA172B99091B00CC6BCB /* ToolButton.swift */,
+				DE0B6B222B9FC760006D75CB /* ColorWheel.swift */,
+				DE22BA0A2B966AEF00CC6BCB /* SpriteKitUI.swift */,
+			);
+			path = "UI with SpriteKit";
+			sourceTree = "<group>";
+		};
 		DE2F262F2B5A2873004003C3 = {
 			isa = PBXGroup;
 			children = (
@@ -92,8 +186,10 @@
 		DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
 				DE16D1322B67E3C60076836A /* Assets Source */,
-				DE3607412B64EE8C0005BDE4 /* Utilities */,
+				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
+				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
 				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
 				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
 				DE2F26492B5A29AF004003C3 /* Combine.swift */,
@@ -103,11 +199,18 @@
 				DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */,
 				DEABB9D32B623BB00023B79B /* SpringDrag.swift */,
 				DE36073F2B6411070005BDE4 /* ImageFilters.swift */,
+				DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */,
+				DE3607412B64EE8C0005BDE4 /* Utilities */,
+				DEACDF632B9FE86D00D496D2 /* Extentions */,
+				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
+				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
+				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
 				DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */,
 				DE3607442B64F6140005BDE4 /* Core Image Filters.md */,
 				DE61D7692B66E4C400086378 /* SpriteKitText.swift */,
 				DE4292FD2B5BB413004326C9 /* Views */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
+				DEACDF6E2BA1353A00D496D2 /* Fonts */,
 				DE2F26412B5A2875004003C3 /* Preview Content */,
 			);
 			path = SpriteKitExplorer;
@@ -125,6 +228,8 @@
 			isa = PBXGroup;
 			children = (
 				DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */,
+				DEACDF692BA132DD00D496D2 /* FontHelper.swift */,
+				DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -135,6 +240,32 @@
 				DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */,
 			);
 			path = Views;
+			sourceTree = "<group>";
+		};
+		DEACDF632B9FE86D00D496D2 /* Extentions */ = {
+			isa = PBXGroup;
+			children = (
+				DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */,
+			);
+			path = Extentions;
+			sourceTree = "<group>";
+		};
+		DEACDF662BA12E7A00D496D2 /* Drawing nodes */ = {
+			isa = PBXGroup;
+			children = (
+				DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */,
+				DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */,
+				DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */,
+			);
+			path = "Drawing nodes";
+			sourceTree = "<group>";
+		};
+		DEACDF6E2BA1353A00D496D2 /* Fonts */ = {
+			isa = PBXGroup;
+			children = (
+				DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */,
+			);
+			path = Fonts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -181,6 +312,8 @@
 				Base,
 			);
 			mainGroup = DE2F262F2B5A2873004003C3;
+			packageReferences = (
+			);
 			productRefGroup = DE2F26392B5A2873004003C3 /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -198,8 +331,9 @@
 				DE16D1382B67E3FB0076836A /* AppIcon.png in Resources */,
 				DE16D1372B67E3FB0076836A /* SpriteKit_128x128_2x.png in Resources */,
 				DE2F26432B5A2875004003C3 /* Preview Assets.xcassets in Resources */,
-				DE2F26402B5A2875004003C3 /* Assets.xcassets in Resources */,
 				DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */,
+				DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */,
+				DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */,
 				DE16D1362B67E3FB0076836A /* AppIcon.pxd in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -211,17 +345,43 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
+				DE22BA002B95AA7300CC6BCB /* Int+Extensions.swift in Sources */,
+				DE22BA092B95AA7300CC6BCB /* CGFloat+Extensions.swift in Sources */,
+				DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */,
+				DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */,
+				DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */,
+				DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */,
+				DE22BA162B98380D00CC6BCB /* ShapeNodes.swift in Sources */,
+				DE22BA032B95AA7300CC6BCB /* SKAction+SpecialEffects.swift in Sources */,
 				DE4292FC2B5BAEC0004326C9 /* firstButtonStyle.swift in Sources */,
+				DE22BA042B95AA7300CC6BCB /* SKNode+Extensions.swift in Sources */,
+				DE22B9EE2B95956400CC6BCB /* SKEase.swift in Sources */,
+				DE22BA012B95AA7300CC6BCB /* SKTTimingFunctions.swift in Sources */,
 				DE3607402B6411070005BDE4 /* ImageFilters.swift in Sources */,
+				DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */,
+				DE22BA062B95AA7300CC6BCB /* SKTEffects.swift in Sources */,
 				DE3A68632B60378800D10D6E /* Lighting.swift in Sources */,
+				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */,
 				DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */,
+				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
+				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
+				DEACDF652B9FE88B00D496D2 /* HexUIColor.swift in Sources */,
+				DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */,
+				DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */,
+				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
+				DE22B9EC2B95956400CC6BCB /* easing.swift in Sources */,
 				DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */,
+				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
+				DEACDF6A2BA132DD00D496D2 /* FontHelper.swift in Sources */,
 				DE61D76A2B66E4C400086378 /* SpriteKitText.swift in Sources */,
+				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
+				DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */,
 				DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -359,6 +519,7 @@
 				DEVELOPMENT_TEAM = G2XS6FMGZT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpriteKitExplorer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SpriteKit Explorer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
@@ -390,6 +551,7 @@
 				DEVELOPMENT_TEAM = G2XS6FMGZT;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpriteKitExplorer/Info.plist;
 				INFOPLIST_KEY_CFBundleDisplayName = "SpriteKit Explorer";
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;

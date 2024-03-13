@@ -8,12 +8,11 @@
 
 import SwiftUI
 import SpriteKit
-import Observation
 
 // MARK: - SwiftUI
 
 struct StoreAndReset: View {
-    @State var myScene = StoreAndResetScene()
+    var myScene = StoreAndResetScene()
     
     var body: some View {
         ZStack {
@@ -60,7 +59,7 @@ struct SceneModel {
 
 // MARK: - SpriteKit
 
-@Observable class StoreAndResetScene: SKScene {
+class StoreAndResetScene: SKScene {
     var myDataModel = SceneModel()
     
     /// Use sceneDidLoad to perform one-time setup
@@ -85,7 +84,7 @@ struct SceneModel {
         addChild(myDataModel.aSprite)
         
         myDataModel.aLabel = SKLabelNode(text: String(myDataModel.aNumber))
-        myDataModel.aLabel.position = CGPoint(x: -20, y: 0)
+        myDataModel.aLabel.position = CGPoint(x: 0, y: 0)
         myDataModel.aLabel.verticalAlignmentMode = .baseline
         myDataModel.aLabel.fontColor = .systemRed
         myDataModel.aLabel.fontSize = 32
@@ -96,10 +95,6 @@ struct SceneModel {
     
     func updateObjects() {
         myDataModel.aLabel.text = String(myDataModel.aNumber)
-    }
-    
-    override func update(_ currentTime: TimeInterval) {
-
     }
 }
 

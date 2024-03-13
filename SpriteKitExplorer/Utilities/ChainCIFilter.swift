@@ -2,14 +2,14 @@
  
  # ChainCIFilter.swift
  
- In Apple SpriteKit, you can use Core Image filters to add effects to any node of type `SKEffectNode`, including the scene itself.
- But by default, an SKEffectNode only takes one filter. Moreover, the output from a filter can crash SpriteKit's Metal renderer if it exceeds a size limit.
+ ## Overview
  
- This custom `CIFilter` sub-class provides a solution for both of those concerns:
+ In Apple SpriteKit, you can use Core Image filters to add effects to any node of type `SKEffectNode`, including the scene itself.
+ However, the built-in SpriteKit API only takes one filter for each effect node, and the output can crash SpriteKit's Metal renderer if it exceeds a size limit.
+ 
+ This custom `CIFilter` sub-class provides a solution for both concerns:
  - Run multiple filters on the same effect node
  - Check the size of the output image of a filter, and only send it to SpriteKit if it does not exceed Metal's texture size limit of the host device
- 
- Based on code from "zekel":  https://stackoverflow.com/questions/55553869/on-ios-can-you-add-multiple-cifilters-to-a-spritekit-node?noredirect=1&lq=1
  
  ## Usage
  
@@ -34,9 +34,20 @@
  ])
  ```
  
+ Get the array of the applied filters:
+ 
+ ```
+ if let chainFilter = myEffectNode.filter as? ChainCIFilter {
+    let appliedFilters = chainFilter.chainedFilters
+ }
+ ```
+ ## Credit
+ 
+ Based on code from "zekel":  https://stackoverflow.com/questions/55553869/on-ios-can-you-add-multiple-cifilters-to-a-spritekit-node?noredirect=1&lq=1
+ 
  Author: Achraf Kassioui https://www.achrafkassioui.com
  Created: 4 January 2024
- Updated: 3 February 2024
+ Updated: 22 February 2024
  
  */
 
@@ -54,7 +65,9 @@ func maxTextureSize(mtlDevice: MTLDevice) -> Int {
 }
 
 class ChainCIFilter: CIFilter {
-    let chainedFilters: [CIFilter]
+    /// Use this variable to access the array of filters applied on an effect node
+    private(set) var chainedFilters: [CIFilter]
+    
     let textureSizeLimit: CGFloat
     @objc dynamic var inputImage: CIImage?
     

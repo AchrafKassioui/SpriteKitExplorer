@@ -11,27 +11,24 @@
  - Assumes the object has a physicsBody, and overwrites its velocity.
  
  Created: 26 January 2024
+ Updated: 4 March 2024
  
  */
 
-import UIKit
 import SwiftUI
 import SpriteKit
-import Observation
 
 // MARK: - SwiftUI
 
 struct FlingDrag: View {
-    @State var myScene = FlingDragScene()
-    
     var body: some View {
         ZStack {
             ZStack {
                 SpriteView(
-                    scene: myScene,
+                    scene: FlingDragScene(),
                     preferredFramesPerSecond: 120,
                     options: [.ignoresSiblingOrder],
-                    debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount, .showsPhysics]
+                    debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
                 )
                 .ignoresSafeArea()
             }
@@ -41,12 +38,11 @@ struct FlingDrag: View {
 
 // MARK: - SpriteKit
 
-@Observable class FlingDragScene: SKScene {
+class FlingDragScene: SKScene {
     
     var anObject: SKShapeNode!
     
     // MARK: Scene
-    
     override func sceneDidLoad() {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = .lightGray
@@ -73,7 +69,6 @@ struct FlingDrag: View {
     }
     
     // MARK: Objects
-    
     func createObjects() {
         let objectRadius: CGFloat = 40
         anObject = SKShapeNode(circleOfRadius: objectRadius)
@@ -81,12 +76,13 @@ struct FlingDrag: View {
         anObject.strokeColor = .black
         anObject.name = "draggable"
         anObject.zPosition = 10
-        anObject.position = CGPoint(x: 0, y: 0)
+        anObject.position = CGPoint(x: 100, y: 0)
         anObject.physicsBody = SKPhysicsBody(circleOfRadius: objectRadius)
         anObject.physicsBody?.linearDamping = 0
         addChild(anObject)
         
         let instructionsText = SKLabelNode(text: "Drag and throw the ball")
+        instructionsText.name = "label"
         instructionsText.fontName = "Menlo-Bold"
         instructionsText.fontSize = 24
         instructionsText.fontColor = SKColor(white: 1, alpha: 0.5)
@@ -94,7 +90,6 @@ struct FlingDrag: View {
     }
     
     // MARK: Touch events
-    
     var touchPoint: CGPoint = CGPoint()
     var touching: Bool = false
     
@@ -103,6 +98,11 @@ struct FlingDrag: View {
             if anObject.frame.contains(touch) {
                 touchPoint = touch
                 touching = true
+            } else {
+                if let node = self.childNode(withName: "label") {
+                    let myAction = SKAction.screenShakeWithNode(node, amount: CGPoint(x: 0, y: 10), oscillations: 10, duration: 2)
+                    node.run(myAction)
+                }
             }
         }
     }
@@ -123,7 +123,6 @@ struct FlingDrag: View {
     }
     
     // MARK: Update
-    
     override func update(_ currentTime: TimeInterval) {
         
         if touching {

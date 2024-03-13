@@ -8,12 +8,11 @@
 
 import SwiftUI
 import SpriteKit
-import Observation
 
 // MARK: - SwiftUI
 
 struct SpringDrag: View {
-    @State var myScene = SpringDragScene()
+    var myScene = SpringDragScene()
     
     var body: some View {
         ZStack {
@@ -32,7 +31,7 @@ struct SpringDrag: View {
 
 // MARK: - SpriteKit
 
-@Observable class SpringDragScene: SKScene, UIGestureRecognizerDelegate {
+class SpringDragScene: SKScene, UIGestureRecognizerDelegate {
     
     var canvasSize: CGSize = CGSize(width: 300, height: 700)
     var aSprite: SKSpriteNode!

@@ -18,6 +18,8 @@ struct MainMenu: View {
                 NavigationLink("Lighting", destination: Lighting())
                 NavigationLink("Fling Drag", destination: FlingDrag())
                 NavigationLink("Filters", destination: ImageFilters())
+                NavigationLink("Data Binding", destination: DataBinding())
+                NavigationLink("SpriteKit UI", destination: SpriteKitUI())
             }
             .navigationTitle("SpriteKit Explorer")
             .navigationBarTitleDisplayMode(.automatic)
