@@ -2,6 +2,9 @@
  
  # Store and Reset
  
+ A setup to explore how to save and restore the state of a scene.
+ Work in progress...
+ 
  Created: 20 January 2024
  
  */

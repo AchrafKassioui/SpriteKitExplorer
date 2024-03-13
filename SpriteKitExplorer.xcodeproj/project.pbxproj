@@ -46,9 +46,8 @@
 		DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */; };
 		DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D32B623BB00023B79B /* SpringDrag.swift */; };
 		DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D72B6380B40023B79B /* FlingDrag.swift */; };
-		DEACDF652B9FE88B00D496D2 /* HexUIColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */; };
+		DEACDF652B9FE88B00D496D2 /* HexSKColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */; };
 		DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */; };
-		DEACDF6A2BA132DD00D496D2 /* FontHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF692BA132DD00D496D2 /* FontHelper.swift */; };
 		DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2F263F2B5A2875004003C3 /* Assets.xcassets */; };
 		DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */; };
 		DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */; };
@@ -98,9 +97,8 @@
 		DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreImageFilters.json; sourceTree = "<group>"; };
 		DEABB9D32B623BB00023B79B /* SpringDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDrag.swift; sourceTree = "<group>"; };
 		DEABB9D72B6380B40023B79B /* FlingDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingDrag.swift; sourceTree = "<group>"; };
-		DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexUIColor.swift; sourceTree = "<group>"; };
+		DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexSKColor.swift; sourceTree = "<group>"; };
 		DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelNodes.swift; sourceTree = "<group>"; };
-		DEACDF692BA132DD00D496D2 /* FontHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FontHelper.swift; sourceTree = "<group>"; };
 		DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CormorantGaramond-Regular.ttf"; sourceTree = "<group>"; };
 		DEACDF6F2BA135CD00D496D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizeNode.swift; sourceTree = "<group>"; };
@@ -169,6 +167,7 @@
 		DE2F262F2B5A2873004003C3 = {
 			isa = PBXGroup;
 			children = (
+				DEACDF722BA18F6100D496D2 /* Screenshots */,
 				DE16D1392B67E42B0076836A /* README.md */,
 				DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */,
 				DE2F26392B5A2873004003C3 /* Products */,
@@ -193,6 +192,7 @@
 				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
 				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
 				DE2F26492B5A29AF004003C3 /* Combine.swift */,
+				DE4292FD2B5BB413004326C9 /* Views */,
 				DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */,
 				DE3A68622B60378800D10D6E /* Lighting.swift */,
 				DEABB9D72B6380B40023B79B /* FlingDrag.swift */,
@@ -201,14 +201,13 @@
 				DE36073F2B6411070005BDE4 /* ImageFilters.swift */,
 				DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */,
 				DE3607412B64EE8C0005BDE4 /* Utilities */,
-				DEACDF632B9FE86D00D496D2 /* Extentions */,
+				DEACDF632B9FE86D00D496D2 /* Extensions */,
 				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
 				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
 				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
 				DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */,
 				DE3607442B64F6140005BDE4 /* Core Image Filters.md */,
 				DE61D7692B66E4C400086378 /* SpriteKitText.swift */,
-				DE4292FD2B5BB413004326C9 /* Views */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
 				DEACDF6E2BA1353A00D496D2 /* Fonts */,
 				DE2F26412B5A2875004003C3 /* Preview Content */,
@@ -228,7 +227,6 @@
 			isa = PBXGroup;
 			children = (
 				DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */,
-				DEACDF692BA132DD00D496D2 /* FontHelper.swift */,
 				DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */,
 			);
 			path = Utilities;
@@ -242,12 +240,12 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
-		DEACDF632B9FE86D00D496D2 /* Extentions */ = {
+		DEACDF632B9FE86D00D496D2 /* Extensions */ = {
 			isa = PBXGroup;
 			children = (
-				DEACDF642B9FE88B00D496D2 /* HexUIColor.swift */,
+				DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */,
 			);
-			path = Extentions;
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		DEACDF662BA12E7A00D496D2 /* Drawing nodes */ = {
@@ -266,6 +264,13 @@
 				DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		DEACDF722BA18F6100D496D2 /* Screenshots */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -369,7 +374,7 @@
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
-				DEACDF652B9FE88B00D496D2 /* HexUIColor.swift in Sources */,
+				DEACDF652B9FE88B00D496D2 /* HexSKColor.swift in Sources */,
 				DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */,
 				DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */,
 				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
@@ -378,7 +383,6 @@
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
-				DEACDF6A2BA132DD00D496D2 /* FontHelper.swift in Sources */,
 				DE61D76A2B66E4C400086378 /* SpriteKitText.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
 				DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */,

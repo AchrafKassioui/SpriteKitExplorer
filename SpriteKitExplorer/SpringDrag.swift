@@ -1,6 +1,11 @@
 /**
  
  # Spring Drag
+ 
+ A setup to explore how to drag a SpriteKit node on screen, but using physics, such as a spring drag.
+ An example of such drag can be found here: http://davidbau.com/archives/2010/11/26/box2d_web.html
+ 
+ Work in progress...
 
  Created: 25 January 2024
  

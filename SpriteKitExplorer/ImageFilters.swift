@@ -2,8 +2,8 @@
  
  # Core Image filters for SpriteKit and SwiftUI
  
- Wrapping Core Image filters inside a data model and API to make them easier to use in SpriteKit
- Work in progress.
+ A setup to wrap Core Image filters inside a data model and API to make them easier to use in SpriteKit.
+ Work in progress...
  
  Created: 3 January 2024
  Updated: 22 February 2024

@@ -2,7 +2,8 @@
  
  # Visualize SpriteKit nodes
  
- A helper method to visualize any drawing node on a SKScene.
+ A helper method to visualize any drawing node on a SKScene,
+ by drawing a rectangle around its bounding box.
  
  Created: 13 March 2024
  

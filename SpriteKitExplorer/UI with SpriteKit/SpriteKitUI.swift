@@ -79,18 +79,22 @@ class SpriteKitUIScene: SKScene {
         camera.addChild(palette)
         
         /// Tools
-        
-        
         let materialTool = SKSpriteNode(imageNamed: "material_tool")
         materialTool.name = "material_tool"
-        materialTool.position.y = 30
+        materialTool.position.y = 60
         materialTool.zPosition = 1001
         materialTool.color = SKColorWithRGB(255, g: 128, b: 128)
         palette.addChild(materialTool)
         
+        let rotateTool = SKSpriteNode(imageNamed: "rotate_tool")
+        rotateTool.name = "move_tool"
+        rotateTool.position.y = 0
+        rotateTool.zPosition = 1001
+        palette.addChild(rotateTool)
+        
         let moveTool = SKSpriteNode(imageNamed: "move_tool")
         moveTool.name = "move_tool"
-        moveTool.position.y = -30
+        moveTool.position.y = -60
         moveTool.zPosition = 1001
         palette.addChild(moveTool)
         
@@ -143,10 +147,10 @@ class SpriteKitUIScene: SKScene {
         let selector = SKSpriteNode(imageNamed: "selector_dark")
         selector.name = "selector"
         selector.centerRect = setCenterRect(cornerWidth: 20, cornerHeight: 20, spriteNode: selector)
-        selector.position = CGPoint(x: 0, y: -30)
+        selector.position = CGPoint(x: 0, y: 0)
         selector.zPosition = 2000
-        let scaleAction = SKEase.scaleY(easeFunction: .curveTypeElastic, easeType: .easeTypeOut, time: 1, from: 0, to: 1)
-        selector.run(scaleAction)
+        let moveAction = SKEase.move(easeFunction: .curveTypeLinear, easeType: .easeTypeOut, time: 0.3, from: CGPoint(x: 0, y: -60), to: CGPoint(x: 0, y: 0))
+        selector.run(moveAction)
         palette.addChild(selector)
     }
     
@@ -198,7 +202,7 @@ class SpriteKitUIScene: SKScene {
         myEffectNode.filter = CIFilter(name: "CIDither", parameters: ["inputIntensity": 1])
         
         let rotationAction = SKAction.rotate(byAngle: 2 * .pi, duration: 2)
-        //myEffectNode.run(SKAction.repeatForever(rotationAction))
+        myEffectNode.run(SKAction.repeatForever(rotationAction))
     }
     
     // MARK: Touch events

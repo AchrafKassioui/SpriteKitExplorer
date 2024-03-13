@@ -2,8 +2,8 @@
  
  # Data binding with SwiftUI
  
- Exploring data binding with SwiftUI and Observation
- Work in progress
+ A setup to explore data binding with SwiftUI and Observation.
+ Work in progress...
  
  Created: 14 February 2024
  
