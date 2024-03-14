@@ -1,0 +1,263 @@
+[
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Gaussian Blur",
+        "defaults": {
+            "inputRadius": 10
+        },
+        "ranges": {
+            "inputRadius": [
+                0,
+                100
+            ]
+        },
+        "identity": {
+            "inputRadius": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Motion Blur",
+        "defaults": {
+            "inputRadius": 20,
+            "inputAngle": 0
+        },
+        "ranges": {
+            "inputRadius": [
+                0,
+                100
+            ],
+            "inputAngle": [
+                -3.141592653589793,
+                3.141592653589793
+            ]
+        },
+        "identity": {
+            "inputRadius": 0,
+            "inputAngle": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Vignette",
+        "defaults": {
+            "inputIntensity": 0
+        },
+        "ranges": {
+            "inputIntensity": [
+                -1,
+                1
+            ]
+        },
+        "identity": {
+            "inputIntensity": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Bloom",
+        "defaults": {
+            "inputIntensity": 0.5,
+            "inputRadius": 10
+        },
+        "ranges": {
+            "inputIntensity": [
+                0,
+                1
+            ],
+            "inputRadius": [
+                0,
+                100
+            ]
+        },
+        "identity": {
+            "inputIntensity": [
+                0,
+                1
+            ],
+            "inputRadius": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "X-Ray"
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Circular Screen",
+        "defaults": {
+            "inputWidth": 6,
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputSharpness": 0.7
+        },
+        "ranges": {
+            "inputWidth": [
+                2,
+                50
+            ],
+            "inputSharpness": [
+                0,
+                1
+            ]
+        },
+        "identity": {
+            "inputWidth": 1,
+            "inputSharpness": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Halftone",
+        "defaults": {
+            "inputGCR": 1,
+            "inputAngle": 0,
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputWidth": 6,
+            "inputUCR": 0.5,
+            "inputSharpness": 0.7
+        },
+        "ranges": {
+            "inputGCR": [
+                0,
+                1
+            ],
+            "inputAngle": [
+                -3.141592653589793,
+                3.141592653589793
+            ],
+            "inputWidth": [
+                -2,
+                100
+            ],
+            "inputUCR": [
+                0,
+                1
+            ],
+            "inputSharpness": [
+                0,
+                1
+            ]
+        },
+        "identity": {
+            "inputGCR": 0.5,
+            "inputAngle": 0,
+            "inputWidth": 6,
+            "inputUCR": 0.5,
+            "inputSharpness": 0.7
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Dither",
+        "defaults": {
+            "inputIntensity": 0.1
+        },
+        "ranges": {
+            "inputIntensity": [
+                0,
+                5
+            ]
+        },
+        "identity": {
+            "inputIntensity": 0
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Dot Screen",
+        "defaults": {
+            "inputWidth": 6,
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputAngle": 0,
+            "inputSharpness": 0.7
+        },
+        "ranges": {
+            "inputWidth": [
+                1,
+                50
+            ],
+            "inputAngle": [
+                -3.141592653589793,
+                3.141592653589793
+            ],
+            "inputSharpness": [
+                0,
+                1
+            ]
+        },
+        "identity": {
+            "inputWidth": 1,
+            "inputAngle": 0,
+            "inputSharpness": 0.7
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Crystallize",
+        "defaults": {
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputRadius": 20
+        },
+        "ranges": {
+            "inputRadius": [
+                1,
+                100
+            ]
+        },
+        "identity": {
+            "inputRadius": 1
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Pointillize",
+        "defaults": {
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputRadius": 20
+        },
+        "ranges": {
+            "inputRadius": [
+                1,
+                100
+            ]
+        },
+        "identity": {
+            "inputRadius": 1
+        }
+    },
+    {
+        "CIFilter": "CIFilter",
+        "displayName": "Pixellate",
+        "defaults": {
+            "inputCenter": {
+                "x": 150,
+                "y": 150
+            },
+            "inputScale": 8
+        },
+        "ranges": {
+            "inputScale": [
+                1,
+                100
+            ]
+        },
+        "identity": {
+            "inputScale": 1
+        }
+    }
+]
