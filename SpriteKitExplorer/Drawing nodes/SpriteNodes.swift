@@ -1,9 +1,10 @@
-//
-//  SpriteNodes.swift
-//  SpriteKitExplorer
-//
-//  Created by Achraf Kassioui on 9/3/2024.
-//
+/**
+ 
+ # Experimenting with SKSpriteNode
+ 
+ Created: 9 March 2024
+ 
+ */
 
 import SwiftUI
 import SpriteKit

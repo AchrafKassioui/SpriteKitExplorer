@@ -12,9 +12,10 @@
 import SpriteKit
 
 // MARK: draw the bounding box of the node's frame
-func visualizeFrame(for targetNode: SKNode, in scene: SKScene) {
-    let visualizationNodeName = "visualizationFrameNode"
+func visualizeFrame(nodeName: String, in scene: SKScene) {
+    guard let targetNode = scene.childNode(withName: "//\(nodeName)") else { return }
     
+    let visualizationNodeName = "visualizationFrameNode"
     let existingVisualizationNode = scene.childNode(withName: visualizationNodeName) as? SKShapeNode
     
     let frame: CGRect = targetNode.calculateAccumulatedFrame()
@@ -26,7 +27,7 @@ func visualizeFrame(for targetNode: SKNode, in scene: SKScene) {
         let frameNode = SKShapeNode(path: path)
         frameNode.name = visualizationNodeName
         frameNode.lineWidth = 2
-        frameNode.strokeColor = SKColor.red
+        frameNode.strokeColor = SKColor.white
         frameNode.zPosition = 100
         scene.addChild(frameNode)
     }

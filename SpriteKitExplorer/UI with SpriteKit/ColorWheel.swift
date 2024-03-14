@@ -9,7 +9,6 @@
 import SpriteKit
 
 class ColorWheel: SKNode {
-    
     init(radius: CGFloat, position: CGPoint, hexColors: [String]) {
         super.init()
         self.position = position

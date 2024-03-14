@@ -42,7 +42,6 @@
 		DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */; };
 		DE4292FC2B5BAEC0004326C9 /* firstButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */; };
 		DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */; };
-		DE61D76A2B66E4C400086378 /* SpriteKitText.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE61D7692B66E4C400086378 /* SpriteKitText.swift */; };
 		DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */; };
 		DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D32B623BB00023B79B /* SpringDrag.swift */; };
 		DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D72B6380B40023B79B /* FlingDrag.swift */; };
@@ -93,7 +92,6 @@
 		DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAndReset.swift; sourceTree = "<group>"; };
 		DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstButtonStyle.swift; sourceTree = "<group>"; };
 		DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBinding.swift; sourceTree = "<group>"; };
-		DE61D7692B66E4C400086378 /* SpriteKitText.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitText.swift; sourceTree = "<group>"; };
 		DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreImageFilters.json; sourceTree = "<group>"; };
 		DEABB9D32B623BB00023B79B /* SpringDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDrag.swift; sourceTree = "<group>"; };
 		DEABB9D72B6380B40023B79B /* FlingDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingDrag.swift; sourceTree = "<group>"; };
@@ -115,14 +113,15 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		DE16D1322B67E3C60076836A /* Assets Source */ = {
+		DE16D1322B67E3C60076836A /* Assets source files */ = {
 			isa = PBXGroup;
 			children = (
 				DE16D1352B67E3FB0076836A /* AppIcon.png */,
 				DE16D1332B67E3FB0076836A /* AppIcon.pxd */,
 				DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */,
+				DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */,
 			);
-			path = "Assets Source";
+			path = "Assets source files";
 			sourceTree = "<group>";
 		};
 		DE22B9F02B95967800CC6BCB /* SpriteKitEasing */ = {
@@ -167,6 +166,7 @@
 		DE2F262F2B5A2873004003C3 = {
 			isa = PBXGroup;
 			children = (
+				DE16D1322B67E3C60076836A /* Assets source files */,
 				DEACDF722BA18F6100D496D2 /* Screenshots */,
 				DE16D1392B67E42B0076836A /* README.md */,
 				DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */,
@@ -186,30 +186,21 @@
 			isa = PBXGroup;
 			children = (
 				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
-				DE16D1322B67E3C60076836A /* Assets Source */,
 				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
 				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
 				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
 				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
-				DE2F26492B5A29AF004003C3 /* Combine.swift */,
-				DE4292FD2B5BB413004326C9 /* Views */,
-				DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */,
+				DEACDF742BA19E2000D496D2 /* Data binding */,
+				DE4292FD2B5BB413004326C9 /* SwiftUI views */,
+				DE9ADF8D2BA279B000B58429 /* Physics */,
 				DE3A68622B60378800D10D6E /* Lighting.swift */,
-				DEABB9D72B6380B40023B79B /* FlingDrag.swift */,
-				DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */,
-				DEABB9D32B623BB00023B79B /* SpringDrag.swift */,
-				DE36073F2B6411070005BDE4 /* ImageFilters.swift */,
-				DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */,
+				DEACDF732BA19D9100D496D2 /* Core Image */,
 				DE3607412B64EE8C0005BDE4 /* Utilities */,
-				DEACDF632B9FE86D00D496D2 /* Extensions */,
 				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
 				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
-				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
-				DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */,
-				DE3607442B64F6140005BDE4 /* Core Image Filters.md */,
-				DE61D7692B66E4C400086378 /* SpriteKitText.swift */,
+				DE9ADF8C2BA2795800B58429 /* Text */,
+				DEACDF752BA19EEB00D496D2 /* Rendering */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
-				DEACDF6E2BA1353A00D496D2 /* Fonts */,
 				DE2F26412B5A2875004003C3 /* Preview Content */,
 			);
 			path = SpriteKitExplorer;
@@ -228,24 +219,35 @@
 			children = (
 				DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */,
 				DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */,
+				DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
 		};
-		DE4292FD2B5BB413004326C9 /* Views */ = {
+		DE4292FD2B5BB413004326C9 /* SwiftUI views */ = {
 			isa = PBXGroup;
 			children = (
 				DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */,
 			);
-			path = Views;
+			path = "SwiftUI views";
 			sourceTree = "<group>";
 		};
-		DEACDF632B9FE86D00D496D2 /* Extensions */ = {
+		DE9ADF8C2BA2795800B58429 /* Text */ = {
 			isa = PBXGroup;
 			children = (
-				DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */,
+				DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */,
 			);
-			path = Extensions;
+			path = Text;
+			sourceTree = "<group>";
+		};
+		DE9ADF8D2BA279B000B58429 /* Physics */ = {
+			isa = PBXGroup;
+			children = (
+				DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */,
+				DEABB9D72B6380B40023B79B /* FlingDrag.swift */,
+				DEABB9D32B623BB00023B79B /* SpringDrag.swift */,
+			);
+			path = Physics;
 			sourceTree = "<group>";
 		};
 		DEACDF662BA12E7A00D496D2 /* Drawing nodes */ = {
@@ -253,17 +255,8 @@
 			children = (
 				DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */,
 				DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */,
-				DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */,
 			);
 			path = "Drawing nodes";
-			sourceTree = "<group>";
-		};
-		DEACDF6E2BA1353A00D496D2 /* Fonts */ = {
-			isa = PBXGroup;
-			children = (
-				DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */,
-			);
-			path = Fonts;
 			sourceTree = "<group>";
 		};
 		DEACDF722BA18F6100D496D2 /* Screenshots */ = {
@@ -271,6 +264,34 @@
 			children = (
 			);
 			path = Screenshots;
+			sourceTree = "<group>";
+		};
+		DEACDF732BA19D9100D496D2 /* Core Image */ = {
+			isa = PBXGroup;
+			children = (
+				DE3607442B64F6140005BDE4 /* Core Image Filters.md */,
+				DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */,
+				DE36073F2B6411070005BDE4 /* ImageFilters.swift */,
+			);
+			path = "Core Image";
+			sourceTree = "<group>";
+		};
+		DEACDF742BA19E2000D496D2 /* Data binding */ = {
+			isa = PBXGroup;
+			children = (
+				DE2F26492B5A29AF004003C3 /* Combine.swift */,
+				DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */,
+				DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */,
+			);
+			path = "Data binding";
+			sourceTree = "<group>";
+		};
+		DEACDF752BA19EEB00D496D2 /* Rendering */ = {
+			isa = PBXGroup;
+			children = (
+				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
+			);
+			path = Rendering;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -383,7 +404,6 @@
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
-				DE61D76A2B66E4C400086378 /* SpriteKitText.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
 				DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */,
 				DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */,

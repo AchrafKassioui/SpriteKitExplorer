@@ -14,6 +14,7 @@ import SpriteKit
 
 struct SpriteKitUI: View {
     var myScene = SpriteKitUIScene()
+    @State private var debugOptions: SpriteView.DebugOptions = [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
     
     var body: some View {
         ZStack {
@@ -21,11 +22,15 @@ struct SpriteKitUI: View {
                 scene: myScene,
                 preferredFramesPerSecond: 120,
                 options: [.ignoresSiblingOrder],
-                debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
+                debugOptions: debugOptions
             )
             .ignoresSafeArea()
         }
     }
+}
+
+#Preview {
+    SpriteKitUI()
 }
 
 // MARK: - SpriteKit
@@ -159,6 +164,7 @@ class SpriteKitUIScene: SKScene {
         /// IKEA construction blocks
         let slimBlockTexture = SKTexture(imageNamed: "block_slim")
         let slimBlock = SKSpriteNode(texture: slimBlockTexture, size: slimBlockTexture.size())
+        slimBlock.name = "slim_block"
         slimBlock.color = UIColor(hex: "DFB398") ?? .black
         slimBlock.colorBlendFactor = 1
         slimBlock.physicsBody = SKPhysicsBody(texture: slimBlockTexture, size: slimBlockTexture.size())
@@ -166,6 +172,7 @@ class SpriteKitUIScene: SKScene {
         
         let largeBlockTexture = SKTexture(imageNamed: "block_large")
         let largeBlock = SKSpriteNode(texture: largeBlockTexture, size: largeBlockTexture.size())
+        largeBlock.name = "large_block"
         largeBlock.color = UIColor(hex: "EDC846") ?? .black
         largeBlock.colorBlendFactor = 1
         largeBlock.physicsBody = SKPhysicsBody(texture: largeBlockTexture, size: largeBlockTexture.size())
@@ -173,6 +180,7 @@ class SpriteKitUIScene: SKScene {
         
         let triangleBlockTexture = SKTexture(imageNamed: "block_triangle")
         let triangleBlock = SKSpriteNode(texture: triangleBlockTexture, size: triangleBlockTexture.size())
+        triangleBlock.name = "triangle_block"
         triangleBlock.color = UIColor(hex: "D7414D") ?? .black
         triangleBlock.colorBlendFactor = 1
         triangleBlock.physicsBody = SKPhysicsBody(texture: triangleBlockTexture, size: triangleBlockTexture.size())
@@ -180,6 +188,7 @@ class SpriteKitUIScene: SKScene {
         
         let circleBlockTexture = SKTexture(imageNamed: "block_circle")
         let circleBlock = SKSpriteNode(texture: circleBlockTexture, size: circleBlockTexture.size())
+        circleBlock.name = "circle_block"
         circleBlock.color = UIColor(hex: "0190D6") ?? .black
         circleBlock.colorBlendFactor = 1
         circleBlock.physicsBody = SKPhysicsBody(texture: circleBlockTexture, size: circleBlockTexture.size())
@@ -187,6 +196,7 @@ class SpriteKitUIScene: SKScene {
         
         let archBlockTexture = SKTexture(imageNamed: "block_arch")
         let archBlock = SKSpriteNode(texture: archBlockTexture, size: archBlockTexture.size())
+        archBlock.name = "arch_block"
         archBlock.color = UIColor(hex: "00AA64") ?? .black
         archBlock.colorBlendFactor = 1
         archBlock.physicsBody = SKPhysicsBody(texture: archBlockTexture, size: archBlockTexture.size())
@@ -196,6 +206,7 @@ class SpriteKitUIScene: SKScene {
         let myEffectNode = SKEffectNode()
         let hexColors = ["0190D6", "EDC846", "D7414D", "00AA64", "DFB398"]
         let colorWheel = ColorWheel(radius: 90, position: CGPoint(x: 0, y: 0), hexColors: hexColors)
+        colorWheel.name = "color_wheel"
         myEffectNode.addChild(colorWheel)
         addChild(myEffectNode)
         myEffectNode.filter = CIFilter(name: "CIGaussianBlur", parameters: ["inputRadius": 20])
@@ -203,6 +214,12 @@ class SpriteKitUIScene: SKScene {
         
         let rotationAction = SKAction.rotate(byAngle: 2 * .pi, duration: 2)
         myEffectNode.run(SKAction.repeatForever(rotationAction))
+    }
+    
+    // MARK: Lifecyle
+    
+    override func didSimulatePhysics() {
+        visualizeFrame(nodeName: "color_wheel", in: scene!)
     }
     
     // MARK: Touch events
@@ -278,24 +295,6 @@ class SpriteKitUIScene: SKScene {
 
 // MARK: - Helper methods
 
-func marchingAntsAction(dashLength: CGFloat, spaceLength: CGFloat, duration: TimeInterval) -> SKAction {
-    // Calculate the total length of one dash-segment cycle
-    let totalLength = dashLength + spaceLength
-    
-    return SKAction.customAction(withDuration: duration) { node, elapsedTime in
-        guard let shapeNode = node as? SKShapeNode else { return }
-        
-        // Calculate the phase based on elapsed time
-        let phase = (elapsedTime / CGFloat(duration)) * totalLength
-        
-        // Create a new dashed path with the updated phase
-        let dashedPath = CGPath(__byDashing: shapeNode.path!, transform: nil, phase: phase, lengths: [dashLength, spaceLength], count: 2)
-        
-        // Update the node's path to the new dashed path
-        shapeNode.path = dashedPath
-    }
-}
-
 /// Calculates the CGRect for the center part of a 9-slice sprite.
 /// - Parameter cornerWidth: The width of the corner parts
 /// - Parameter cornerHeight: The height of the corner parts
@@ -318,9 +317,5 @@ func setCenterRect(cornerWidth: CGFloat, cornerHeight: CGFloat, spriteNode: SKSp
                       height: centerSliceHeight / totalHeight)
     
     return centerSliceRect
-}
-
-#Preview {
-    SpriteKitUI()
 }
 

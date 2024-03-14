@@ -2,8 +2,6 @@
  
  # ChainCIFilter.swift
  
- ## Overview
- 
  In Apple SpriteKit, you can use Core Image filters to add effects to any node of type `SKEffectNode`, including the scene itself.
  However, the built-in SpriteKit API only takes one filter for each effect node, and the output can crash SpriteKit's Metal renderer if it exceeds a size limit.
  
