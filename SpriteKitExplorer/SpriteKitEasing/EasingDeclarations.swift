@@ -1,5 +1,6 @@
 //
 //  EasingDeclarations.swift
+//  https://github.com/craiggrummitt/SpriteKitEasingSwift
 //
 //  Created by CraigGrummitt on 6/08/2014.
 //  Copyright (c) 2014 CraigGrummitt. All rights reserved.

@@ -76,6 +76,13 @@ class SpriteNodesScene: SKScene {
         }
         effectNode.addChild(ellipse)
         addChild(effectNode)
+        
+        let edgeShapeTexture = SKTexture(imageNamed: "edge_shape_2")
+        let edgeShape = SKSpriteNode(texture: edgeShapeTexture, size: edgeShapeTexture.size())
+        edgeShape.color = SKColor.white.withAlphaComponent(1)
+        edgeShape.colorBlendFactor = 1
+        edgeShape.physicsBody = SKPhysicsBody(texture: edgeShapeTexture, size: edgeShapeTexture.size())
+        addChild((edgeShape))
     }
     
 }

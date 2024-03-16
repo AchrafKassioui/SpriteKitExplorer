@@ -1,15 +1,17 @@
 {
   "images" : [
     {
+      "filename" : "edge_shape_1@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
+      "filename" : "edge_shape_1@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "disc_132_dashed.png",
+      "filename" : "edge_shape_1@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

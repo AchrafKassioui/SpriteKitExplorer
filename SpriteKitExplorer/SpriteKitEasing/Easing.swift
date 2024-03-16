@@ -1,5 +1,6 @@
 //
 //  Easing.swift
+//  https://github.com/craiggrummitt/SpriteKitEasingSwift
 //
 //  Created by CraigGrummitt on 6/08/2014.
 //  Copyright (c) 2014 CraigGrummitt. All rights reserved.
@@ -13,8 +14,15 @@
 //  and/or modify it under the terms of the Do What The Fuck You Want
 //  To Public License, Version 2, as published by Sam Hocevar. See
 //  http://sam.zoy.org/wtfpl/COPYING for more details.
-//
-//  Added Swift formatting by Achraf Kassioui, 14 March 2024
+
+/**
+ 
+ Added Swift formatting
+ 
+ Last update: 14 March 2024
+ Achraf Kassioui
+ 
+ */
 
 import UIKit
 

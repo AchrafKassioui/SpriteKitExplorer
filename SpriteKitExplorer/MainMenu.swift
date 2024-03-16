@@ -8,7 +8,7 @@
  However, the value of this project is in the code itself. Several scenes are not linked in this menu.
  
  Created: 19 January 2024
- Updated: 13 March 2024
+ Updated: 16 March 2024
  
  */
 
@@ -25,12 +25,13 @@ struct MainMenu: View {
                 NavigationLink("Filters", destination: ImageFilters())
                 NavigationLink("Data Binding", destination: DataBinding())
                 NavigationLink("SpriteKit UI", destination: SpriteKitUI())
+                NavigationLink("Shape Nodes", destination: ShapeNodes())
             }
             .navigationTitle("SpriteKit Explorer")
             .navigationBarTitleDisplayMode(.automatic)
             .toolbar {
                 ToolbarItem(placement: .navigation) {
-                    Image("SpriteKit_128x128_2x")
+                    Image("SpriteKit")
                         .resizable()
                         .frame(width: 32, height: 32)
                         .padding()
