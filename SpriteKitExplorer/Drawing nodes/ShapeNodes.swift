@@ -20,7 +20,7 @@ struct ShapeNodes: View {
                 scene: myScene,
                 preferredFramesPerSecond: 120,
                 options: [.ignoresSiblingOrder, .shouldCullNonVisibleNodes],
-                debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount, .showsPhysics]
+                debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
             )
             .ignoresSafeArea()
         }
@@ -53,11 +53,11 @@ class ShapeNodesScene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
         
         /// comment/uncomment to execute various examples
+        pointingArrow()
         //variousShapes()
         //marchingAnts()
         //shapeWithTexture()
         //drawPath()
-        pointingArrow()
     }
     
     func pointingArrow() {
@@ -81,20 +81,17 @@ class ShapeNodesScene: SKScene {
         arrowShape.lineCap = .round
         arrowShape.lineJoin = .round
         addChild(arrowShape)
+        arrowShape.zRotation = 1
         
         let dashes: [CGFloat] = [8, 6]
         var phase: CGFloat = 0
-        var colorBlink: Bool = false
         
         let animateDashes = SKAction.run {
             phase -= 1
             let dashedArrowPath = arrowPath.copy(dashingWithPhase: phase, lengths: dashes)
-            if colorBlink { arrowShape.strokeColor = .white }
-            else { arrowShape.strokeColor = .black }
-            colorBlink.toggle()
             arrowShape.path = dashedArrowPath
         }
-        let waitAction = SKAction.wait(forDuration: 0.08)
+        let waitAction = SKAction.wait(forDuration: 0.02)
         let sequenceAction = SKAction.sequence([animateDashes, waitAction])
         
         arrowShape.run(SKAction.repeatForever(sequenceAction))
@@ -122,8 +119,10 @@ class ShapeNodesScene: SKScene {
         let rectanglePath = CGMutablePath()
         rectanglePath.addRect(CGRect(x: -50, y: -50, width: 100, height: 100))
         let pathShape = SKShapeNode(path: rectanglePath)
-        pathShape.strokeColor = .blue
-        pathShape.lineWidth = 2
+        pathShape.strokeColor = .systemBlue
+        pathShape.lineWidth = 4
+        pathShape.lineJoin = .miter
+        pathShape.miterLimit = .infinity
         addChild(pathShape)
         pathShape.position = CGPoint(x: -100, y: -100)
         
@@ -131,7 +130,7 @@ class ShapeNodesScene: SKScene {
         let circlePath = CGMutablePath()
         circlePath.addEllipse(in: CGRect(x: 0, y: 0, width: 100, height: 100))
         let pathCenteredShape = SKShapeNode(path: circlePath, centered: true)
-        pathCenteredShape.strokeColor = .green
+        pathCenteredShape.strokeColor = .systemGreen
         pathCenteredShape.lineWidth = 2
         addChild(pathCenteredShape)
         pathCenteredShape.position = CGPoint(x: 100, y: -100)
@@ -140,7 +139,9 @@ class ShapeNodesScene: SKScene {
         var points: [CGPoint] = [CGPoint(x: -50, y: -50), CGPoint(x: 0, y: 50), CGPoint(x: 50, y: -50)]
         let pointsShape = SKShapeNode(points: &points, count: points.count)
         pointsShape.strokeColor = SKColor.red
-        pointsShape.lineWidth = 2
+        pointsShape.lineWidth = 4
+        pointsShape.lineCap = .round
+        pointsShape.lineJoin = .round
         addChild(pointsShape)
         pointsShape.position = CGPoint(x: 0, y: 300)
         
@@ -161,10 +162,10 @@ class ShapeNodesScene: SKScene {
         
         /// Shape from spline points
         /// pairs of points are joined with a quadratic curve
-        var splinePoints: [CGPoint] = [CGPoint(x: -50, y: 0), CGPoint(x: -25, y: 25), CGPoint(x: 25, y: 25), CGPoint(x: 50, y: 0)]
+        var splinePoints: [CGPoint] = [CGPoint(x: -200, y: 0), CGPoint(x: 0, y: 25), CGPoint(x: 25, y: -25), CGPoint(x: 100, y: 50)]
         let splineShape = SKShapeNode(splinePoints: &splinePoints, count: splinePoints.count)
         splineShape.strokeColor = SKColor.magenta
-        splineShape.lineWidth = 2
+        splineShape.lineWidth = 4
         addChild((splineShape))
         splineShape.position = CGPoint(x: 50, y: -200)
         
@@ -276,8 +277,8 @@ class ShapeNodesScene: SKScene {
     // MARK: Add texture to shape node
     func shapeWithTexture() {
         let myShape = SKShapeNode(rectOf: CGSize(width: 64, height: 64), cornerRadius: 12)
-        myShape.position = CGPoint(x: 0, y: 200)
-        myShape.lineWidth = 10
+        myShape.position = CGPoint(x: 0, y: 0)
+        myShape.lineWidth = 20
         myShape.fillColor = .blue
         myShape.fillTexture = SKTexture(imageNamed: "SpriteKit_128x128_2x")
         myShape.strokeTexture = SKTexture(imageNamed: "basketball-94")

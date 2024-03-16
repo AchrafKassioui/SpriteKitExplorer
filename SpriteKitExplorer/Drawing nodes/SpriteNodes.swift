@@ -38,7 +38,7 @@ class SpriteNodesScene: SKScene {
     // MARK: Scene setup
     override func sceneDidLoad() {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        backgroundColor = .lightGray
+        backgroundColor = .darkGray
     }
     
     override func didMove(to view: SKView) {
