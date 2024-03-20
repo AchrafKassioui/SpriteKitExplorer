@@ -49,6 +49,14 @@
 		DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2F263F2B5A2875004003C3 /* Assets.xcassets */; };
 		DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */; };
 		DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */; };
+		DEAFED8A2BA77CEF0030857E /* TextureSizeLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */; };
+		DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED8B2BA8C4B00030857E /* UIKits.swift */; };
+		DEAFED8F2BA8F7DD0030857E /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */; };
+		DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED912BAA1EED0030857E /* TouchEvents.swift */; };
+		DEAFED942BAA22E90030857E /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED932BAA22E90030857E /* Misc.swift */; };
+		DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED962BAA42FB0030857E /* GKPlayground.swift */; };
+		DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */; };
+		DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -98,6 +106,14 @@
 		DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "CormorantGaramond-Regular.ttf"; sourceTree = "<group>"; };
 		DEACDF6F2BA135CD00D496D2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizeNode.swift; sourceTree = "<group>"; };
+		DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureSizeLimit.swift; sourceTree = "<group>"; };
+		DEAFED8B2BA8C4B00030857E /* UIKits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKits.swift; sourceTree = "<group>"; };
+		DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
+		DEAFED912BAA1EED0030857E /* TouchEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEvents.swift; sourceTree = "<group>"; };
+		DEAFED932BAA22E90030857E /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
+		DEAFED962BAA42FB0030857E /* GKPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKPlayground.swift; sourceTree = "<group>"; };
+		DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyframes.swift; sourceTree = "<group>"; };
+		DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTransitions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -184,20 +200,25 @@
 			isa = PBXGroup;
 			children = (
 				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
-				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
-				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
-				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
-				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
-				DEACDF742BA19E2000D496D2 /* Data binding */,
-				DE4292FD2B5BB413004326C9 /* SwiftUI views */,
-				DE9ADF8D2BA279B000B58429 /* Physics */,
-				DEACDF732BA19D9100D496D2 /* Core Image */,
-				DE3607412B64EE8C0005BDE4 /* Utilities */,
-				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
-				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
-				DE9ADF8C2BA2795800B58429 /* Text */,
-				DEACDF752BA19EEB00D496D2 /* Rendering */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
+				DEAFED952BAA42DF0030857E /* GameplayKit */,
+				DEAFED902BAA1EAD0030857E /* Touch */,
+				DEAFED8D2BA8C9210030857E /* UIKit */,
+				DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */,
+				DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */,
+				DE9ADF8C2BA2795800B58429 /* Text */,
+				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
+				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
+				DEACDF732BA19D9100D496D2 /* Core Image */,
+				DE9ADF8D2BA279B000B58429 /* Physics */,
+				DEACDF742BA19E2000D496D2 /* Data binding */,
+				DEACDF752BA19EEB00D496D2 /* Rendering */,
+				DE4292FD2B5BB413004326C9 /* SwiftUI views */,
+				DE3607412B64EE8C0005BDE4 /* Utilities */,
+				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
+				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
+				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
+				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
 			);
 			path = SpriteKitExplorer;
 			sourceTree = "<group>";
@@ -208,6 +229,8 @@
 				DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */,
 				DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */,
 				DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */,
+				DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */,
+				DEAFED932BAA22E90030857E /* Misc.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -243,6 +266,7 @@
 			children = (
 				DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */,
 				DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */,
+				DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */,
 			);
 			path = "Drawing nodes";
 			sourceTree = "<group>";
@@ -281,6 +305,38 @@
 				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
 			);
 			path = Rendering;
+			sourceTree = "<group>";
+		};
+		DEAFED8D2BA8C9210030857E /* UIKit */ = {
+			isa = PBXGroup;
+			children = (
+				DEAFED8B2BA8C4B00030857E /* UIKits.swift */,
+			);
+			path = UIKit;
+			sourceTree = "<group>";
+		};
+		DEAFED902BAA1EAD0030857E /* Touch */ = {
+			isa = PBXGroup;
+			children = (
+				DEAFED912BAA1EED0030857E /* TouchEvents.swift */,
+			);
+			path = Touch;
+			sourceTree = "<group>";
+		};
+		DEAFED952BAA42DF0030857E /* GameplayKit */ = {
+			isa = PBXGroup;
+			children = (
+				DEAFED962BAA42FB0030857E /* GKPlayground.swift */,
+			);
+			path = GameplayKit;
+			sourceTree = "<group>";
+		};
+		DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */ = {
+			isa = PBXGroup;
+			children = (
+				DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */,
+			);
+			path = "Scene Transitions";
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -359,12 +415,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */,
 				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
+				DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
+				DEAFED8F2BA8F7DD0030857E /* CoreGraphics.swift in Sources */,
 				DE22BA002B95AA7300CC6BCB /* Int+Extensions.swift in Sources */,
 				DE22BA092B95AA7300CC6BCB /* CGFloat+Extensions.swift in Sources */,
 				DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */,
 				DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */,
+				DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */,
 				DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */,
 				DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */,
 				DE22BA162B98380D00CC6BCB /* ShapeNodes.swift in Sources */,
@@ -377,6 +437,7 @@
 				DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */,
 				DE22BA062B95AA7300CC6BCB /* SKTEffects.swift in Sources */,
 				DE3A68632B60378800D10D6E /* Lighting.swift in Sources */,
+				DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */,
 				DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */,
@@ -385,15 +446,18 @@
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
 				DEACDF652B9FE88B00D496D2 /* HexSKColor.swift in Sources */,
 				DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */,
+				DEAFED8A2BA77CEF0030857E /* TextureSizeLimit.swift in Sources */,
 				DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */,
 				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
 				DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */,
 				DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */,
+				DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */,
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
 				DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */,
+				DEAFED942BAA22E90030857E /* Misc.swift in Sources */,
 				DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

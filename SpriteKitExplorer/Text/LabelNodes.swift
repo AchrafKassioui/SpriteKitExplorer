@@ -37,7 +37,7 @@ class LabelNodesScene: SKScene {
         backgroundColor = SKColor(hex: "#dddddd") ?? .white
         
         /// comment and uncomment the following functions to see various text effects
-        createMultipleLines()
+        //createMultipleLines()
         //highlightedText()
         //longParagraph()
         //strokedText()

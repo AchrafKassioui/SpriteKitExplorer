@@ -3,6 +3,7 @@
  # Experimenting with SKShapeNode
  
  Created: 6 March 2024
+ Updated: 19 March 2024
  
  */
 
@@ -27,11 +28,16 @@ struct ShapeNodes: View {
     }
 }
 
+#Preview {
+    ShapeNodes()
+}
+
 // MARK: - SpriteKit
 
 class ShapeNodesScene: SKScene {
     
     // MARK: Scene setup
+    
     override func sceneDidLoad() {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = .darkGray
@@ -43,7 +49,7 @@ class ShapeNodesScene: SKScene {
         view.isMultipleTouchEnabled = true
         scene?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         scene?.position = CGPoint(x: 200, y: 0)
-        physicsWorld.speed = 0
+        physicsWorld.speed = 1
         let physicsBoundaries = CGRect(
             x: -view.frame.width / 2 + 40,
             y: -view.frame.height / 2 + 40,
@@ -51,15 +57,158 @@ class ShapeNodesScene: SKScene {
             height: view.frame.height - 80
         )
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
+        setupCamera()
         
         /// comment/uncomment to execute various examples
-        pointingArrow()
+        ///createAnimatedGrid(cellSize: 60, rows: 12, cols: 6)
+        //createGrid(cellSize: 60, rows: 6, cols: 6)
+        //shapeWithFilters()
+        //pointingArrow()
         //variousShapes()
-        //marchingAnts()
-        //shapeWithTexture()
         //drawPath()
+        //shapeWithTexture()
+        //marchingAnts()
     }
     
+    func setupCamera() {
+        let camera = SKCameraNode()
+        let viewSize = view?.bounds.size
+        camera.xScale = (viewSize!.width / size.width)
+        camera.yScale = (viewSize!.height / size.height)
+        addChild(camera)
+        scene?.camera = camera
+        camera.setScale(1)
+    }
+    
+    // MARK: Drawing functions
+    
+    /**
+     
+     # Animate the drawing of a grid
+     
+     */
+    func createAnimatedGrid(cellSize: CGFloat, rows: Int, cols: Int) {
+        let totalWidth = CGFloat(cols) * cellSize
+        let totalHeight = CGFloat(rows) * cellSize
+        let gridOrigin = CGPoint(x: -totalWidth / 2, y: -totalHeight / 2)
+        
+        var delay: TimeInterval = 0
+        let animationDuration: TimeInterval = 0.3
+        
+        /// horizontal lines
+        for row in (0...rows).reversed() {
+            let start = CGPoint(x: gridOrigin.x, y: CGFloat(row) * cellSize + gridOrigin.y)
+            let end = CGPoint(x: totalWidth + gridOrigin.x, y: CGFloat(row) * cellSize + gridOrigin.y)
+            animateLine(from: start, to: end, delay: delay, duration: animationDuration)
+            delay += animationDuration
+        }
+        
+        /// vertical lines
+        for col in 0...cols {
+            let start = CGPoint(x: CGFloat(col) * cellSize + gridOrigin.x, y: totalHeight + gridOrigin.y)
+            let end = CGPoint(x: CGFloat(col) * cellSize + gridOrigin.x, y: gridOrigin.y)
+            animateLine(from: start, to: end, delay: delay, duration: animationDuration)
+            delay += animationDuration
+        }
+    }
+    
+    func animateLine(from start: CGPoint, to end: CGPoint, delay: TimeInterval, duration: TimeInterval) {
+        let path = CGMutablePath()
+        path.move(to: start)
+        
+        let lineNode = SKShapeNode(path: path)
+        lineNode.strokeColor = SKColor(white: 1, alpha: 1)
+        lineNode.lineWidth = 0
+        lineNode.lineCap = .square
+        lineNode.isAntialiased = true
+        
+        self.addChild(lineNode)
+        
+        // Animation to draw the line
+        let drawAnimation = SKAction.customAction(withDuration: duration) { node, elapsedTime in
+            guard let shapeNode = node as? SKShapeNode else { return }
+            
+            lineNode.lineWidth = 1
+            let progress = elapsedTime / CGFloat(duration)
+            let currentPoint = CGPoint(x: start.x + (end.x - start.x) * progress, y: start.y + (end.y - start.y) * progress)
+            let currentPath = CGMutablePath()
+            currentPath.move(to: start)
+            currentPath.addLine(to: currentPoint)
+            shapeNode.path = currentPath
+        }
+        
+        let delayAction = SKAction.wait(forDuration: delay)
+        let sequence = SKAction.sequence([delayAction, drawAnimation])
+        lineNode.run(sequence)
+    }
+    /**
+     
+     # Draw a grid
+     
+     */
+    func createGrid(cellSize: CGFloat, rows: Int, cols: Int) {
+        let path = CGMutablePath()
+        
+        // Calculate the total size of the grid
+        let totalWidth = CGFloat(cols) * cellSize
+        let totalHeight = CGFloat(rows) * cellSize
+        
+        // Draw vertical lines
+        for col in 0...cols {
+            let x = CGFloat(col) * cellSize
+            path.move(to: CGPoint(x: x, y: 0))
+            path.addLine(to: CGPoint(x: x, y: totalHeight))
+        }
+        
+        // Draw horizontal lines
+        for row in 0...rows {
+            let y = CGFloat(row) * cellSize
+            path.move(to: CGPoint(x: 0, y: y))
+            path.addLine(to: CGPoint(x: totalWidth, y: y))
+        }
+        //path.addRect(CGRect(x: 0, y: 0, width: totalWidth, height: totalHeight))
+        
+        // Create a shape node with the path
+        let shapeNode = SKShapeNode(path: path)
+        shapeNode.strokeColor = SKColor(white: 1, alpha: 1)
+        shapeNode.lineWidth = 1
+        shapeNode.lineCap = .square
+        shapeNode.isAntialiased = true
+        shapeNode.fillColor = SKColor(white: 1, alpha: 0.1)
+        
+        // Adjust the position of the shapeNode if necessary
+        shapeNode.position = CGPoint(x: -totalWidth / 2, y: -totalHeight / 2) // Center the grid lines within the node
+        
+        addChild(shapeNode)
+    }
+    
+    /**
+     
+     # ???
+     
+     */
+    func shapeWithFilters() {
+        /// a shape added as a child of an effect node
+        /// the effect node is used to apply Core Image filters
+        /// the physics body is made from the sprite texture, not the effect node result texture
+        let effectNode = SKEffectNode()
+        let ellipse = SKShapeNode(ellipseOf: CGSize(width: 100, height: 200))
+        ellipse.lineWidth = 1
+        ellipse.fillColor = .yellow
+        if let path2 = ellipse.path {
+            ellipse.physicsBody = SKPhysicsBody(polygonFrom: path2)
+        }
+        effectNode.filter = CIFilter(name: "CIBloom", parameters: ["inputIntensity": 1.5, "inputRadius": 40])
+        effectNode.shouldRasterize = true
+        effectNode.addChild(ellipse)
+        addChild(effectNode)
+    }
+    
+    /**
+     
+     # Pointing arrow with marching ants effect
+     
+     */
     func pointingArrow() {
         let arrowPath = CGMutablePath()
         
@@ -97,7 +246,11 @@ class ShapeNodesScene: SKScene {
         arrowShape.run(SKAction.repeatForever(sequenceAction))
     }
     
-    // MARK: Various shapes
+    /**
+     
+     # Basic shapes
+     
+     */
     func variousShapes() {
         /// Basic shapes
         let circle = SKShapeNode(circleOfRadius: 50)
@@ -193,7 +346,11 @@ class ShapeNodesScene: SKScene {
         shapeFromSplinePath.position = CGPoint(x: -50, y: -300)
     }
     
-    // MARK: drawing paths
+    /**
+     
+     # Basic paths
+     
+     */
     func drawPath() {
         /// Sprite node from shape node
         let path1 = CGMutablePath()
@@ -249,8 +406,7 @@ class ShapeNodesScene: SKScene {
         
         visualizeFrame(for: angleShape, in: scene!)
     }
-    
-    // MARK: Visualize frame
+
     func visualizeFrame(for targetNode: SKNode, in parent: SKNode) {
         let visualizationNodeName = "visualizationFrameNode"
         
@@ -273,8 +429,12 @@ class ShapeNodesScene: SKScene {
     override func didSimulatePhysics() {
         //visualizeFrame(for: effectNode, in: self)
     }
-    
-    // MARK: Add texture to shape node
+
+    /**
+     
+     # Add fill and stroke textures to shape nodes
+     
+     */
     func shapeWithTexture() {
         let myShape = SKShapeNode(rectOf: CGSize(width: 64, height: 64), cornerRadius: 12)
         myShape.position = CGPoint(x: 0, y: 0)
@@ -285,8 +445,12 @@ class ShapeNodesScene: SKScene {
         myShape.strokeColor = .red
         addChild((myShape))
     }
-    
-    // MARK: Marching Ants
+
+    /**
+     
+     # Marching ants effect
+     
+     */
     func marchingAnts() {
         /// create paths
         let rect = CGRect(x: -100, y: -100, width: 200, height: 200)
@@ -341,9 +505,5 @@ class ShapeNodesScene: SKScene {
         let repeatForeverAction = SKAction.repeatForever(sequenceAction)
         shapeNode.run(repeatForeverAction)
     }
-}
-
-#Preview {
-    ShapeNodes()
 }
 
