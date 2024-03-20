@@ -32,7 +32,7 @@ struct TouchEventsView: View {
 
 class TouchEventsScene: SKScene {
     
-    var label = SKLabelNode()
+    // MARK: Scene setup
     
     override func didMove(to view: SKView) {
         view.isMultipleTouchEnabled = true
@@ -40,7 +40,6 @@ class TouchEventsScene: SKScene {
         scaleMode = .resizeFill
         backgroundColor = .gray
         setupCamera()
-        setupLabel()
         drawGrid()
     }
     
@@ -54,21 +53,13 @@ class TouchEventsScene: SKScene {
         camera.setScale(1)
     }
     
-    func setupLabel() {
-        label.text = "..."
-        label.fontName = "Menlo-Bold"
-        label.fontSize = 32
-        label.zPosition = 1
-        addChild(label)
-    }
-    
     func drawGrid() {
         let scaleDuration: TimeInterval = 1
         let moveDuration: TimeInterval = 0 // Use the same duration for simultaneous scaling and moving
         
         // Starting size for both line types to ensure they grow from a point.
         let startingSize = CGSize(width: 1, height: 1)
-        let color = SKColor(white: 1, alpha: 0.2)
+        let color = SKColor(white: 1, alpha: 0.3)
         
         for i in -8..<8 {
             let finalXPosition = CGFloat(i * 60)
@@ -100,23 +91,68 @@ class TouchEventsScene: SKScene {
             hLine.run(SKAction.group([scaleXAction, moveYAction])) // Run simultaneously
         }
     }
-
-
     
     // MARK: Touch functions
     
+    /**
+     
+     # Display something for each touch point
+     
+     */
+    var touchLabels = [UITouch: SKLabelNode]()
+    var touchPoints = [UITouch: SKShapeNode]()
+    
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        guard touches.first != nil else { return }
-        
         for touch in touches {
-            //let touchLocation = touch.location(in: scene!)
-            //label.text = pointToString(touchLocation)
+            let touchLocation = touch.location(in: self)
             
-            let d6 = GKRandomDistribution.d6()
-            let choice = d6.nextInt()
-            label.text = String(describing: choice)
+            let label = SKLabelNode(fontNamed: "Menlo-Bold")
+            label.fontSize = 32
+            label.zPosition = 1
+            label.text = pointToString(touchLocation)
+            label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
+            addChild(label)
+            touchLabels[touch] = label
+            
+            let touchPoint = SKShapeNode(circleOfRadius: touch.majorRadius)
+            touchPoint.lineWidth = 0
+            touchPoint.fillColor = .systemRed
+            touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
+            addChild(touchPoint)
+            touchPoints[touch] = touchPoint
         }
     }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            guard let label = touchLabels[touch],
+                  let touchPoint = touchPoints[touch] else { continue }
+            
+            let touchLocation = touch.location(in: self)
+            
+            label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
+            label.text = pointToString(touchLocation)
+            
+            let newPath = CGPath(ellipseIn: CGRect(x: -touch.majorRadius, y: -touch.majorRadius, width: touch.majorRadius * 2, height: touch.majorRadius * 2), transform: nil)
+            touchPoint.path = newPath
+            touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            touchLabels[touch]?.removeFromParent()
+            touchLabels[touch] = nil
+            
+            touchPoints[touch]?.removeFromParent()
+            touchLabels[touch] = nil
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded(touches, with: event)
+    }
+
 }
 
 import GameplayKit

@@ -64,8 +64,16 @@ class GKPlaygroundScene: SKScene {
     
     // MARK: GameplayKit functions
     
-    func customDice(min: Int, max: Int) {
-        let customDice = GKRandomDistribution(lowestValue: min, highestValue: max)
+    func nonClusteredRandomValues() {
+        /// consecutive values are never the same
+        /// source: https://devstreaming-cdn.apple.com/videos/wwdc/2015/608rpwq1ltvg5nmk/608/608_hd_introducing_gameplaykit.mp4
+        let dice = GKShuffledDistribution(forDieWithSideCount: 10)
+        let choice = dice.nextInt()
+        label.text = String(describing: choice)
+    }
+    
+    func customDice() {
+        let customDice = GKRandomDistribution(lowestValue: 1, highestValue: 10)
         let choice = customDice.nextInt()
         label.text = String(describing: choice)
     }
@@ -87,7 +95,7 @@ class GKPlaygroundScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard touches.first != nil else { return }
         
-        customDice(min: 1, max: 256)
+        nonClusteredRandomValues()
     }
 }
 
