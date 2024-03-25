@@ -51,6 +51,9 @@
 
 import CoreImage
 
+/// The code assumes there is always a Metal device
+let currentDevice = MTLCreateSystemDefaultDevice()!
+
 /// Get the Metal texture size limit depending on the GPU  family of the device
 /// Could be improved by not using hard coded values. But how?
 func getTextureSizeLimit(metalDevice: MTLDevice) -> Int {
@@ -63,7 +66,7 @@ class ChainCIFilter: CIFilter {
     /// Use this variable to access the array of the filters applied
     private(set) var chainedFilters: [CIFilter]
     
-    let currentDevice: MTLDevice
+    //let currentDevice: MTLDevice
     let textureSizeLimit: CGFloat
     @objc dynamic var inputImage: CIImage?
     
@@ -71,8 +74,6 @@ class ChainCIFilter: CIFilter {
         /// The array of filters can contain a nil if the CIFilter inside it is given a wrong name or parameter
         /// `compactMap { $0 }` filter out any `nil` values from the array
         self.chainedFilters = filters.compactMap { $0 }
-        /// The code assumes there is always a Metal device
-        self.currentDevice = MTLCreateSystemDefaultDevice()!
         self.textureSizeLimit = CGFloat(getTextureSizeLimit(metalDevice: currentDevice))
         super.init()
     }

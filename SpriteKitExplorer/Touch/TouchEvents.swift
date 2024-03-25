@@ -19,7 +19,7 @@ struct TouchEventsView: View {
             SpriteView(
                 scene: myScene,
                 options: [.ignoresSiblingOrder],
-                debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS]
+                debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS, .showsPhysics]
             )
             .ignoresSafeArea()
         }
@@ -32,9 +32,10 @@ struct TouchEventsView: View {
 
 class TouchEventsScene: SKScene {
     
-    // MARK: Scene setup
+    // MARK: - Scene setup
     
     override func didMove(to view: SKView) {
+        name = "scene"
         view.isMultipleTouchEnabled = true
         size = view.bounds.size
         scaleMode = .resizeFill
@@ -45,6 +46,7 @@ class TouchEventsScene: SKScene {
     
     func setupCamera() {
         let camera = SKCameraNode()
+        camera.name = "camera"
         let viewSize = view?.bounds.size
         camera.xScale = (viewSize!.width / size.width)
         camera.yScale = (viewSize!.height / size.height)
@@ -53,8 +55,15 @@ class TouchEventsScene: SKScene {
         camera.setScale(1)
     }
     
+    /**
+     
+     # Create a grid an animate its creation
+     
+     Not relevant to touch events. This is a cosmetic experiment.
+     
+     */
     func drawGrid() {
-        let scaleDuration: TimeInterval = 1
+        let scaleDuration: TimeInterval = 0.5
         let moveDuration: TimeInterval = 0 // Use the same duration for simultaneous scaling and moving
         
         // Starting size for both line types to ensure they grow from a point.
@@ -92,54 +101,52 @@ class TouchEventsScene: SKScene {
         }
     }
     
-    // MARK: Touch functions
-    
+    // MARK: - Touch visualization
     /**
      
-     # Display something for each touch point
+     For each touch point on screen:
+     - visualize the touch area
+     - display the touch point coordinates
      
      */
     var touchLabels = [UITouch: SKLabelNode]()
     var touchPoints = [UITouch: SKShapeNode]()
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            let touchLocation = touch.location(in: self)
-            
-            let label = SKLabelNode(fontNamed: "Menlo-Bold")
-            label.fontSize = 32
-            label.zPosition = 1
-            label.text = pointToString(touchLocation)
-            label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
-            addChild(label)
-            touchLabels[touch] = label
-            
-            let touchPoint = SKShapeNode(circleOfRadius: touch.majorRadius)
-            touchPoint.lineWidth = 0
-            touchPoint.fillColor = .systemRed
-            touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
-            addChild(touchPoint)
-            touchPoints[touch] = touchPoint
-        }
+    func visualizeTouchesBegan(_ touch: UITouch) {
+        let touchLocation = touch.location(in: self)
+        
+        let label = SKLabelNode(fontNamed: "Menlo-Bold")
+        label.fontSize = 32
+        label.zPosition = 1
+        label.text = pointToString(touchLocation)
+        label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
+        addChild(label)
+        touchLabels[touch] = label
+        
+        let touchPoint = SKShapeNode(circleOfRadius: touch.majorRadius)
+        touchPoint.name = "touch-point"
+        touchPoint.lineWidth = 0
+        touchPoint.fillColor = .systemRed
+        touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
+        addChild(touchPoint)
+        touchPoints[touch] = touchPoint
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            guard let label = touchLabels[touch],
-                  let touchPoint = touchPoints[touch] else { continue }
-            
-            let touchLocation = touch.location(in: self)
-            
-            label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
-            label.text = pointToString(touchLocation)
-            
-            let newPath = CGPath(ellipseIn: CGRect(x: -touch.majorRadius, y: -touch.majorRadius, width: touch.majorRadius * 2, height: touch.majorRadius * 2), transform: nil)
-            touchPoint.path = newPath
-            touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
-        }
+    func visualizeTouchesMoved(_ touch: UITouch) {
+        guard let label = touchLabels[touch],
+              let touchPoint = touchPoints[touch] else { return }
+        
+        let touchLocation = touch.location(in: self)
+        
+        label.position = CGPoint(x: touchLocation.x, y: touchLocation.y + 60)
+        label.text = pointToString(touchLocation)
+        
+        let newPath = CGPath(ellipseIn: CGRect(x: -touch.majorRadius, y: -touch.majorRadius, width: touch.majorRadius * 2, height: touch.majorRadius * 2), transform: nil)
+        touchPoint.path = newPath
+        touchPoint.position = CGPoint(x: touchLocation.x, y: touchLocation.y)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    func visualizeTouchesEnded(_ touches: Set<UITouch>) {
         for touch in touches {
             touchLabels[touch]?.removeFromParent()
             touchLabels[touch] = nil
@@ -149,10 +156,26 @@ class TouchEventsScene: SKScene {
         }
     }
     
+    // MARK: - Touch events
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            visualizeTouchesBegan(touch)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            visualizeTouchesMoved(touch)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        visualizeTouchesEnded(touches)
+    }
+    
     override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
         touchesEnded(touches, with: event)
     }
 
 }
-
-import GameplayKit

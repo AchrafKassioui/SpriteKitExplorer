@@ -10,7 +10,6 @@
 		DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */; };
 		DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B222B9FC760006D75CB /* ColorWheel.swift */; };
 		DE16D1362B67E3FB0076836A /* AppIcon.pxd in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1332B67E3FB0076836A /* AppIcon.pxd */; };
-		DE16D1372B67E3FB0076836A /* SpriteKit_128x128_2x.png in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */; };
 		DE16D1382B67E3FB0076836A /* AppIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = DE16D1352B67E3FB0076836A /* AppIcon.png */; };
 		DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9E92B95956400CC6BCB /* Easing.swift */; };
 		DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22B9EA2B95956400CC6BCB /* EasingDeclarations.swift */; };
@@ -55,6 +54,14 @@
 		DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED912BAA1EED0030857E /* TouchEvents.swift */; };
 		DEAFED942BAA22E90030857E /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED932BAA22E90030857E /* Misc.swift */; };
 		DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED962BAA42FB0030857E /* GKPlayground.swift */; };
+		DEB4ED3E2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DEB4ED3D2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 */; };
+		DEB4ED402BAF92850097EEC0 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEB4ED3F2BAF92850097EEC0 /* SF-Pro.ttf */; };
+		DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB4ED432BB116C20097EEC0 /* HitDetection.swift */; };
+		DEC9BAF72BAB579100563A99 /* SpriteAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */; };
+		DEC9BAFA2BAC95F800563A99 /* GenerateGridImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */; };
+		DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAFC2BAD254700563A99 /* VideoNode.swift */; };
+		DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BB042BAD44C300563A99 /* AVPlayer.swift */; };
+		DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */; };
 		DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */; };
 		DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */; };
 /* End PBXBuildFile section */
@@ -63,7 +70,6 @@
 		DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteNodes.swift; sourceTree = "<group>"; };
 		DE0B6B222B9FC760006D75CB /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
 		DE16D1332B67E3FB0076836A /* AppIcon.pxd */ = {isa = PBXFileReference; lastKnownFileType = file; path = AppIcon.pxd; sourceTree = "<group>"; };
-		DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = SpriteKit_128x128_2x.png; sourceTree = "<group>"; };
 		DE16D1352B67E3FB0076836A /* AppIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = AppIcon.png; sourceTree = "<group>"; };
 		DE16D1392B67E42B0076836A /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		DE22B9E92B95956400CC6BCB /* Easing.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Easing.swift; sourceTree = "<group>"; };
@@ -112,6 +118,14 @@
 		DEAFED912BAA1EED0030857E /* TouchEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEvents.swift; sourceTree = "<group>"; };
 		DEAFED932BAA22E90030857E /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		DEAFED962BAA42FB0030857E /* GKPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKPlayground.swift; sourceTree = "<group>"; };
+		DEB4ED3D2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cars on Bridge - Legio Seven - SD.mp4"; sourceTree = "<group>"; };
+		DEB4ED3F2BAF92850097EEC0 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
+		DEB4ED432BB116C20097EEC0 /* HitDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDetection.swift; sourceTree = "<group>"; };
+		DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteAnimation.swift; sourceTree = "<group>"; };
+		DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateGridImage.swift; sourceTree = "<group>"; };
+		DEC9BAFC2BAD254700563A99 /* VideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNode.swift; sourceTree = "<group>"; };
+		DEC9BB042BAD44C300563A99 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
+		DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Multi-touch typography.mp4"; sourceTree = "<group>"; };
 		DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyframes.swift; sourceTree = "<group>"; };
 		DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTransitions.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -130,9 +144,11 @@
 		DE16D1322B67E3C60076836A /* Assets source files */ = {
 			isa = PBXGroup;
 			children = (
+				DEB4ED3D2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 */,
+				DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */,
 				DE16D1352B67E3FB0076836A /* AppIcon.png */,
 				DE16D1332B67E3FB0076836A /* AppIcon.pxd */,
-				DE16D1342B67E3FB0076836A /* SpriteKit_128x128_2x.png */,
+				DEB4ED3F2BAF92850097EEC0 /* SF-Pro.ttf */,
 				DEACDF6C2BA1353200D496D2 /* CormorantGaramond-Regular.ttf */,
 			);
 			path = "Assets source files";
@@ -201,11 +217,12 @@
 			children = (
 				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
+				DEC9BAFB2BAD253300563A99 /* Video */,
 				DEAFED952BAA42DF0030857E /* GameplayKit */,
+				DEC9BAF82BAB579900563A99 /* Animation */,
 				DEAFED902BAA1EAD0030857E /* Touch */,
 				DEAFED8D2BA8C9210030857E /* UIKit */,
 				DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */,
-				DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */,
 				DE9ADF8C2BA2795800B58429 /* Text */,
 				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
 				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
@@ -231,6 +248,7 @@
 				DEACDF642B9FE88B00D496D2 /* HexSKColor.swift */,
 				DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */,
 				DEAFED932BAA22E90030857E /* Misc.swift */,
+				DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -319,6 +337,7 @@
 			isa = PBXGroup;
 			children = (
 				DEAFED912BAA1EED0030857E /* TouchEvents.swift */,
+				DEB4ED432BB116C20097EEC0 /* HitDetection.swift */,
 			);
 			path = Touch;
 			sourceTree = "<group>";
@@ -329,6 +348,24 @@
 				DEAFED962BAA42FB0030857E /* GKPlayground.swift */,
 			);
 			path = GameplayKit;
+			sourceTree = "<group>";
+		};
+		DEC9BAF82BAB579900563A99 /* Animation */ = {
+			isa = PBXGroup;
+			children = (
+				DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */,
+				DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */,
+			);
+			path = Animation;
+			sourceTree = "<group>";
+		};
+		DEC9BAFB2BAD253300563A99 /* Video */ = {
+			isa = PBXGroup;
+			children = (
+				DEC9BAFC2BAD254700563A99 /* VideoNode.swift */,
+				DEC9BB042BAD44C300563A99 /* AVPlayer.swift */,
+			);
+			path = Video;
 			sourceTree = "<group>";
 		};
 		DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */ = {
@@ -400,11 +437,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE16D1382B67E3FB0076836A /* AppIcon.png in Resources */,
-				DE16D1372B67E3FB0076836A /* SpriteKit_128x128_2x.png in Resources */,
+				DEB4ED402BAF92850097EEC0 /* SF-Pro.ttf in Resources */,
 				DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */,
 				DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */,
 				DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */,
 				DE16D1362B67E3FB0076836A /* AppIcon.pxd in Resources */,
+				DEB4ED3E2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 in Resources */,
+				DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -415,7 +454,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DEC9BAFA2BAC95F800563A99 /* GenerateGridImage.swift in Sources */,
 				DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */,
+				DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */,
 				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
 				DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
@@ -435,12 +476,14 @@
 				DE22BA012B95AA7300CC6BCB /* SKTTimingFunctions.swift in Sources */,
 				DE3607402B6411070005BDE4 /* ImageFilters.swift in Sources */,
 				DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */,
+				DEC9BAF72BAB579100563A99 /* SpriteAnimation.swift in Sources */,
 				DE22BA062B95AA7300CC6BCB /* SKTEffects.swift in Sources */,
 				DE3A68632B60378800D10D6E /* Lighting.swift in Sources */,
 				DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */,
 				DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */,
+				DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */,
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
@@ -452,6 +495,7 @@
 				DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */,
 				DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */,
 				DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */,
+				DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */,
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,

@@ -60,11 +60,11 @@ class ShapeNodesScene: SKScene {
         setupCamera()
         
         /// comment/uncomment to execute various examples
-        ///createAnimatedGrid(cellSize: 60, rows: 12, cols: 6)
+        //createAnimatedGrid(cellSize: 60, rows: 12, cols: 6)
         //createGrid(cellSize: 60, rows: 6, cols: 6)
         //shapeWithFilters()
         //pointingArrow()
-        //variousShapes()
+        variousShapes()
         //drawPath()
         //shapeWithTexture()
         //marchingAnts()
