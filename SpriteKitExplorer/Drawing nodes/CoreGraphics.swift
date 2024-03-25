@@ -52,9 +52,9 @@ class CoreGraphicsScene: SKScene {
         
         /// comment/uncomment to execute various examples
         //drawSpriteWithShadow()
-        //drawCellsWithPositionDetection()
+        drawCellsWithPositionDetection()
         //drawCheckerboard()
-        drawGrid()
+        //drawGrid()
     }
     
     func setupCamera() {

@@ -82,16 +82,16 @@ class UIKitScene: SKScene {
         let myUIKitView = createUIView()
         view.addSubview(myUIKitView)
         myUIKitView.center = view.center
-        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 100, height: 100))
-        label.text = "Hello"
-        label.font = UIFont(name: "Menlo-Bold", size: 32)
+        let label = UILabel(frame: CGRect(x: 0, y: 0, width: 200, height: 100))
+        label.text = "  UIKit view"
+        label.font = UIFont(name: "Menlo-Bold", size: 24)
         myUIKitView.addSubview(label)
     }
 }
 
 func createUIView() -> UIView {
     let myView = UIView()
-    myView.frame = CGRect(x: 0, y: 0, width: 100, height: 100)
+    myView.frame = CGRect(x: 0, y: 0, width: 200, height: 100)
     myView.backgroundColor = UIColor(white: 1, alpha: 0.7)
     return myView
 }
