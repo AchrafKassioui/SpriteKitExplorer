@@ -4,7 +4,7 @@ An ongoing exploration of SpriteKit, Apple's native 2D game engine.
 
 ## Screenshots
 
-<img src="Screenshots/25-Mar-2024/SpriteKitExplorer-25-Mar-2024.png" alt="SpriteKitExplorer-25-Mar-2024" style="width:50%;" />
+<img src="Screenshots/25-Mar-2024/SpriteKitExplorer-25-Mar-2024.png" alt="SpriteKitExplorer-25-Mar-2024" style="width:100%;" />
 
 ## Usage
 
