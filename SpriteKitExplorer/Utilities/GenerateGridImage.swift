@@ -47,7 +47,7 @@ struct GenerateGridImageUI: View {
  
  */
 func generatePNG() {
-    if let pngData = generateGrid(cellSize: 50, rows: 10, cols: 10) {
+    if let pngData = generateGrid(cellSize: 60, rows: 12, cols: 6) {
         let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
         let filePath = paths[0].appendingPathComponent("grid.png")
         
@@ -80,7 +80,7 @@ func generateGrid(cellSize: CGFloat, rows: Int, cols: Int) -> Data? {
         }
         
         /// the color of the strokes
-        UIColor(white: 0, alpha: 1).setStroke()
+        UIColor(white: 1, alpha: 1).setStroke()
         
         /// the thickness of the strokes
         bezierPath.lineWidth = 1

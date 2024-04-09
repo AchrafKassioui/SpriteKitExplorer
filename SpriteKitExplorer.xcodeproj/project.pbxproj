@@ -30,6 +30,9 @@
 		DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */; };
 		DE22BA162B98380D00CC6BCB /* ShapeNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */; };
 		DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE22BA172B99091B00CC6BCB /* ToolButton.swift */; };
+		DE2E6C282BC0D5A2005C06F2 /* InertialCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2E6C272BC0D5A2005C06F2 /* InertialCamera.swift */; };
+		DE2E6C2D2BC23792005C06F2 /* MyParticle.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE2E6C2B2BC23792005C06F2 /* MyParticle.sks */; };
+		DE2E6C2E2BC23792005C06F2 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE2E6C2C2BC23792005C06F2 /* Assets.xcassets */; };
 		DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */; };
 		DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263D2B5A2873004003C3 /* MainMenu.swift */; };
 		DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F26492B5A29AF004003C3 /* Combine.swift */; };
@@ -39,7 +42,23 @@
 		DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */; };
 		DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */; };
 		DE4292FC2B5BAEC0004326C9 /* firstButtonStyle.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */; };
+		DE4BA9F52BB8937E009B418F /* Shaders.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BA9F42BB8937E009B418F /* Shaders.swift */; };
+		DE4BA9F92BB89BAE009B418F /* crt-retro.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DE4BA9F82BB89BAE009B418F /* crt-retro.fsh */; };
+		DE4BA9FB2BB89D93009B418F /* water-movement.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DE4BA9FA2BB89D93009B418F /* water-movement.fsh */; };
+		DE4BA9FD2BB8A085009B418F /* motion-blur.fsh in Resources */ = {isa = PBXBuildFile; fileRef = DE4BA9FC2BB8A085009B418F /* motion-blur.fsh */; };
+		DE4BA9FF2BB8A25B009B418F /* Shaders2.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BA9FE2BB8A25B009B418F /* Shaders2.swift */; };
+		DE4BAA012BB8DBA5009B418F /* InertialCamera01.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BAA002BB8DBA5009B418F /* InertialCamera01.swift */; };
+		DE4BAA032BB9FA6B009B418F /* BackgroundPatterns.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BAA022BB9FA6B009B418F /* BackgroundPatterns.swift */; };
+		DE4BAA062BBA75A9009B418F /* LabelPosition.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BAA052BBA75A9009B418F /* LabelPosition.swift */; };
+		DE4BAA082BBB3FB0009B418F /* scraps.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BAA072BBB3FB0009B418F /* scraps.swift */; };
+		DE4BAA0A2BBB4E7C009B418F /* Tutorial.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE4BAA092BBB4E7C009B418F /* Tutorial.swift */; };
+		DE4BAA0C2BBB4F33009B418F /* Tutorial.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE4BAA0B2BBB4F33009B418F /* Tutorial.sks */; };
+		DE5846082BBE8718006C978A /* InertialCamera03.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5846072BBE8718006C978A /* InertialCamera03.swift */; };
 		DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */; };
+		DE711BA92BBC9E7E005F30CC /* InertialCamera02.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE711BA82BBC9E7E005F30CC /* InertialCamera02.swift */; };
+		DE91203D2BB49A0F00B3B63F /* InertialCamera00.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91203C2BB49A0F00B3B63F /* InertialCamera00.swift */; };
+		DE91203F2BB4B45A00B3B63F /* VideoPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */; };
+		DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9120402BB4EE2400B3B63F /* Numbers.swift */; };
 		DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */ = {isa = PBXBuildFile; fileRef = DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */; };
 		DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D32B623BB00023B79B /* SpringDrag.swift */; };
 		DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEABB9D72B6380B40023B79B /* FlingDrag.swift */; };
@@ -50,13 +69,14 @@
 		DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */; };
 		DEAFED8A2BA77CEF0030857E /* TextureSizeLimit.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */; };
 		DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED8B2BA8C4B00030857E /* UIKits.swift */; };
-		DEAFED8F2BA8F7DD0030857E /* CoreGraphics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */; };
+		DEAFED8F2BA8F7DD0030857E /* PatternGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED8E2BA8F7DD0030857E /* PatternGenerators.swift */; };
 		DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED912BAA1EED0030857E /* TouchEvents.swift */; };
 		DEAFED942BAA22E90030857E /* Misc.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED932BAA22E90030857E /* Misc.swift */; };
 		DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEAFED962BAA42FB0030857E /* GKPlayground.swift */; };
 		DEB4ED3E2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DEB4ED3D2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 */; };
 		DEB4ED402BAF92850097EEC0 /* SF-Pro.ttf in Resources */ = {isa = PBXBuildFile; fileRef = DEB4ED3F2BAF92850097EEC0 /* SF-Pro.ttf */; };
 		DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB4ED432BB116C20097EEC0 /* HitDetection.swift */; };
+		DEB4ED462BB25E970097EEC0 /* FilterSpin.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB4ED452BB25E970097EEC0 /* FilterSpin.swift */; };
 		DEC9BAF72BAB579100563A99 /* SpriteAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */; };
 		DEC9BAFA2BAC95F800563A99 /* GenerateGridImage.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */; };
 		DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAFC2BAD254700563A99 /* VideoNode.swift */; };
@@ -64,6 +84,10 @@
 		DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */; };
 		DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */; };
 		DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */; };
+		DEFE9DA82BC49049002EDD9F /* UIScreen+ScreenCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DA72BC49049002EDD9F /* UIScreen+ScreenCorners.swift */; };
+		DEFE9DAA2BC4A5DE002EDD9F /* IsometricCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DA92BC4A5DE002EDD9F /* IsometricCamera.swift */; };
+		DEFE9DAD2BC4A771002EDD9F /* UI.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DAC2BC4A771002EDD9F /* UI.swift */; };
+		DEFE9DAF2BC4A81C002EDD9F /* DemoScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DAE2BC4A81C002EDD9F /* DemoScene.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -91,6 +115,9 @@
 		DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShouldRender.swift; sourceTree = "<group>"; };
 		DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShapeNodes.swift; sourceTree = "<group>"; };
 		DE22BA172B99091B00CC6BCB /* ToolButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ToolButton.swift; sourceTree = "<group>"; };
+		DE2E6C272BC0D5A2005C06F2 /* InertialCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InertialCamera.swift; sourceTree = "<group>"; };
+		DE2E6C2B2BC23792005C06F2 /* MyParticle.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = MyParticle.sks; sourceTree = "<group>"; };
+		DE2E6C2C2BC23792005C06F2 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE2F26382B5A2873004003C3 /* SpriteKitExplorer.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpriteKitExplorer.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitExplorerApp.swift; sourceTree = "<group>"; };
 		DE2F263D2B5A2873004003C3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
@@ -103,7 +130,23 @@
 		DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SimulationSpeed.swift; sourceTree = "<group>"; };
 		DE4292F92B5BADC0004326C9 /* StoreAndReset.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoreAndReset.swift; sourceTree = "<group>"; };
 		DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = firstButtonStyle.swift; sourceTree = "<group>"; };
+		DE4BA9F42BB8937E009B418F /* Shaders.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders.swift; sourceTree = "<group>"; };
+		DE4BA9F82BB89BAE009B418F /* crt-retro.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = "crt-retro.fsh"; sourceTree = "<group>"; };
+		DE4BA9FA2BB89D93009B418F /* water-movement.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = "water-movement.fsh"; sourceTree = "<group>"; };
+		DE4BA9FC2BB8A085009B418F /* motion-blur.fsh */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.glsl; path = "motion-blur.fsh"; sourceTree = "<group>"; };
+		DE4BA9FE2BB8A25B009B418F /* Shaders2.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Shaders2.swift; sourceTree = "<group>"; };
+		DE4BAA002BB8DBA5009B418F /* InertialCamera01.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InertialCamera01.swift; sourceTree = "<group>"; };
+		DE4BAA022BB9FA6B009B418F /* BackgroundPatterns.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BackgroundPatterns.swift; sourceTree = "<group>"; };
+		DE4BAA052BBA75A9009B418F /* LabelPosition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LabelPosition.swift; sourceTree = "<group>"; };
+		DE4BAA072BBB3FB0009B418F /* scraps.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = scraps.swift; sourceTree = "<group>"; };
+		DE4BAA092BBB4E7C009B418F /* Tutorial.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Tutorial.swift; sourceTree = "<group>"; };
+		DE4BAA0B2BBB4F33009B418F /* Tutorial.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = Tutorial.sks; sourceTree = "<group>"; };
+		DE5846072BBE8718006C978A /* InertialCamera03.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InertialCamera03.swift; sourceTree = "<group>"; };
 		DE58AB272B7C7FC3007F93B3 /* DataBinding.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataBinding.swift; sourceTree = "<group>"; };
+		DE711BA82BBC9E7E005F30CC /* InertialCamera02.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InertialCamera02.swift; sourceTree = "<group>"; };
+		DE91203C2BB49A0F00B3B63F /* InertialCamera00.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InertialCamera00.swift; sourceTree = "<group>"; };
+		DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPhysics.swift; sourceTree = "<group>"; };
+		DE9120402BB4EE2400B3B63F /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
 		DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */ = {isa = PBXFileReference; lastKnownFileType = text.json; path = CoreImageFilters.json; sourceTree = "<group>"; };
 		DEABB9D32B623BB00023B79B /* SpringDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpringDrag.swift; sourceTree = "<group>"; };
 		DEABB9D72B6380B40023B79B /* FlingDrag.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FlingDrag.swift; sourceTree = "<group>"; };
@@ -114,13 +157,14 @@
 		DEACDF702BA16AAC00D496D2 /* VisualizeNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VisualizeNode.swift; sourceTree = "<group>"; };
 		DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextureSizeLimit.swift; sourceTree = "<group>"; };
 		DEAFED8B2BA8C4B00030857E /* UIKits.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UIKits.swift; sourceTree = "<group>"; };
-		DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreGraphics.swift; sourceTree = "<group>"; };
+		DEAFED8E2BA8F7DD0030857E /* PatternGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PatternGenerators.swift; sourceTree = "<group>"; };
 		DEAFED912BAA1EED0030857E /* TouchEvents.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TouchEvents.swift; sourceTree = "<group>"; };
 		DEAFED932BAA22E90030857E /* Misc.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Misc.swift; sourceTree = "<group>"; };
 		DEAFED962BAA42FB0030857E /* GKPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GKPlayground.swift; sourceTree = "<group>"; };
 		DEB4ED3D2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Cars on Bridge - Legio Seven - SD.mp4"; sourceTree = "<group>"; };
 		DEB4ED3F2BAF92850097EEC0 /* SF-Pro.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "SF-Pro.ttf"; sourceTree = "<group>"; };
 		DEB4ED432BB116C20097EEC0 /* HitDetection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HitDetection.swift; sourceTree = "<group>"; };
+		DEB4ED452BB25E970097EEC0 /* FilterSpin.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FilterSpin.swift; sourceTree = "<group>"; };
 		DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteAnimation.swift; sourceTree = "<group>"; };
 		DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GenerateGridImage.swift; sourceTree = "<group>"; };
 		DEC9BAFC2BAD254700563A99 /* VideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNode.swift; sourceTree = "<group>"; };
@@ -128,6 +172,10 @@
 		DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Multi-touch typography.mp4"; sourceTree = "<group>"; };
 		DEE20AA62BA5628500D4B4D1 /* Keyframes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keyframes.swift; sourceTree = "<group>"; };
 		DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTransitions.swift; sourceTree = "<group>"; };
+		DEFE9DA72BC49049002EDD9F /* UIScreen+ScreenCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+ScreenCorners.swift"; sourceTree = "<group>"; };
+		DEFE9DA92BC4A5DE002EDD9F /* IsometricCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsometricCamera.swift; sourceTree = "<group>"; };
+		DEFE9DAC2BC4A771002EDD9F /* UI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UI.swift; sourceTree = "<group>"; };
+		DEFE9DAE2BC4A81C002EDD9F /* DemoScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DemoScene.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -183,14 +231,32 @@
 			path = SKTUtils;
 			sourceTree = "<group>";
 		};
-		DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */ = {
+		DE22BA0E2B9834EB00CC6BCB /* UI */ = {
 			isa = PBXGroup;
 			children = (
 				DE22BA172B99091B00CC6BCB /* ToolButton.swift */,
 				DE0B6B222B9FC760006D75CB /* ColorWheel.swift */,
 				DE22BA0A2B966AEF00CC6BCB /* SpriteKitUI.swift */,
+				DE4BAA022BB9FA6B009B418F /* BackgroundPatterns.swift */,
 			);
-			path = "UI with SpriteKit";
+			path = UI;
+			sourceTree = "<group>";
+		};
+		DE2E6C292BC1F580005C06F2 /* Core Graphics */ = {
+			isa = PBXGroup;
+			children = (
+				DEAFED8E2BA8F7DD0030857E /* PatternGenerators.swift */,
+			);
+			path = "Core Graphics";
+			sourceTree = "<group>";
+		};
+		DE2E6C2A2BC2376E005C06F2 /* Particles */ = {
+			isa = PBXGroup;
+			children = (
+				DE2E6C2B2BC23792005C06F2 /* MyParticle.sks */,
+				DE2E6C2C2BC23792005C06F2 /* Assets.xcassets */,
+			);
+			path = Particles;
 			sourceTree = "<group>";
 		};
 		DE2F262F2B5A2873004003C3 = {
@@ -215,27 +281,31 @@
 		DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */ = {
 			isa = PBXGroup;
 			children = (
-				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
-				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
-				DEC9BAFB2BAD253300563A99 /* Video */,
-				DEAFED952BAA42DF0030857E /* GameplayKit */,
 				DEC9BAF82BAB579900563A99 /* Animation */,
-				DEAFED902BAA1EAD0030857E /* Touch */,
-				DEAFED8D2BA8C9210030857E /* UIKit */,
-				DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */,
-				DE9ADF8C2BA2795800B58429 /* Text */,
-				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
-				DE22BA0E2B9834EB00CC6BCB /* UI with SpriteKit */,
+				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
+				DE91203B2BB499EC00B3B63F /* Camera */,
+				DE2E6C292BC1F580005C06F2 /* Core Graphics */,
 				DEACDF732BA19D9100D496D2 /* Core Image */,
-				DE9ADF8D2BA279B000B58429 /* Physics */,
 				DEACDF742BA19E2000D496D2 /* Data binding */,
-				DEACDF752BA19EEB00D496D2 /* Rendering */,
-				DE4292FD2B5BB413004326C9 /* SwiftUI views */,
-				DE3607412B64EE8C0005BDE4 /* Utilities */,
-				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
-				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
+				DEACDF662BA12E7A00D496D2 /* Drawing nodes */,
+				DEAFED952BAA42DF0030857E /* GameplayKit */,
+				DEACDF6F2BA135CD00D496D2 /* Info.plist */,
 				DE2F263D2B5A2873004003C3 /* MainMenu.swift */,
+				DE2E6C2A2BC2376E005C06F2 /* Particles */,
+				DE9ADF8D2BA279B000B58429 /* Physics */,
+				DEACDF752BA19EEB00D496D2 /* Rendering */,
+				DEE20AAA2BA589D500D4B4D1 /* Scene Transitions */,
+				DE4BAA042BBA758B009B418F /* Scratch */,
+				DE22B9F12B95AA7300CC6BCB /* SKTUtils */,
+				DE22B9F02B95967800CC6BCB /* SpriteKitEasing */,
 				DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */,
+				DE4292FD2B5BB413004326C9 /* SwiftUI views */,
+				DE9ADF8C2BA2795800B58429 /* Text */,
+				DEAFED902BAA1EAD0030857E /* Touch */,
+				DE22BA0E2B9834EB00CC6BCB /* UI */,
+				DEAFED8D2BA8C9210030857E /* UIKit */,
+				DE3607412B64EE8C0005BDE4 /* Utilities */,
+				DEC9BAFB2BAD253300563A99 /* Video */,
 			);
 			path = SpriteKitExplorer;
 			sourceTree = "<group>";
@@ -249,6 +319,8 @@
 				DEAFED892BA77CEF0030857E /* TextureSizeLimit.swift */,
 				DEAFED932BAA22E90030857E /* Misc.swift */,
 				DEC9BAF92BAC95F800563A99 /* GenerateGridImage.swift */,
+				DE9120402BB4EE2400B3B63F /* Numbers.swift */,
+				DEFE9DA72BC49049002EDD9F /* UIScreen+ScreenCorners.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -259,6 +331,28 @@
 				DE4292FB2B5BAEC0004326C9 /* firstButtonStyle.swift */,
 			);
 			path = "SwiftUI views";
+			sourceTree = "<group>";
+		};
+		DE4BAA042BBA758B009B418F /* Scratch */ = {
+			isa = PBXGroup;
+			children = (
+				DE4BAA052BBA75A9009B418F /* LabelPosition.swift */,
+				DE4BAA092BBB4E7C009B418F /* Tutorial.swift */,
+				DE4BAA0B2BBB4F33009B418F /* Tutorial.sks */,
+			);
+			path = Scratch;
+			sourceTree = "<group>";
+		};
+		DE91203B2BB499EC00B3B63F /* Camera */ = {
+			isa = PBXGroup;
+			children = (
+				DEFE9DAE2BC4A81C002EDD9F /* DemoScene.swift */,
+				DE2E6C272BC0D5A2005C06F2 /* InertialCamera.swift */,
+				DEFE9DA92BC4A5DE002EDD9F /* IsometricCamera.swift */,
+				DEFE9DAC2BC4A771002EDD9F /* UI.swift */,
+				DEFE9DAB2BC4A6E5002EDD9F /* Drafts */,
+			);
+			path = Camera;
 			sourceTree = "<group>";
 		};
 		DE9ADF8C2BA2795800B58429 /* Text */ = {
@@ -275,6 +369,7 @@
 				DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */,
 				DEABB9D72B6380B40023B79B /* FlingDrag.swift */,
 				DEABB9D32B623BB00023B79B /* SpringDrag.swift */,
+				DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */,
 			);
 			path = Physics;
 			sourceTree = "<group>";
@@ -284,7 +379,6 @@
 			children = (
 				DE22BA152B98380D00CC6BCB /* ShapeNodes.swift */,
 				DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */,
-				DEAFED8E2BA8F7DD0030857E /* CoreGraphics.swift */,
 			);
 			path = "Drawing nodes";
 			sourceTree = "<group>";
@@ -302,6 +396,7 @@
 				DE3607442B64F6140005BDE4 /* Core Image Filters.md */,
 				DE9907FF2B6EA41000DC0B05 /* CoreImageFilters.json */,
 				DE36073F2B6411070005BDE4 /* ImageFilters.swift */,
+				DEB4ED452BB25E970097EEC0 /* FilterSpin.swift */,
 			);
 			path = "Core Image";
 			sourceTree = "<group>";
@@ -321,6 +416,11 @@
 			children = (
 				DE3A68622B60378800D10D6E /* Lighting.swift */,
 				DE22BA0C2B969D2500CC6BCB /* ShouldRender.swift */,
+				DE4BA9F42BB8937E009B418F /* Shaders.swift */,
+				DE4BA9FE2BB8A25B009B418F /* Shaders2.swift */,
+				DE4BA9F82BB89BAE009B418F /* crt-retro.fsh */,
+				DE4BA9FA2BB89D93009B418F /* water-movement.fsh */,
+				DE4BA9FC2BB8A085009B418F /* motion-blur.fsh */,
 			);
 			path = Rendering;
 			sourceTree = "<group>";
@@ -374,6 +474,18 @@
 				DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */,
 			);
 			path = "Scene Transitions";
+			sourceTree = "<group>";
+		};
+		DEFE9DAB2BC4A6E5002EDD9F /* Drafts */ = {
+			isa = PBXGroup;
+			children = (
+				DE91203C2BB49A0F00B3B63F /* InertialCamera00.swift */,
+				DE4BAA002BB8DBA5009B418F /* InertialCamera01.swift */,
+				DE711BA82BBC9E7E005F30CC /* InertialCamera02.swift */,
+				DE5846072BBE8718006C978A /* InertialCamera03.swift */,
+				DE4BAA072BBB3FB0009B418F /* scraps.swift */,
+			);
+			path = Drafts;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -437,10 +549,16 @@
 			buildActionMask = 2147483647;
 			files = (
 				DE16D1382B67E3FB0076836A /* AppIcon.png in Resources */,
+				DE4BA9FD2BB8A085009B418F /* motion-blur.fsh in Resources */,
 				DEB4ED402BAF92850097EEC0 /* SF-Pro.ttf in Resources */,
+				DE4BAA0C2BBB4F33009B418F /* Tutorial.sks in Resources */,
+				DE4BA9FB2BB89D93009B418F /* water-movement.fsh in Resources */,
 				DE9908002B6EA41000DC0B05 /* CoreImageFilters.json in Resources */,
+				DE2E6C2D2BC23792005C06F2 /* MyParticle.sks in Resources */,
+				DE2E6C2E2BC23792005C06F2 /* Assets.xcassets in Resources */,
 				DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */,
 				DEACDF6B2BA134F800D496D2 /* Assets.xcassets in Resources */,
+				DE4BA9F92BB89BAE009B418F /* crt-retro.fsh in Resources */,
 				DE16D1362B67E3FB0076836A /* AppIcon.pxd in Resources */,
 				DEB4ED3E2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 in Resources */,
 				DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */,
@@ -458,50 +576,68 @@
 				DEE20AA72BA5628500D4B4D1 /* Keyframes.swift in Sources */,
 				DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */,
 				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
+				DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */,
+				DE91203D2BB49A0F00B3B63F /* InertialCamera00.swift in Sources */,
 				DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
-				DEAFED8F2BA8F7DD0030857E /* CoreGraphics.swift in Sources */,
+				DE4BAA082BBB3FB0009B418F /* scraps.swift in Sources */,
+				DEAFED8F2BA8F7DD0030857E /* PatternGenerators.swift in Sources */,
 				DE22BA002B95AA7300CC6BCB /* Int+Extensions.swift in Sources */,
 				DE22BA092B95AA7300CC6BCB /* CGFloat+Extensions.swift in Sources */,
 				DE58AB282B7C7FC3007F93B3 /* DataBinding.swift in Sources */,
+				DE4BA9FF2BB8A25B009B418F /* Shaders2.swift in Sources */,
 				DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */,
 				DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */,
+				DE4BAA062BBA75A9009B418F /* LabelPosition.swift in Sources */,
 				DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */,
 				DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */,
+				DE91203F2BB4B45A00B3B63F /* VideoPhysics.swift in Sources */,
 				DE22BA162B98380D00CC6BCB /* ShapeNodes.swift in Sources */,
+				DEFE9DAA2BC4A5DE002EDD9F /* IsometricCamera.swift in Sources */,
+				DE4BA9F52BB8937E009B418F /* Shaders.swift in Sources */,
 				DE22BA032B95AA7300CC6BCB /* SKAction+SpecialEffects.swift in Sources */,
 				DE4292FC2B5BAEC0004326C9 /* firstButtonStyle.swift in Sources */,
 				DE22BA042B95AA7300CC6BCB /* SKNode+Extensions.swift in Sources */,
+				DEB4ED462BB25E970097EEC0 /* FilterSpin.swift in Sources */,
 				DE22B9EE2B95956400CC6BCB /* SKEase.swift in Sources */,
 				DE22BA012B95AA7300CC6BCB /* SKTTimingFunctions.swift in Sources */,
+				DEFE9DA82BC49049002EDD9F /* UIScreen+ScreenCorners.swift in Sources */,
 				DE3607402B6411070005BDE4 /* ImageFilters.swift in Sources */,
 				DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */,
 				DEC9BAF72BAB579100563A99 /* SpriteAnimation.swift in Sources */,
 				DE22BA062B95AA7300CC6BCB /* SKTEffects.swift in Sources */,
 				DE3A68632B60378800D10D6E /* Lighting.swift in Sources */,
+				DE2E6C282BC0D5A2005C06F2 /* InertialCamera.swift in Sources */,
 				DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */,
 				DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */,
 				DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */,
+				DEFE9DAD2BC4A771002EDD9F /* UI.swift in Sources */,
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
 				DEACDF652B9FE88B00D496D2 /* HexSKColor.swift in Sources */,
+				DE4BAA012BB8DBA5009B418F /* InertialCamera01.swift in Sources */,
 				DE22BA0D2B969D2500CC6BCB /* ShouldRender.swift in Sources */,
+				DE5846082BBE8718006C978A /* InertialCamera03.swift in Sources */,
 				DEAFED8A2BA77CEF0030857E /* TextureSizeLimit.swift in Sources */,
 				DE22B9ED2B95956400CC6BCB /* EasingDeclarations.swift in Sources */,
+				DE4BAA032BB9FA6B009B418F /* BackgroundPatterns.swift in Sources */,
 				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
 				DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */,
+				DE4BAA0A2BBB4E7C009B418F /* Tutorial.swift in Sources */,
 				DEABB9D42B623BB00023B79B /* SpringDrag.swift in Sources */,
 				DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */,
 				DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */,
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
+				DE711BA92BBC9E7E005F30CC /* InertialCamera02.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
 				DEACDF712BA16AAC00D496D2 /* VisualizeNode.swift in Sources */,
 				DEAFED942BAA22E90030857E /* Misc.swift in Sources */,
+				DEFE9DAF2BC4A81C002EDD9F /* DemoScene.swift in Sources */,
 				DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -642,6 +778,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
@@ -672,6 +811,9 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UIRequiresFullScreen = YES;
+				INFOPLIST_KEY_UIStatusBarHidden = YES;
+				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				IPHONEOS_DEPLOYMENT_TARGET = 17.0;

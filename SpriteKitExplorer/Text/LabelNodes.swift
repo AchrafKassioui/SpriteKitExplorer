@@ -38,9 +38,9 @@ class LabelNodesScene: SKScene {
         
         /// comment and uncomment the following functions to see various text effects
         //createMultipleLines()
-        highlightedText()
+        //highlightedText()
         //longParagraph()
-        //strokedText()
+        strokedText()
     }
     
     func createMultipleLines() {
@@ -78,7 +78,7 @@ class LabelNodesScene: SKScene {
             .foregroundColor: #colorLiteral(red: 1, green: 0.9507730603, blue: 0, alpha: 1),
             .strokeColor: #colorLiteral(red: 1, green: 0, blue: 0.3822745085, alpha: 1),
             .strokeWidth: -5,
-            .shadow: shadow
+            .shadow: shadow,
         ]
         
         let label = SKLabelNode()

@@ -1,16 +1,20 @@
 /**
  
- # Hit Detection
+ # Hit Detection in SpriteKit
  
- In SpriteKit, it is not tirvial to implement precise hit detection on nodes with transparency or non rectangular shapes.
- This file explores various hit detection strategies for better precision.
+ Hit detection is how to determine which node is present at some location in space.
+ it is common to use hit detection to determine which node has the user touched.
+ This file explores various hit detection strategies.
  
  Created: 25 March 2024
+ Updated: 31 March 2024
  
  */
 
 import SwiftUI
 import SpriteKit
+
+// MARK: - SwiftUI
 
 struct HitDetectionView: View {
     var myScene = HitDetectionScene()
@@ -27,13 +31,14 @@ struct HitDetectionView: View {
     }
 }
 
+/// this is for Xcode live preview
 #Preview {
     HitDetectionView()
 }
 
+// MARK: - Scene setup
+
 class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
-    
-    // MARK: - Scene setup
     
     override func didMove(to view: SKView) {
         view.isMultipleTouchEnabled = true
@@ -43,7 +48,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         physicsWorld.contactDelegate = self
         setupCamera()
         createSomeBodies()
-        createContactBody()
+        createTouchBody()
     }
     
     func setupCamera() {
@@ -74,6 +79,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         )
         orangeRicky.physicsBody = SKPhysicsBody(texture: orangeRickyTexture, size: physicsTextureSize)
         orangeRicky.physicsBody?.affectedByGravity = false
+        orangeRicky.physicsBody?.angularDamping = 1
         orangeRicky.physicsBody?.collisionBitMask = 0
         orangeRicky.physicsBody?.contactTestBitMask = 1
         
@@ -144,27 +150,35 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         label.physicsBody?.collisionBitMask = 0
         
         addChild(label)
-        
     }
     
     // MARK: - Hit detection
     
+    let unnamed: String = "\"unnamed\""
+    
     /**
      
-     # Bounding box based hit detection
+     # Bounding box hit detection
      
-     Check if the touch location is within the accumulated frame of the node.
-     Note that the frame of a node is axis aligned. It does not rotate with the node.
-     Not suitable for precise hit detection of transparent or non rectangular looking entities
+     Given a point in space, return the nodes whose bounding box, aka the accumulated frame, contains the point.
+     Note that the accumulated frame of a node is axis aligned. It does not rotate with the node. For example, it expands to enclose a rotated node.
+     Fully transparent or hidden nodes are not returned.
+     This method is not suitable for precise hit detection of semi-transparent or non-rectangular looking entities.
      
      */
-    func hitDetectionWithNodesAt(_ touch: UITouch) {
-        let touchLocation = touch.location(in: self)
-        let touchedNodes = nodes(at: touchLocation)
-        
+    func hitDetectionWithBoundingBox(location: CGPoint) {
+        /// returns all nodes under the touch location
+        /// The array returned by `nodes(at:)` is ordered from front to back
+        /// The first element in the array is the node that visually appears on top at the touch location
+        let touchedNodes = nodes(at: location)
         for node in touchedNodes {
-            print("Bounding box of node named \"\(node.name ?? "with no name")\" has been touched")
+            print("Bounding box of node named \(node.name ?? unnamed) has been touched")
         }
+        
+        /// returns the deepest node in the hierarchy (the "childest" node)
+        /// if it finds nodes with the same parent, it returns the node with the largest z position
+        let foremostNode = atPoint(location)
+        print("The foremost found node is \(foremostNode.name ?? unnamed)")
     }
     
     /**
@@ -176,14 +190,13 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
      This method returns only the first body found by the physics engine.
      
      */
-    func hitDetectionWithBody(_ touch: UITouch) {
-        let touchLocation = touch.location(in: self)
-        guard let touchedBody = physicsWorld.body(at: touchLocation) else {
-            print("no physics body found")
+    func hitDetectionWithBody(location: CGPoint) {
+        guard let touchedBody = physicsWorld.body(at: location) else {
+            print("No physics body found")
             return
         }
         
-        print("physics body with name \(touchedBody.node?.name ?? "\"\"") found")
+        print("Physics body with name \(touchedBody.node?.name ?? unnamed) found")
     }
     
     /**
@@ -192,16 +205,16 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
      
      Relies on the shape created by SKPhysicsBody
      Get all physical bodies found under the touch location.
+     This method is effective, but it requires that the target node has an accurate physics body shape.
      
      */
-    func hitDetectionWithEnumerateBodies(_ touch: UITouch) {
-        let touchLocation = touch.location(in: self)
+    func hitDetectionWithEnumerateBodies(location: CGPoint) {
         var touchedBodies: [SKPhysicsBody] = []
         
         /// enumerate through all bodies at the touch location
-        physicsWorld.enumerateBodies(at: touchLocation) { body, stop in
+        physicsWorld.enumerateBodies(at: location) { body, stop in
             touchedBodies.append(body)
-            print("Physics body with name \(body.node?.name ?? "\"\"") found at \(touchLocation)")
+            print("Physics body with name \(body.node?.name ?? self.unnamed) found at \(location)")
         }
         
         /// sort bodies by zPosition of their nodes (highest first)
@@ -212,7 +225,9 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         
         /// do somehting with the top-most body according to zPosition
         if let topBody = sortedBodies.first {
-            print("Top-most physics body is \(topBody.node?.name ?? "\"\"") and has zPosition \(topBody.node?.zPosition ?? 0)")
+            print("Top-most physics body is \(topBody.node?.name ?? unnamed) and has zPosition \(topBody.node?.zPosition ?? 0)")
+            
+            topBody.applyAngularImpulse(1)
         }
     }
     
@@ -221,27 +236,29 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
      # Transparency based hit detection
      
      This strategy uses Core Graphics to analyize the texture of a node.
-     The function determines whether the pixel at the touch location has an alpha value above some threshold.
+     It determines whether the pixel at the touch location has an alpha value above some threshold.
      
      This method assumes it can access the texture of the touched node:
-     - On nodes that are not of type SKSpriteNode, we try to generate an SKTexture with the `texture(from:)` method of UIView.
+     - On nodes that are *not* of type SKSpriteNode, we try to generate an SKTexture with the `texture(from:)` method of UIView.
      - On nodes of type SKSpriteNode, we use the attached SKTexture. Sprite nodes that were created without an explicit texture are ignored.
      
      If a texture has been succesfully retrieved, we read the pixel information with Core Graphics.
      The function returns true if the pixel alpha value is above the threshold.
      
      */
+    /// this function should be rewritten to take a CGPoint instead of a UITouch
     func hitDetectionWithTransparency(_ touch: UITouch) {
         let touchLocation = touch.location(in: self)
         let touchedNodes = nodes(at: touchLocation)
         
         for node in touchedNodes {
             if isTouchOnTransparentArea(touch: touch, node: node) {
-                print("Node named \"\(node.name ?? "with no name")\" has been touched")
+                print("Node named \(node.name ?? unnamed) has been touched")
             }
         }
     }
     
+    /// this function should be rewritten to not take a UITouch
     func isTouchOnTransparentArea(touch: UITouch, node: SKNode, threshold: CGFloat = 0.1) -> Bool {
         let locationInNode = touch.location(in: node)
         
@@ -262,13 +279,14 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         let textureSize = texture?.size() ?? CGSize.zero
         let scaleFactor = CGFloat(cgImage.width) / textureSize.width
         
-        // Adjust the touch point to texture coordinates, flipping the Y axis
+        /// adjust the touch point to texture coordinates, flipping the Y axis
         let touchPointInTexture = CGPoint(
             x: (locationInNode.x + textureSize.width / 2) * scaleFactor,
-            y: (textureSize.height / 2 - locationInNode.y) * scaleFactor // Flip Y axis
+            /// flip Y axis
+            y: (textureSize.height / 2 - locationInNode.y) * scaleFactor
         )
         
-        // Ensure the touch point is within texture bounds
+        /// ensure the touch point is within texture bounds
         guard touchPointInTexture.x >= 0, touchPointInTexture.x < CGFloat(cgImage.width),
               touchPointInTexture.y >= 0, touchPointInTexture.y < CGFloat(cgImage.height) else {
             return false
@@ -284,32 +302,16 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         return alpha > threshold
     }
     
-    // MARK: - Touch events
+    // MARK: - Helpers
     
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            /// replace the function with one of the 4 hit detection strategies above
-            hitDetectionWithEnumerateBodies(touch)
-        }
-    }
-    
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
-        for touch in touches {
-            followTouch(touch)
-        }
-    }
-    
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
-        resetFollowTouch()
-    }
-    
-    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
-        touchesEnded(touches, with: event)
-    }
-    
-    // MARK: - physical contact
-    
-    func createContactBody() {
+    /**
+     
+     These methods help with visualization and debugging.
+     We create a circle that follows touch location.
+     The circle visualize the touched area, and is used to test contact with other physics bodies.
+     
+     */
+    func createTouchBody() {
         let touchCircle = SKShapeNode(circleOfRadius: 10)
         touchCircle.name = "touch-circle"
         touchCircle.fillColor = .white
@@ -361,10 +363,36 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         /// determine which node is not the "touchPoint" and set it to otherNode
         if contact.bodyA.node?.name == "touch-circle" {
             otherNode = contact.bodyB.node
-            print("Contacted node has name \(otherNode?.name ?? "\"\"")")
+            print("Contacted node has name \(otherNode?.name ?? unnamed)")
         } else if contact.bodyB.node?.name == "touch-circle" {
             otherNode = contact.bodyA.node
-            print("Contacted node has name \(otherNode?.name ?? "\"\"")")
+            print("Contacted node has name \(otherNode?.name ?? unnamed)")
         }
+    }
+    
+    // MARK: - Touch events
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            /// we need a point specified in the scene's coordinate system
+            let touchLocation = touch.location(in: self)
+            
+            /// replace the function with 1 of the 4 hit detection strategies above
+            hitDetectionWithBoundingBox(location: touchLocation)
+        }
+    }
+    
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for touch in touches {
+            followTouch(touch)
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        resetFollowTouch()
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded(touches, with: event)
     }
 }

@@ -32,11 +32,10 @@ struct SpriteNodesPreview: View {
     SpriteNodesPreview()
 }
 
-// MARK: - SpriteKit
+// MARK: - Scene setup
 
 class SpriteNodesScene: SKScene {
     
-    // MARK: Scene setup
     override func sceneDidLoad() {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = .darkGray
@@ -49,10 +48,14 @@ class SpriteNodesScene: SKScene {
         scene?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         physicsWorld.speed = 1
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        setupCamera()
+        //setupCamera()
+        let cameraNode = InertialCamera(view: view, scene: self)
+        addChild(cameraNode)
+        camera = cameraNode
         
         /// comment/uncomment to execute various examples
-        drawSprites()
+        //drawSprites()
+        drawSpriteWithShadow()
     }
     
     func setupCamera() {
@@ -65,7 +68,39 @@ class SpriteNodesScene: SKScene {
         camera.setScale(1)
     }
     
-    // MARK: drawing sprites
+    // MARK: - Texture filtering
+    
+    func drawSomeSprites() {
+        
+    }
+    
+    // MARK: - Shadow sprite
+    
+    func drawSpriteWithShadow() {
+        let background = SKSpriteNode(imageNamed: "abstract-dunes-1024")
+        background.setScale(2.4)
+        background.texture?.filteringMode = .nearest
+        background.zPosition = -1
+        addChild(background)
+        
+        let shadowTexture = createShadowTexture(
+            width: 60,
+            height: 180,
+            cornerRadius: 12,
+            shadowOffset: CGSize( width: 0, height: 4),
+            shadowBlurRadius: 20,
+            shadowColor: SKColor(white: 0, alpha: 0.6)
+        )
+        
+        let shadowSprite = SKSpriteNode(texture: shadowTexture)
+        shadowSprite.position.y = -5
+        shadowSprite.zPosition = 10
+        shadowSprite.blendMode = .multiplyAlpha
+        addChild(shadowSprite)
+    }
+    
+    // MARK: - drawing sprites
+    
     func drawSprites() {
         /// apply a Core Image filter to the texture
         /// pass one of the premade filters below to the SKTexture function
@@ -94,6 +129,8 @@ class SpriteNodesScene: SKScene {
     }
     
 }
+
+// MARK: - Core Image Filters
 
 /// A list of Core Image filters to speed up code writing
 ///
