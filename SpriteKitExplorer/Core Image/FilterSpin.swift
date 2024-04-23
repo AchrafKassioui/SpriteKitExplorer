@@ -16,14 +16,12 @@ struct FilterSpinView: View {
     var myScene = FilterSpinScene()
     
     var body: some View {
-        ZStack {
-            SpriteView(
-                scene: myScene,
-                options: [.ignoresSiblingOrder],
-                debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS]
-            )
-            .ignoresSafeArea()
-        }
+        SpriteView(
+            scene: myScene,
+            options: [.ignoresSiblingOrder],
+            debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS]
+        )
+        .ignoresSafeArea()
     }
 }
 

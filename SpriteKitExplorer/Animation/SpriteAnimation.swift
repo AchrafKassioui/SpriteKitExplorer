@@ -40,19 +40,13 @@ class SpriteAnimationScene: SKScene {
         scaleMode = .resizeFill
         backgroundColor = .gray
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
-        setupCamera()
+        
+        let inertialCamera = InertialCamera(scene: self)
+        inertialCamera.zPosition = 999
+        camera = inertialCamera
+        addChild(inertialCamera)
+        
         setupObjects()
-    }
-    
-    func setupCamera() {
-        let camera = SKCameraNode()
-        camera.name = "camera"
-        let viewSize = view?.bounds.size
-        camera.xScale = (viewSize!.width / size.width)
-        camera.yScale = (viewSize!.height / size.height)
-        addChild(camera)
-        scene?.camera = camera
-        camera.setScale(1)
     }
     
     func setupObjects() {

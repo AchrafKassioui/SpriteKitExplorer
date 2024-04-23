@@ -8,7 +8,7 @@
  However, the value of this project is in the code itself. Several scenes are not linked in this menu.
  
  Created: 19 January 2024
- Updated: 16 March 2024
+ Updated: 20 April 2024
  
  */
 
@@ -22,10 +22,11 @@ struct MainMenu: View {
                 NavigationLink("Simulation Speed", destination: SimulationSpeed())
                 NavigationLink("Lighting", destination: Lighting())
                 NavigationLink("Fling Drag", destination: FlingDrag())
-                NavigationLink("Filters", destination: ImageFilters())
                 NavigationLink("Data Binding", destination: DataBinding())
                 NavigationLink("SpriteKit UI", destination: SpriteKitUI())
                 NavigationLink("Shape Nodes", destination: ShapeNodes())
+                NavigationLink("Inertial Camera", destination: CameraDemoView())
+                NavigationLink("Physics Benchmarks", destination: PhysicsBenchmarksView())
             }
             .navigationTitle("SpriteKit Explorer")
             .navigationBarTitleDisplayMode(.automatic)

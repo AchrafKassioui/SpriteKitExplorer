@@ -48,30 +48,13 @@ class SpriteNodesScene: SKScene {
         scene?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
         physicsWorld.speed = 1
         physicsBody = SKPhysicsBody(edgeLoopFrom: self.frame)
-        //setupCamera()
-        let cameraNode = InertialCamera(view: view, scene: self)
+        let cameraNode = InertialCamera(scene: self)
         addChild(cameraNode)
         camera = cameraNode
         
         /// comment/uncomment to execute various examples
         //drawSprites()
         drawSpriteWithShadow()
-    }
-    
-    func setupCamera() {
-        let camera = SKCameraNode()
-        let viewSize = view?.bounds.size
-        camera.xScale = (viewSize!.width / size.width)
-        camera.yScale = (viewSize!.height / size.height)
-        addChild(camera)
-        scene?.camera = camera
-        camera.setScale(1)
-    }
-    
-    // MARK: - Texture filtering
-    
-    func drawSomeSprites() {
-        
     }
     
     // MARK: - Shadow sprite
@@ -81,9 +64,9 @@ class SpriteNodesScene: SKScene {
         background.setScale(2.4)
         background.texture?.filteringMode = .nearest
         background.zPosition = -1
-        addChild(background)
+        //addChild(background)
         
-        let shadowTexture = createShadowTexture(
+        let shadowTexture = generateShadowTexture(
             width: 60,
             height: 180,
             cornerRadius: 12,

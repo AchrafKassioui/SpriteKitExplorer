@@ -36,11 +36,16 @@ class LabelNodesScene: SKScene {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = SKColor(hex: "#dddddd") ?? .white
         
+        let myCamera = InertialCamera(scene: self)
+        camera = myCamera
+        addChild(myCamera)
+        myCamera.zPosition = 99999
+        
         /// comment and uncomment the following functions to see various text effects
         //createMultipleLines()
         //highlightedText()
-        //longParagraph()
-        strokedText()
+        //longParagraph(with: view)
+        strokedText(with: view)
     }
     
     func createMultipleLines() {
@@ -60,7 +65,7 @@ class LabelNodesScene: SKScene {
     /// SpriteKit attributedText is a bridge with NSAttributedString
     /// Many text properties and settings can be borrowed from NSAttributedString and applied to SpriteKit
 
-    func strokedText() {
+    func strokedText(with view: SKView) {
         let text = "BAM!"
         
         let paragraphStyle = NSMutableParagraphStyle()
@@ -85,10 +90,14 @@ class LabelNodesScene: SKScene {
         label.attributedText = NSAttributedString(string: text, attributes: attributes)
         label.numberOfLines = 0
         label.verticalAlignmentMode = .center
-        addChild(label)
+        
+        let textTexture = view.texture(from: label)
+        let textSprite = SKSpriteNode(texture: textTexture)
+        textSprite.setScale(1)
+        addChild(textSprite)
     }
     
-    func longParagraph() {
+    func longParagraph(with view: SKView) {
         let text = """
 There are 2 aspects that these experiments make me think about.\n 1. Mathematics. While observing the spatial behavior of elements on a grid, I can see what keeps a mathematician awake: there is a mechanical necessity in the relations between the elements that begs to be resolved. We can feel that the behavior is not random, and that there must be a logical point of view from which the phenomenological results can be derived (phenomenologically means “how things appear”).
 """
@@ -111,7 +120,10 @@ There are 2 aspects that these experiments make me think about.\n 1. Mathematics
         label.numberOfLines = 0
         label.verticalAlignmentMode = .center
         label.preferredMaxLayoutWidth = size.width - 80
-        addChild(label)
+        
+        let textTexture = view.texture(from: label)
+        let textSprite = SKSpriteNode(texture: textTexture)
+        addChild(textSprite)
     }
     
     func highlightedText() {
@@ -142,5 +154,13 @@ There are 2 aspects that these experiments make me think about.\n 1. Mathematics
         label.verticalAlignmentMode = .center
         label.preferredMaxLayoutWidth = size.width - 40
         addChild(label)
+    }
+    
+    // MARK: Update loop
+    
+    override func update(_ currentTime: TimeInterval) {
+        if let myCamera = camera as? InertialCamera {
+            myCamera.updateInertia()
+        }
     }
 }

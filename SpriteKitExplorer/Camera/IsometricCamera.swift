@@ -88,11 +88,10 @@ class IsometricCameraScene: SKScene, UIGestureRecognizerDelegate {
         sprite.zRotation = .pi * 0.25
         addChild(sprite)
         
-        if let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, color: SKColor(white: 0, alpha: 0.15)) {
-            let gridbackground = SKSpriteNode(texture: gridTexture)
-            gridbackground.zPosition = -1
-            addChild(gridbackground)
-        }
+        let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, color: SKColor(white: 0, alpha: 0.15))
+        let gridbackground = SKSpriteNode(texture: gridTexture)
+        gridbackground.zPosition = -1
+        addChild(gridbackground)
         
         let container = SKShapeNode(rectOf: CGSize(width: view.frame.width, height: view.frame.height))
         container.lineWidth = 3
@@ -122,7 +121,8 @@ class IsometricCameraScene: SKScene, UIGestureRecognizerDelegate {
     func createResetCameraButton(with view: SKView) {
         let resetCameraButton = ButtonWithIconAndPattern(
             size: buttonSize,
-            iconName: "arrow.counterclockwise",
+            icon1: "arrow.counterclockwise",
+            icon2: "arrow.counterclockwise",
             iconSize: CGSize(width: 20, height: 24),
             onTouch: resetCamera
         )
@@ -150,7 +150,8 @@ class IsometricCameraScene: SKScene, UIGestureRecognizerDelegate {
     func createIsometricCameraButton(with view: SKView) {
         let switchCameraProjectionButton = ButtonWithIconAndPattern(
             size: buttonSize,
-            iconName: "move.3d",
+            icon1: "move.3d",
+            icon2: "move.3d",
             iconSize: CGSize(width: 20, height: 20),
             onTouch: switchCameraProjection
         )
