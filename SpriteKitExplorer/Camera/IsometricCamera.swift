@@ -88,7 +88,7 @@ class IsometricCameraScene: SKScene, UIGestureRecognizerDelegate {
         sprite.zRotation = .pi * 0.25
         addChild(sprite)
         
-        let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, color: SKColor(white: 0, alpha: 0.15))
+        let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, linesColor: SKColor(white: 0, alpha: 0.15))
         let gridbackground = SKSpriteNode(texture: gridTexture)
         gridbackground.zPosition = -1
         addChild(gridbackground)

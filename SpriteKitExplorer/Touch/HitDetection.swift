@@ -378,7 +378,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
             let touchLocation = touch.location(in: self)
             
             /// replace the function with 1 of the 4 hit detection strategies above
-            hitDetectionWithBoundingBox(location: touchLocation)
+            hitDetectionWithEnumerateBodies(location: touchLocation)
         }
     }
     

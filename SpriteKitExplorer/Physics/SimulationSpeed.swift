@@ -99,8 +99,10 @@ struct SimulationSpeed: View {
                         Button(action: {
                             myScene.togglePlayPause()
                         }, label: {
-                            let iconToDisplay = myScene.isScenePaused ? "play.fill" : "pause.fill"
+                            let iconToDisplay = myScene.isScenePaused ? "play.fill.white" : "pause.fill.white"
                             Image(systemName: iconToDisplay)
+                                .renderingMode(.template) // Apply renderingMode(.template) to allow color modification
+                                .foregroundColor(.black)
                         })
                         .buttonStyle(firstButtonStyle())
                     }

@@ -11,9 +11,96 @@
 
 import SpriteKit
 
+// MARK: - Stripes
+
+func generateStripedTexture(size: CGSize, colorA: SKColor, colorB: SKColor, stripeHeight: CGFloat) -> SKTexture {
+    let renderer = UIGraphicsImageRenderer(size: size)
+    
+    let image = renderer.image { context in
+        /// calculate the number of stripes needed
+        let numStripes = Int(ceil(size.height / stripeHeight))
+        
+        /// draw alternating stripes
+        for i in 0..<numStripes {
+            let stripeY = CGFloat(i) * stripeHeight
+            let stripeRect = CGRect(x: 0, y: stripeY, width: size.width, height: stripeHeight)
+            let color = (i % 2 == 0) ? colorA : colorB
+            color.setFill()
+            context.fill(stripeRect)
+        }
+    }
+    
+    return SKTexture(image: image)
+}
+
 // MARK: - Dot Pattern
 
-func generateDotPatternImage(size: CGSize) -> SKTexture {
+enum ButtonPattern {
+    case regular
+    case staggered
+}
+
+func generateDotPatternTexture(
+    size: CGSize,
+    color: SKColor,
+    pattern: ButtonPattern,
+    dotSize: CGFloat? = 2,
+    cornerRadius: CGFloat? = nil,
+    rotation: CGFloat? = nil
+) -> SKTexture {
+    let dotRadius: CGFloat = (dotSize ?? 1) * 0.5
+    let spacing: CGFloat = dotRadius * 0.5
+    let renderer = UIGraphicsImageRenderer(size: size)
+    
+    let image = renderer.image { context in
+        /// if you need to set a background fill color, uncomment these 2 lines
+        /// the color is set in the first line, the filling is done in the second line
+        SKColor(white: 1, alpha: 0).setFill()
+        context.fill(CGRect(origin: .zero, size: size))
+        
+        /// rotate the texture around its visual center
+        /// the origin of the coordinate system in Core Graphics is in the top left
+        /// to pivot around the center, we move the origin (the rotation pivot) to the center then put it back
+        if let rotation = rotation {
+            context.cgContext.translateBy(x: size.width / 2, y: size.height / 2)
+            context.cgContext.rotate(by: rotation)
+            context.cgContext.translateBy(x: -size.width / 2, y: -size.height / 2)
+        }
+        
+        /// if provided, clip the context with a rounded rect
+        if let cornerRadius = cornerRadius {
+            let clippingPath = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: cornerRadius)
+            clippingPath.addClip()
+        }
+        
+        /// set a color to fill the path later, default is black
+        color.setFill()
+        
+        switch pattern {
+            case .regular:
+                for y in stride(from: 0, to: size.height, by: dotRadius * 2 + spacing) {
+                    for x in stride(from: 0, to: size.width, by: dotRadius * 2 + spacing) {
+                        let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
+                        dotPath.fill()
+                    }
+                }
+                
+            case .staggered:
+                for y in stride(from: dotRadius, to: size.height, by: dotRadius * 2 + spacing) {
+                    let xOffset = (y / dotRadius).truncatingRemainder(dividingBy: 2) == 0 ? 0 : dotRadius + spacing / 2
+                    for x in stride(from: xOffset, to: size.width, by: dotRadius * 2 + spacing) {
+                        let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
+                        dotPath.fill()
+                    }
+                }
+        }
+    }
+    
+    /// Convert the image to an SKTexture
+    return SKTexture(image: image)
+}
+
+func generateDotPatternTextureOld(size: CGSize, color: SKColor) -> SKTexture {
     let dotRadius: CGFloat = 0.5
     let spacing: CGFloat = 0.5
     let renderer = UIGraphicsImageRenderer(size: size)
@@ -21,18 +108,11 @@ func generateDotPatternImage(size: CGSize) -> SKTexture {
     let image = renderer.image { context in
         /// if you need to set a background fill color, uncomment these 2 lines
         /// the color is set in the first line, the filling is done in the second line
-        SKColor(white: 1, alpha: 1).setFill()
+        SKColor(white: 1, alpha: 0).setFill()
         context.fill(CGRect(origin: .zero, size: size))
         
-        /// rotate the whole drawing
-        /// the origin of the coordinate system in Core Graphics is in the top left
-        /// to pivot around the center, we move the origin (the rotation pivot) to the center then put it back
-        context.cgContext.translateBy(x: size.width / 2, y: size.height / 2)
-        //context.cgContext.rotate(by: .pi / -4)
-        context.cgContext.translateBy(x: -size.width / 2, y: -size.height / 2)
-        
-        /// set a color to fill the path later
-        SKColor(white: 0, alpha: 1).setFill()
+        /// set a color to fill the path later, default is black
+        color.setFill()
         
         /// the pattern
         /// a regular pattern
@@ -128,23 +208,61 @@ func generateCheckerboardTexture(cellSize: CGFloat, rows: Int, cols: Int) -> SKT
     return SKTexture(image: image)
 }
 
-// MARK: - Grid
+// MARK: - SpriteKit Grid Generator
+/**
+ 
+ The function returns a empty texture of the expected size exceeds Metal texture size limit.
+ The current limit is 8192x8192, which is the maximum size allowed in Xcode live preview.
+ 
+ */
 
-func generateGridTexture(cellSize: CGFloat, rows: Int, cols: Int, color: SKColor) -> SKTexture {
+func generateGridTexture(cellSize: CGFloat, rows: Int, cols: Int, linesColor: SKColor) -> SKTexture {
+    let backgroundColor: SKColor = .clear
+    
+    /**
+     Shadow settings examples:
+     - Bump tiles:  shadow color = white, offset = CGSize(width: 3, height: 3), blur = 3
+     */
+    let lineShadowColor: SKColor = .clear
+    let lineShadowOffset: CGSize = CGSize(width: 3, height: 3)
+    let shadowBlur: CGFloat = 3
+    
+    /// calculate the initial size of the texture in points
+    let widthInPoints = CGFloat(cols) * cellSize + 1
+    let heightInPoints = CGFloat(rows) * cellSize + 1
+    
+    /// get the screen scale to convert points to pixels
+    let scale = UIScreen.main.scale
+    let widthInPixels = widthInPoints * scale
+    let heightInPixels = heightInPoints * scale
+    
+    /// check if the size exceeds Metal texture size limit
+    if widthInPixels > 8192 || heightInPixels > 8192 {
+        print("generateGridTexture: size exceeds Metal texture size limit.")
+        /// if so, create and return a clear (empty) texture
+        let emptyRenderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
+        let emptyImage = emptyRenderer.image { _ in }
+        return SKTexture(image: emptyImage)
+    }
+    
     /// Add 1 to the height and width to ensure the borders are within the sprite
     let size = CGSize(width: CGFloat(cols) * cellSize + 1, height: CGFloat(rows) * cellSize + 1)
     
     let renderer = UIGraphicsImageRenderer(size: size)
     let image = renderer.image { ctx in
-        //let context = ctx.cgContext
+        let context = ctx.cgContext
         
         /// set shadows?
-        //let shadowColor = SKColor(white: 0, alpha: 0.6).cgColor
-        //context.setShadow(offset: CGSize(width: 0, height: 2), blur: 1, color: shadowColor)
+        if lineShadowColor != .clear {
+            let shadowColor = lineShadowColor.cgColor
+            context.setShadow(offset: lineShadowOffset, blur: shadowBlur, color: shadowColor)
+        }
         
         /// fill the background?
-        //context.setFillColor(SKColor(white: 1, alpha: 0.2).cgColor)
-        //context.fill(CGRect(origin: .zero, size: size))
+        if backgroundColor != .clear {
+            context.setFillColor(backgroundColor.cgColor)
+            context.fill(CGRect(origin: .zero, size: size))
+        }
         
         let bezierPath = UIBezierPath()
         let offset: CGFloat = 0.5
@@ -162,7 +280,7 @@ func generateGridTexture(cellSize: CGFloat, rows: Int, cols: Int, color: SKColor
         }
         
         /// stroke style
-        color.setStroke()
+        linesColor.setStroke()
         bezierPath.lineWidth = 1
         
         /// draw

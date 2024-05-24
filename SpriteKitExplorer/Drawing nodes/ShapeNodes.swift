@@ -570,3 +570,29 @@ class ShapeNodesScene: SKScene {
     }
 }
 
+class DashedLine: SKShapeNode {
+    init(startPoint: CGPoint, endPoint: CGPoint, color: SKColor, width: CGFloat, dashLength: CGFloat, gap: CGFloat) {
+        super.init()
+        
+        self.strokeColor = color
+        
+        let path = CGMutablePath()
+        path.move(to: startPoint)
+        path.addLine(to: endPoint)
+        
+        let shapeNode = SKShapeNode(path: path)
+        shapeNode.strokeColor = color
+        shapeNode.lineWidth = width
+        
+        let pattern: [CGFloat] = [dashLength, gap]
+        let dashedPath = path.copy(dashingWithPhase: 0, lengths: pattern)
+        
+        self.path = dashedPath
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+}
+
+

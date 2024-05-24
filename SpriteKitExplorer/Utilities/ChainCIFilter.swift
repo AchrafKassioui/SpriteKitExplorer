@@ -2,12 +2,12 @@
  
  # ChainCIFilter.swift
  
- In Apple SpriteKit, you can use Core Image filters to add effects to any node of type `SKEffectNode`, including the scene itself.
- However, the built-in SpriteKit API only takes one filter for each effect node, and the output can crash SpriteKit's Metal renderer if it exceeds a size limit.
+ In Apple SpriteKit, you can use Core Image filters to add effects to nodes of type `SKEffectNode`, including the scene itself.
+ However, the built-in SpriteKit API only takes one filter at a time, and the output can crash SpriteKit's renderer if the result exceeds Metal texture size limit.
  
- This custom `CIFilter` sub-class provides a solution for both concerns:
- - Run multiple filters on the same effect node
- - Check the size of the output image of a filter, and only send it to SpriteKit if it does not exceed Metal's texture size limit of the host device
+ This custom `CIFilter` sub-class provides a solution for both issues:
+ - You can run multiple filters on the same effect node.
+ - The size of the generated output is checked against a size limit, and is sent to SpriteKit only if the limit is not exceeded.
  
  ## Usage
  
@@ -32,7 +32,7 @@
  ])
  ```
  
- Get the array of the applied filters:
+ Retrieve the array of the applied filters:
  
  ```
  if let chainFilter = myEffectNode.filter as? ChainCIFilter {
@@ -43,7 +43,7 @@
  
  Based on code from "zekel":  https://stackoverflow.com/questions/55553869/on-ios-can-you-add-multiple-cifilters-to-a-spritekit-node?noredirect=1&lq=1
  
- Author: Achraf Kassioui https://www.achrafkassioui.com
+ Author: Achraf Kassioui
  Created: 4 January 2024
  Updated: 22 February 2024
  
@@ -54,7 +54,7 @@ import CoreImage
 /// The code assumes there is always a Metal device
 let currentDevice = MTLCreateSystemDefaultDevice()!
 
-/// Get the Metal texture size limit depending on the GPU  family of the device
+/// Get the Metal texture size limit depending on the GPU family of the device
 /// Could be improved by not using hard coded values. But how?
 func getTextureSizeLimit(metalDevice: MTLDevice) -> Int {
     /// https://developer.apple.com/documentation/metal/mtldevice/3143473-supportsfamily

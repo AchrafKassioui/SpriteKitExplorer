@@ -167,3 +167,42 @@ CIFilter(name: "CIHexagonalPixellate", parameters: [
     "inputCenter": CIVector(x: 150, y: 150),
     "inputScale": 8
 ])
+
+## Glass Lozenge
+
+```swift
+let myFilter = CIFilter.glassLozenge()
+myFilter.point0 = CGPoint(x: 250*2, y: 844*2)
+myFilter.point1 = CGPoint(x: 150*2, y: 0)
+myFilter.radius = 75
+myFilter.refraction = 1.1
+```
+
+## Line Overlay
+
+```swift
+let myFilter = CIFilter.lineOverlay()
+myFilter.threshold = 1
+myFilter.edgeIntensity = 1.5
+filter = ChainCIFilter(filters: [myFilter])
+shouldEnableEffects = true
+addChild(objectsLayer)
+```
+
+## Hole Distortion
+
+```swift
+let myFilter = CIFilter.holeDistortion()
+myFilter.center = CGPoint(x: 195*2, y: 844)
+myFilter.radius = 70
+filter = ChainCIFilter(filters: [myFilter])
+```
+
+## Bump Distortion
+
+```swift
+let myFilter = CIFilter.bumpDistortion()
+myFilter.center = CGPoint(x: 390, y: view.bounds.height)
+myFilter.radius = 844
+myFilter.scale = 0.2
+```

@@ -66,7 +66,7 @@ class CGDemoScene: SKScene {
     }
     
     func drawGrid() {
-        let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, color: SKColor(white: 1, alpha: 1))
+        let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, linesColor: SKColor(white: 1, alpha: 1))
         let gridbackground = SKSpriteNode(texture: gridTexture)
         addChild(gridbackground)
     }

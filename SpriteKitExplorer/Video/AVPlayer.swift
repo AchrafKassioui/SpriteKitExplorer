@@ -159,14 +159,18 @@ class AVPlayerScene: SKScene {
                 if isPlaying {
                     player.pause()
                     if let icon = node.childNode(withName: "playback-button-icon") as? SKSpriteNode {
-                        icon.texture = SKTexture(imageNamed: "play.fill")
+                        icon.texture = SKTexture(imageNamed: "play.fill.white")
+                        icon.colorBlendFactor = 1
+                        icon.color = .black
                     }
                     isPlaying = false
                 } else {
                     player.play()
                     player.rate = playbackRate
                     if let icon = node.childNode(withName: "playback-button-icon") as? SKSpriteNode {
-                        icon.texture = SKTexture(imageNamed: "pause.fill")
+                        icon.texture = SKTexture(imageNamed: "pause.fill.white")
+                        icon.colorBlendFactor = 1
+                        icon.color = .black
                     }
                     isPlaying = true
                 }

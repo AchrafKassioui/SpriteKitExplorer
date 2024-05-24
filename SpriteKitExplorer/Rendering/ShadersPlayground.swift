@@ -74,7 +74,7 @@ class ShadersPlaygroundScene: SKScene {
         camera = inertialCamera
         addChild(inertialCamera)
         
-        let backgroundTexture = generateGridTexture(cellSize: 60, rows: 30, cols: 30, color: SKColor(white: 0, alpha: 0.3))
+        let backgroundTexture = generateGridTexture(cellSize: 60, rows: 30, cols: 30, linesColor: SKColor(white: 0, alpha: 0.3))
         let background = SKSpriteNode(texture: backgroundTexture)
         background.zPosition = -1
         addChild(background)

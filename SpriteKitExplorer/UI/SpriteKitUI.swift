@@ -219,7 +219,7 @@ class SpriteKitUIScene: SKScene {
     // MARK: Lifecyle
     
     override func didSimulatePhysics() {
-        visualizeFrame(nodeName: "color_wheel", in: scene!)
+        visualizeFrameOnce(nodeName: "color_wheel", in: scene!)
     }
     
     // MARK: Touch events

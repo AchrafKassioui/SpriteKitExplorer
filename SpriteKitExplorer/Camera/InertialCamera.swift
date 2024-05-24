@@ -8,38 +8,49 @@
  
  Tested on iOS. Not adapted for macOS yet.
  
+ 
  ## Setup
+ 
+ Include this file in your project, then create an instance of InertialCamera and set it as the scene camera.
  
  ```
  override func didMove(to view: SKView) {
-     size = view.bounds.size
-     let inertialCamera = InertialCameraNode(scene: self)
-     camera = inertialCamera
-     addChild(inertialCamera)
+    size = view.bounds.size
+    let inertialCamera = InertialCameraNode(scene: self)
+    camera = inertialCamera
+    addChild(inertialCamera)
  }
  
  ```
+ 
  
  ## Inertia
  
- You can enable inertial panning, zooming, and rotating by calling the `updateInertia` method inside the SKScene update loop.
+ You enable inertial panning, zooming, and rotating by calling `updateInertia()` inside the SKScene update loop.
  
  ```
  override func update(_ currentTime: TimeInterval) {
-     if let inertialCamera = camera as? InertialCamera {
+    if let inertialCamera = camera as? InertialCamera {
         inertialCamera.updateInertia()
-     }
+    }
  }
  ```
  
- You can also selectively toggle inertia on each of pan, pinch, and rotate in the camera settings inside the class.
+ You can also selectively toggle inertia on each of pan, pinch, and rotate in the camera settings. For example:
  
- ## Texture filtering
+ ```
+ inertialCamera.enableRotationInertia = false
  
- This camera is set up so it changes the filtering mode of SKSpriteNode and SKShapeNode depending on zoom level.
- The default SpriteKit smoothing is applied at 1:1 scale and when the camera is zoomed out.
- Smoothing is disabled when the camera is zoomed in (magnification), to see the pixel grid.
- This mimicks what bitmap graphical authoring tools do.
+ ```
+ 
+ 
+ ## Adaptive filtering
+ 
+ ```
+ let objectsLayer = SKNode()
+ inertialCamera.setAdaptiveFiltering(forChildrenOf: objectsLayer, to: true)
+ 
+ ```
  
  
  ## Challenges
@@ -47,14 +58,17 @@
  Implementing simulataneous pan and rotation has been a challenge. See: https://gist.github.com/AchrafKassioui/bd835b99a78e9ce29b08ce406896c59b
  The solution is to not rely on cumulative states stored when gesture has began. Instead, continuously reset the gesture value inside the changed state.
  
+ 
  ## Todo
  
  During a pan gesture, when a new touch is added, the ongoing gesture is momentarily interrupted. Fix that.
  
  
+ ## Author
+ 
  Achraf Kassioui
  Created: 8 April 2024
- Updated: 19 April 2024
+ Updated: 22 May 2024
  
  */
 
@@ -83,6 +97,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     var positionVelocity: (x: CGFloat, y: CGFloat) = (0, 0)
     var scaleVelocity: (x: CGFloat, y: CGFloat) = (0, 0)
     var rotationVelocity: CGFloat = 0
+    
     /// convenience method. Called to stop all ongoing inertia. Typically called on a touchBegan event in your scene.
     func stopInertia() {
         positionVelocity = (0.0, 0.0)
@@ -91,11 +106,8 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     }
     
     /// zoom settings
-    var maxScale: CGFloat = 100 /// max zoom out. Default 0.01x = scale of 100
-    var minScale: CGFloat = 0.01 /// max zoom in. Default 100x = scale of 0.01
-    
-    /// adaptive filtering
-    var adaptiveFiltering = true
+    var maxScale: CGFloat = 20 /// Default: 20 -> 5% zoom
+    var minScale: CGFloat = 0.2 /// Default: 0.2 -> 500% zoom
     
     /// selectively lock the camera transforms
     var lockPan = false
@@ -136,10 +148,11 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
      Send the camera to a specific position, scale, and rotation, with an animation.
      
      */
-    
     func setTo(position: CGPoint, xScale: CGFloat, yScale: CGFloat, rotation: CGFloat) {
+        self.stopInertia()
+        
         /// the minimum and maximum durations for the animation of each transform
-        let minDuration: CGFloat = 0.3
+        let minDuration: CGFloat = 0.2
         let maxDuration: CGFloat = 3
         /// the maximum points per second traveled by the camera
         let translationSpeed: CGFloat = 10000
@@ -174,7 +187,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
         /// create and run animation actions
         let translationAction = SKAction.move(to: position, duration: translationDuration)
         translationAction.timingMode = .easeInEaseOut
-        let scaleAction = SKAction.scale(to: CGSize(width: xScale, height: yScale), duration: scaleDuration)
+        let scaleAction = SKAction.scaleX(to: xScale, y: yScale, duration: scaleDuration)
         scaleAction.timingMode = .easeInEaseOut
         let rotateAction = SKAction.rotate(toAngle: rotation, duration: rotationDuration)
         rotateAction.timingMode = .easeInEaseOut
@@ -194,16 +207,27 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     // MARK: - Adaptive filtering
     /**
      
-     The filtering mode of textures is changed depending on camera zoom.
-     When the scale is below 1 (zoom in) on either x or y, linear filtering and anti-aliasing are disabled.
-     When the scale is 1 or above (zoom out) on either x and y, linear filtering and anti-aliasing are enabled (the default renderer behavior).
-     This is an opinionated feature. When the camera is zoomed in, I want to see the pixel grid, not a blur. This behavior can be disabled.
+     This camera is able to change the filtering mode of SKSpriteNode and SKShapeNode depending on zoom level.
+     The adaptive filtering is applied only to sprite and shape nodes that are children of a specific parent node.
+     When the scale is 1.0 or above (zoom out) on either x and y, linear filtering and anti-aliasing are enabled (the default renderer behavior).
+     When the scale is below 1.0 (zoom in) on either x or y, linear filtering and anti-aliasing are disabled.
      
-     Adaptive filtering is called whenever the camera scale is changed after initialization, through the `didSet` observer on the camera scale property.
+     This mimicks what bitmap graphical authoring tools do, and allow you to see the pixel grid.
+     By default, adaptive filtering is off.
      
      */
     
-    private var wasCameraScaleBelowOne: (x: Bool, y: Bool) = (false, false)
+    /// Children of this node will get adaptive texture filtering
+    weak var adaptiveFilteringParent: SKNode? {
+        didSet {
+            if adaptiveFilteringParent != nil { adaptiveFiltering = true}
+            else { adaptiveFiltering = false}
+        }
+    }
+    /// Toggle adaptive filtering, if a parent node is defined.
+    var adaptiveFiltering = false
+    /// Is the camera zoomed in.
+    private(set) var isZoomedIn: Bool = false
     
     /// override to access the super class (SKCameraNode) scale properties
     override var xScale: CGFloat {
@@ -215,27 +239,34 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     }
     
     private func updateFilteringMode() {
-        /// check both scales
-        let isCameraScaleBelowOne = xScale < 1 || yScale < 1
+        let _isZoomedIn = xScale < 1 || yScale < 1
         
-        /// check if the scale state has changed (crossed the threshold of 1)
-        if adaptiveFiltering && (wasCameraScaleBelowOne.x != isCameraScaleBelowOne || wasCameraScaleBelowOne.y != isCameraScaleBelowOne) {
-            /// apply pixelated rendering for sprite textures when the camera is zoomed in
-            let filteringMode: SKTextureFilteringMode = isCameraScaleBelowOne ? .nearest : .linear
-            /// disable antialiasing for shape nodes when camera is zommed in
-            let shouldAntialias = !isCameraScaleBelowOne
-            
-            /// there is probably a more performant way to implement this logic
-            enumerateChildNodes(withName: "//*") { node, _ in
-                if let spriteNode = node as? SKSpriteNode {
-                    spriteNode.texture?.filteringMode = filteringMode
-                } else if let shapeNode = node as? SKShapeNode {
-                    shapeNode.isAntialiased = shouldAntialias
-                    shapeNode.fillTexture?.filteringMode = filteringMode
-                }
+        if adaptiveFiltering, let parent = adaptiveFilteringParent {
+            if _isZoomedIn != isZoomedIn {
+                setSmoothing(to: !_isZoomedIn, forChildrenOf: parent)
             }
-            
-            wasCameraScaleBelowOne = (xScale < 1, yScale < 1)
+        } else if !adaptiveFiltering, let parent = adaptiveFilteringParent {
+            setSmoothing(to: true, forChildrenOf: parent)
+        }
+        
+        isZoomedIn = _isZoomedIn
+    }
+    
+    func setSmoothing(to smoothing: Bool, forChildrenOf parent: SKNode) {
+        let filteringMode: SKTextureFilteringMode = smoothing ? .linear : .nearest
+        let antialiasing = smoothing
+        
+        for node in parent.children {
+            if let spriteNode = node as? SKSpriteNode {
+                spriteNode.texture?.filteringMode = filteringMode
+                /// Force the redraw of the texture to apply the new filtering mode
+                spriteNode.texture = spriteNode.texture
+            } else if let shapeNode = node as? SKShapeNode {
+                shapeNode.isAntialiased = antialiasing
+                shapeNode.fillTexture?.filteringMode = filteringMode
+                /// Force redraw
+                shapeNode.fillTexture = shapeNode.fillTexture
+            }
         }
     }
     
@@ -245,7 +276,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     private var positionBeforePanGesture = CGPoint.zero
     
     @objc private func panCamera(gesture: UIPanGestureRecognizer) {
-        if lockPan { return }
+        if lockPan || lock { return }
         
         guard let scene = parentScene else { return }
         
@@ -304,7 +335,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     private var positionBeforePinchGesture = CGPoint.zero
     
     @objc private func scaleCamera(gesture: UIPinchGestureRecognizer) {
-        if lockScale { return }
+        if lockScale || lock { return }
         
         guard let scene = parentScene else { return }
         
@@ -363,7 +394,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     private var rotationPivot = CGPoint.zero
     
     @objc private func rotateCamera(gesture: UIRotationGestureRecognizer) {
-        if lockRotation { return }
+        if lockRotation || lock { return }
         
         guard let scene = parentScene else { return }
         

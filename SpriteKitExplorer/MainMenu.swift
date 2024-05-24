@@ -27,6 +27,7 @@ struct MainMenu: View {
                 NavigationLink("Shape Nodes", destination: ShapeNodes())
                 NavigationLink("Inertial Camera", destination: CameraDemoView())
                 NavigationLink("Physics Benchmarks", destination: PhysicsBenchmarksView())
+                NavigationLink("Physics Playground", destination: PhysicsPlaygroundView())
             }
             .navigationTitle("SpriteKit Explorer")
             .navigationBarTitleDisplayMode(.automatic)
