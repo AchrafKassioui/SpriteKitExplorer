@@ -515,7 +515,6 @@ class AppleSmoothScrubber {
         if playerCurrentItemStatus == .unknown {
             // wait until item becomes ready (KVO player.currentItem.status)
         } else if playerCurrentItemStatus == .readyToPlay {
-            print("yo")
             actuallySeekToTime()
         }
     }

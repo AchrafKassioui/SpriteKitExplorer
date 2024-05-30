@@ -61,8 +61,8 @@ public struct roundButtonStyle: PrimitiveButtonStyle {
                     //.scaleEffect(isPressed ? 0.9 : 1)
             }
             .gesture(
-                TapGesture()
-                    .onEnded { _ in
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
                         isPressed = true
                         configuration.trigger()
                         UIImpactFeedbackGenerator(style: .light).impactOccurred()

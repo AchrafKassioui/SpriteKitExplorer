@@ -15,15 +15,24 @@ import CoreImage.CIFilterBuiltins
 
 struct PhysicsPlaygroundView: View {
     @State private var sceneId = UUID()
-    @State var isPaused: Bool = false
+    @State var isPaused = false
+    @State var isMinimized = false
     var scene = PhysicsPlaygroundScene()
     
     var body: some View {
         VStack (spacing: 0) {
-            SpriteView(
-                scene: scene,
-                options: [.ignoresSiblingOrder, .shouldCullNonVisibleNodes]
-            )
+            GeometryReader { geo in
+                SpriteView(
+                    scene: scene,
+                    options: [.ignoresSiblingOrder, .shouldCullNonVisibleNodes]
+                )
+                .onAppear {
+                    scene.sceneSize = geo.size
+                }
+                .onChange(of: geo.size) {
+                    scene.sceneSize = geo.size
+                }
+            }
             /// force recreation using the unique ID
             .id(sceneId)
             .onAppear {
@@ -34,7 +43,7 @@ struct PhysicsPlaygroundView: View {
             .ignoresSafeArea()
             
             VStack {
-                menuBar()
+                //menuBar()
             }
         }
         .statusBar(hidden: true)
@@ -45,19 +54,41 @@ struct PhysicsPlaygroundView: View {
     private func menuBar() -> some View {
         HStack {
             Spacer()
+            zoomOutButton
+            zoomInButton
             playPauseButton
             debugButton
+            minimizeButton
             Spacer()
         }
+        .frame(height: isMinimized ? nil : 280)
         .padding([.top, .leading, .trailing], 10)
         .background(.ultraThinMaterial)
         .shadow(radius: 10)
     }
     
+    private var zoomOutButton: some View {
+        Button(action: {
+            scene.cameraZoomBy(factor: 0.25)
+        }) {
+            Image("zoom-out-icon").colorInvert()
+        }
+        .buttonStyle(roundButtonStyle())
+    }
+    
+    private var zoomInButton: some View {
+        Button(action: {
+            scene.cameraZoomBy(factor: -0.1)
+        }) {
+            Image("zoom-in-icon").colorInvert()
+        }
+        .buttonStyle(roundButtonStyle())
+    }
+    
     private var playPauseButton: some View {
         Button(action: {
             isPaused.toggle()
-            scene.physicsWorld.speed = isPaused ? 0 : 1
+            scene.pauseScene(isPaused)
         }) {
             Image(systemName: isPaused ? "play.fill" : "pause.fill")
         }
@@ -70,7 +101,18 @@ struct PhysicsPlaygroundView: View {
                 scene.toggleDebugOptions(view: view)
             }
         }, label: {
-            Image("scope-icon")
+            Image("chart-bar-icon").colorInvert()
+        })
+        .buttonStyle(roundButtonStyle())
+    }
+    
+    private var minimizeButton: some View {
+        Button(action: {
+            withAnimation(.easeInOut(duration: 0.2)) {
+                isMinimized.toggle()
+            }
+        }, label: {
+            Image(isMinimized ? "chevron-up-icon" : "chevron-down-icon")
                 .colorInvert()
         })
         .buttonStyle(roundButtonStyle())
@@ -89,7 +131,7 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     
     override func didMove(to view: SKView) {
         /// configure view
-        size = CGSize(width: view.bounds.width, height: view.bounds.height)
+        size = sceneSize
         scaleMode = .resizeFill
         view.contentMode = .center
         backgroundColor = SKColor(red: 0.89, green: 0.89, blue: 0.84, alpha: 1)
@@ -107,12 +149,12 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         objectsLayer.addChild(gridbackground)
         
         /// camera
-        setupCamera()
+        setupCamera(zoom: 1)
         
         /// filters for testing
         let myFilter = CIFilter.bloom()
         effectLayer.filter = ChainCIFilter(filters: [myFilter])
-        effectLayer.shouldEnableEffects = true
+        effectLayer.shouldEnableEffects = false
         
         /// populate scene
         createSceneLayers()
@@ -122,13 +164,47 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         createZoomDisplay(view: view, parent: uiLayer)
         updateZoomLabel()
 
-        //createPaletteOnRail(in: uiLayer, with: view)
-        createLeftFieldPalette(view: view, parent: uiLayer)
-        //createRightFieldPalette(view: view, parent: uiLayer)
-        createSpringPalette(parent: uiLayer, view: view)
+        //createLeftPaletteWithSpringField(view: view, parent: uiLayer)
+        //createRightPaletteWithRadialGravityField(view: view, parent: uiLayer)
+        
+        createBottomDrawer(view: view, parent: uiLayer)
+        
+        //createLorenzSystem(parent: objectsLayer)
+        //visualizeFieldsWithParticles(view: view, parent: objectsLayer, particleCategory: .sceneParticle)
+    }
+    
+    func createLorenzSystem(parent: SKNode) {
+        let magField1 = SKFieldNode.magneticField()
+        magField1.strength = -1
+        setupPhysicsCategories(node: magField1, as: .sceneField)
+        magField1.position = CGPoint(x: -100, y: 100)
+        parent.addChild(magField1)
+        
+        let magField2 = SKFieldNode.magneticField()
+        magField2.strength = 0.01
+        setupPhysicsCategories(node: magField2, as: .sceneField)
+        magField1.position = CGPoint(x: 100, y: 100)
+        //parent.addChild(magField2)
+        
+        let magField3 = SKFieldNode.magneticField()
+        setupPhysicsCategories(node: magField3, as: .sceneField)
+        magField1.position = CGPoint(x: 100, y: -100)
+        //parent.addChild(magField3)
+        
+        let magField4 = SKFieldNode.magneticField()
+        setupPhysicsCategories(node: magField4, as: .sceneField)
+        magField1.position = CGPoint(x: -100, y: -100)
+        //parent.addChild(magField4)
     }
     
     // MARK: - Global Variables
+    
+    var sceneSize: CGSize = .zero {
+        didSet {
+            self.size = sceneSize
+            print(sceneSize)
+        }
+    }
     
     var sceneGravity = false {
         didSet {
@@ -149,6 +225,11 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     let effectLayer = SKEffectNode()
     let objectsLayer = SKNode()
     
+    func pauseScene(_ isPaused: Bool) {
+        self.objectsLayer.isPaused = isPaused
+        self.physicsWorld.speed = isPaused ? 0 : 1
+    }
+    
     func createSceneLayers() {
         if let camera = scene?.camera {
             uiLayer.zPosition = 9999
@@ -164,23 +245,31 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         effectLayer.addChild(objectsLayer)
     }
     
-    // MARK: - Camera Setup
+    // MARK: - Camera
     
-    func resetActiveCamera() {
+    func cameraZoomBy(factor: CGFloat) {
+        if let camera = self.camera {
+            camera.xScale += factor
+            camera.yScale += factor
+        }
+    }
+    
+    func resetCamera() {
         if let camera = scene?.camera as? InertialCamera {
             camera.stopInertia()
             camera.setTo(position: .zero, xScale: 1, yScale: 1, rotation: 0)
         }
     }
     
-    func setupCamera() {
-        let cameraOrigin = InertialCamera(scene: self)
-        cameraOrigin.name = "camera"
-        cameraOrigin.maxScale = 10
-        cameraOrigin.minScale = 0.2
-        cameraOrigin.lockRotation = true
-        camera = cameraOrigin
-        addChild(cameraOrigin)
+    func setupCamera(zoom: CGFloat) {
+        let inertialCamera = InertialCamera(scene: self)
+        inertialCamera.name = "camera"
+        inertialCamera.maxScale = 10
+        inertialCamera.minScale = 0.25
+        inertialCamera.setScale(zoom)
+        inertialCamera.lockRotation = true
+        camera = inertialCamera
+        addChild(inertialCamera)
     }
     
     func createZoomDisplay(view: SKView, parent: SKNode) {
@@ -214,7 +303,6 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         boundaryForSceneBodies = SKShapeNode(rect: physicsBoundaries)
         boundaryForSceneBodies.lineWidth = 1
         boundaryForSceneBodies.strokeColor = SKColor(white: 0, alpha: 0.3)
-        boundaryForSceneBodies.fillColor = fillColor
         boundaryForSceneBodies.physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
         setupPhysicsCategories(node: boundaryForSceneBodies, as: .sceneBoundary)
         boundaryForSceneBodies.zPosition = -1
@@ -223,19 +311,19 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     
     func createPhysicalBoundaryForUIBodies(view: SKView, UILayer: SKNode) {
         let bodyExtension: CGFloat = -10
-        let viewSafeArea = CGRect(
+        let uiArea = CGRect(
             x: -view.bounds.width/2 - bodyExtension/2,
             y: -view.bounds.height/2 - bodyExtension/2,
             width: view.bounds.width - view.safeAreaInsets.left - view.safeAreaInsets.right + bodyExtension,
             height: view.bounds.height - view.safeAreaInsets.top - view.safeAreaInsets.bottom + bodyExtension
         )
         
-        let viewSafeAreaFrame = SKShapeNode(rect: viewSafeArea)
-        viewSafeAreaFrame.lineWidth = 0
-        viewSafeAreaFrame.physicsBody = SKPhysicsBody(edgeLoopFrom: viewSafeArea)
-        setupPhysicsCategories(node: viewSafeAreaFrame, as: .UIBoundary)
-        viewSafeAreaFrame.alpha = 0
-        UILayer.addChild(viewSafeAreaFrame)
+        let uiAreaFrame = SKShapeNode(rect: uiArea)
+        uiAreaFrame.lineWidth = 0
+        uiAreaFrame.physicsBody = SKPhysicsBody(edgeLoopFrom: uiArea)
+        setupPhysicsCategories(node: uiAreaFrame, as: .UIBoundary)
+        uiAreaFrame.alpha = 0
+        UILayer.addChild(uiAreaFrame)
     }
     
     func createSceneConstraints(node: SKNode, insideRect: SKNode) -> SKConstraint {
@@ -266,18 +354,224 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     
     /**
      
-     # Base palette with fields
+     # Palette constructor
      
      */
+    func createPalette(size paletteSize: CGSize, radius: CGFloat? = 12, view: SKView) -> SKSpriteNode {
+        let bodyExtension: Double = 10
+        let cornerRadius = radius ?? 12
+        
+        /// palette shape
+        let paletteShape = SKShapeNode(rectOf: paletteSize, cornerRadius: cornerRadius)
+        paletteShape.lineWidth = 2
+        paletteShape.strokeColor = strokeColor
+        paletteShape.fillColor = fillColor
+        
+        /// palette
+        let paletteSprite = SKSpriteNode(texture: view.texture(from: paletteShape))
+        paletteSprite.name = "flickable-palette"
+        paletteSprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
+            width: paletteSize.width + bodyExtension,
+            height: paletteSize.height + bodyExtension
+        ))
+        paletteSprite.zPosition = 1
+        
+        /// palette shadow
+        let shadowSprite = SKSpriteNode(
+            texture: generateShadowTexture(
+                width: paletteSize.width,
+                height: paletteSize.height,
+                cornerRadius: cornerRadius,
+                shadowOffset: CGSize(width: 0, height: 0),
+                shadowBlurRadius: 32,
+                shadowColor: SKColor(white: 0, alpha: 0.4)
+            )
+        )
+        shadowSprite.zPosition = -1
+        shadowSprite.blendMode = .alpha
+        paletteSprite.addChild(shadowSprite)
+        
+        return paletteSprite
+    }
+    
+    // MARK: - UI Drawer
+    
+    func createBottomDrawer(view: SKView, parent: SKNode) {
+        let drawerSize = CGSize(width: view.bounds.width, height: 120)
+        
+        let drawer = createPalette(size: drawerSize, radius: 0, view: view)
+        setupPhysicsCategories(node: drawer, as: .UIBody)
+        drawer.physicsBody?.isDynamic = false
+        drawer.position.y = -view.bounds.height/2 + drawerSize.height/2
+        parent.addChild(drawer)
+        
+        let buttonArray = createLeftButtons(view: view)
+        distributeNodes(direction: .horizontal, container: drawer, nodes: buttonArray)
+    }
+    
+    // MARK: - UI with fields
+    
+    func visualizeFieldsWithParticles(view: SKView, parent: SKNode, particleCategory: PhysicsCategory) {
+        if let particleEmitter = SKEmitterNode(fileNamed: "VisualizationParticles") {
+            particleEmitter.name = "visualization-particles"
+            setupPhysicsCategories(node: particleEmitter, as: particleCategory)
+            particleEmitter.targetNode = parent
+            particleEmitter.zPosition = 0
+            particleEmitter.advanceSimulationTime(100)
+            parent.addChild(particleEmitter)
+        }
+    }
+    
+    func updateSpringFields() {
+        enumerateChildNodes(withName: "//*ui-field-spring*", using: {node, _ in
+            if let field = node as? SKFieldNode, let camera = self.camera {
+                let originalStrength: Float = 40
+                let factor = pow(camera.xScale, 2)
+                field.strength = originalStrength * Float(factor)
+            }
+        })
+    }
+    
+    func createLeftPaletteWithElectromagneticField(view: SKView, parent: SKNode) {
+        let margin: CGFloat = 20
+        let paletteSize = CGSize(width: 60, height: 360)
+        
+        let electricField = SKFieldNode.electricField()
+        electricField.name = "ui-field-electromagnetic"
+        setupPhysicsCategories(node: electricField, as: .UIFieldLeft)
+        electricField.strength = -5
+        electricField.falloff = 0
+        electricField.position.x = -view.bounds.width/2 + paletteSize.width/2 + margin
+        electricField.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(electricField)
+        
+        let magneticField = SKFieldNode.magneticField()
+        magneticField.name = "ui-field-electromagnetic"
+        setupPhysicsCategories(node: magneticField, as: .UIFieldLeft)
+        magneticField.strength = -5
+        magneticField.falloff = 0
+        magneticField.position.x = -view.bounds.width/2 + paletteSize.width/2 + margin
+        magneticField.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(magneticField)
+        
+        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBodyLeft)
+        palette.physicsBody?.linearDamping = 1
+        palette.physicsBody?.charge = 1
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: 0)]
+        parent.addChild(palette)
+        
+        let buttonArray: [SKNode] = createLeftButtons(view: view)
+        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
+    }
+    
+    func createRightPaletteWithRadialGravityField(view: SKView, parent: SKNode) {
+        let margin: CGFloat = 10
+        let paletteSize = CGSize(width: 60, height: 200)
+        
+        let field = SKFieldNode.radialGravityField()
+        field.name = "ui-field-radial-gravity"
+        setupPhysicsCategories(node: field, as: .UIFieldRight)
+        field.strength = 40
+        field.falloff = -1
+        field.minimumRadius = 0
+        field.position.x = view.bounds.width/2 - paletteSize.width/2 - margin
+        field.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(field)
+        
+        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBodyRight)
+        palette.physicsBody?.linearDamping = 1
+        palette.physicsBody?.restitution = 0.2
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: margin)]
+        parent.addChild(palette)
+        
+        let buttonArray: [SKNode] = createRightButtons(view: view)
+        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
+    }
+    
+    func createLeftPaletteWithLinearGravityField(view: SKView, parent: SKNode) {
+        let margin: CGFloat = 10
+        let paletteSize = CGSize(width: 60, height: 360)
+        
+        let field = SKFieldNode.linearGravityField(withVector: vector_float3(-40, 0, 0))
+        field.name = "ui-field-radial-gravity"
+        setupPhysicsCategories(node: field, as: .UIFieldLeft)
+        field.strength = 1
+        field.falloff = 0
+        field.minimumRadius = 0
+        field.position.x = -view.bounds.width/2 + paletteSize.width/2 + margin
+        field.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(field)
+        
+        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBodyLeft)
+        palette.physicsBody?.linearDamping = 1
+        palette.physicsBody?.restitution = 0.2
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: margin)]
+        parent.addChild(palette)
+        
+        let buttonArray: [SKNode] = createLeftButtons(view: view)
+        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
+    }
+    
+    func createLeftPaletteWithSpringField(view: SKView, parent: SKNode) {
+        let paletteSize = CGSize(width: 60, height: 360)
+        let strength: Float = 10
+        let falloff: Float = -2
+        let margin: CGFloat = 10
+        
+        let leftField = SKFieldNode.springField()
+        leftField.name = "ui-field-spring"
+        setupPhysicsCategories(node: leftField, as: .UIFieldLeft)
+        leftField.strength = strength
+        leftField.falloff = falloff
+        leftField.position.x = -view.bounds.width/2 + paletteSize.width/2 + margin
+        leftField.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(leftField)
+        
+        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBodyLeft)
+        palette.physicsBody?.restitution = 0.2
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: margin)]
+        parent.addChild(palette)
+        
+        let buttonArray: [SKNode] = createLeftButtons(view: view)
+        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
+    }
+
+    func createRightFieldPalette(view: SKView, parent: SKNode) {
+        let paletteSize = CGSize(width: 60, height: 360)
+        let strength: Float = 40
+        let falloff: Float = -2
+        let margin: CGFloat = 20
+        
+        let rightField = SKFieldNode.springField()
+        rightField.name = "ui-field-spring"
+        setupPhysicsCategories(node: rightField, as: .UIFieldRight)
+        rightField.strength = strength
+        rightField.falloff = falloff
+        rightField.position.x = view.bounds.width/2 - paletteSize.width/2 - margin
+        rightField.position.y = -view.bounds.height/2 + paletteSize.height/2 + margin
+        parent.addChild(rightField)
+        
+        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBodyRight)
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: 0)]
+        parent.addChild(palette)
+        
+        let buttonArray: [SKNode] = createRightButtons(view: view)
+        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
+    }
+    
     func createBasePaletteWithField(view: SKView, parent: SKNode) {
         let paletteSize = CGSize(width: 230, height: 60)
         let fieldStrength: Float = 40
         let fieldFalloff: Float = -2
         
         let field = SKFieldNode.springField()
-        field.name = "UIField"
+        field.name = "ui-field-spring"
         setupPhysicsCategories(node: field, as: .UIField)
-        //rightField.region = SKRegion(size: fieldSize)
         field.strength = fieldStrength
         field.falloff = fieldFalloff
         field.position.x = 0
@@ -293,76 +587,19 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         distributeNodes(direction: .horizontal, container: palette, nodes: buttonArray)
     }
     
-    /**
-     
-     # Field based palettes
-     
-     */
-    func createRightFieldPalette(view: SKView, parent: SKNode) {
-        let paletteSize = CGSize(width: 60, height: 240)
-        let strength: Float = 40
-        let falloff: Float = -2
-        
-        let rightField = SKFieldNode.springField()
-        rightField.name = "UIField"
-        setupPhysicsCategories(node: rightField, as: .UIFieldRight)
-        //rightField.region = SKRegion(size: fieldSize)
-        rightField.strength = strength
-        rightField.falloff = falloff
-        rightField.position.x = view.bounds.width/2 - paletteSize.width/2
-        rightField.position.y = -view.bounds.height/2 + paletteSize.height/2
-        parent.addChild(rightField)
-        
-        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
-        setupPhysicsCategories(node: palette, as: .UIBodyRight)
-        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view)]
-        parent.addChild(palette)
-        
-        let buttonArray: [SKNode] = createRightButtons(view: view)
-        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
-    }
-    
-    func createLeftFieldPalette(view: SKView, parent: SKNode) {
-        let paletteSize = CGSize(width: 60, height: 360)
-        let strength: Float = 40
-        let falloff: Float = -2
-        
-        let leftField = SKFieldNode.springField()
-        leftField.name = "UIField"
-        setupPhysicsCategories(node: leftField, as: .UIFieldLeft)
-        //leftField.region = SKRegion(size: fieldSize)
-        leftField.strength = strength
-        leftField.falloff = falloff
-        //leftField.minimumRadius = 60
-        leftField.position.x = -view.bounds.width/2 + paletteSize.width/2
-        leftField.position.y = -view.bounds.height/2 + paletteSize.height/2
-        parent.addChild(leftField)
-        
-        let palette: SKSpriteNode = createPalette(size: paletteSize, view: view)
-        setupPhysicsCategories(node: palette, as: .UIBodyLeft)
-        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view)]
-        parent.addChild(palette)
-        
-        let buttonArray: [SKNode] = createLeftButtons(view: view)
-        distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
-    }
-    
-    /**
-     
-     # Spring based palette
-     
-     */
+    // MARK: - UI with spring joints
+
     var UIleftSpringJoint = SKPhysicsJointSpring()
     
-    func createSpringPalette(parent: SKNode, view: SKView) {
+    func createRightPaletteWithSpringJoint(view: SKView, parent: SKNode) {
         let paletteSize = CGSize(width: 60, height: 240)
         
-        let railNode = SKSpriteNode(color: _debugColor, size: paletteSize)
-        //railNode.name = "flickable"
+        let railNode = SKSpriteNode(color: .clear, size: paletteSize)
+        railNode.name = "flickable"
         railNode.physicsBody = SKPhysicsBody(rectangleOf: railNode.size)
         setupPhysicsCategories(node: railNode, as: .UIBody)
         railNode.physicsBody?.linearDamping = 4
-        railNode.constraints = [createConstraintsInView(view: view, node: railNode, region: .rightEdge)]
+        railNode.constraints = [createConstraintsInView(view: view, node: railNode, region: .rightEdge, margin: 10)]
         railNode.position.y = 0
         //railNode.zPosition = 100
         parent.addChild(railNode)
@@ -378,8 +615,8 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         palette.name = "flickable-palette"
         palette.physicsBody = SKPhysicsBody(rectangleOf: palette.size)
         setupPhysicsCategories(node: palette, as: .UIBody)
-        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view)]
-        palette.physicsBody?.linearDamping = 4
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .view, margin: 10)]
+        palette.physicsBody?.linearDamping = 1
         palette.physicsBody?.allowsRotation = false
         palette.physicsBody?.restitution = 0.02
         palette.zPosition = 10
@@ -391,8 +628,8 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
             anchorA: railNode.position,
             anchorB: palette.position
         )
-        UIleftSpringJoint.frequency = 4
-        UIleftSpringJoint.damping = 1
+        UIleftSpringJoint.frequency = 0
+        UIleftSpringJoint.damping = 2
         physicsWorld.add(UIleftSpringJoint)
         
         /// palette shadow
@@ -415,13 +652,10 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
     }
     
-    /**
-     
-     # Palette on rail
-     
-     */
-    func createPaletteOnRail(in parent: SKNode, with view: SKView) {
-        let paletteSize = CGSize(width: 60, height: 300)
+    // MARK: - UI with rails
+
+    func createLeftPaletteWithRails(view: SKView, parent: SKNode) {
+        let paletteSize = CGSize(width: 60, height: 320)
         
         let dashedRail = SKShapeNode()
         dashedRail.strokeColor = strokeColor
@@ -435,55 +669,14 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
         
         let palette = createPalette(size: paletteSize, view: view)
         setupPhysicsCategories(node: palette, as: .UIBody)
-        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .leftEdge)]
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .leftEdge, margin: 10)]
         parent.addChild(palette)
         
         let buttonArray = createLeftButtons(view: view)
         distributeNodes(direction: .vertical, container: palette, nodes: buttonArray)
     }
     
-    /**
-     
-     # Palette constructor
-     
-     */
-    func createPalette(size paletteSize: CGSize, view: SKView) -> SKSpriteNode {
-        let bodyExtension: Double = 10
-        
-        /// palette shape
-        let paletteShape = SKShapeNode(rectOf: paletteSize, cornerRadius: 12)
-        paletteShape.lineWidth = 2
-        paletteShape.strokeColor = strokeColor
-        paletteShape.fillColor = fillColor
-        
-        /// palette
-        let paletteSprite = SKSpriteNode(texture: view.texture(from: paletteShape))
-        paletteSprite.name = "flickable-palette"
-        paletteSprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
-            width: paletteSize.width + bodyExtension,
-            height: paletteSize.height + bodyExtension
-        ))
-        paletteSprite.zPosition = 1
-        
-        /// palette shadow
-        let shadowSprite = SKSpriteNode(
-            texture: generateShadowTexture(
-                width: paletteSize.width,
-                height: paletteSize.height,
-                cornerRadius: 12,
-                shadowOffset: CGSize(width: 0, height: 0),
-                shadowBlurRadius: 32,
-                shadowColor: SKColor(white: 0, alpha: 0.4)
-            )
-        )
-        shadowSprite.zPosition = -1
-        shadowSprite.blendMode = .alpha
-        paletteSprite.addChild(shadowSprite)
-        
-        return paletteSprite
-    }
-    
-    // MARK: Buttons
+    // MARK: - UI Buttons
     
     func createBaseButtons(view: SKView) -> [SKNode] {
         let debugButton = ButtonPhysical(
@@ -543,7 +736,7 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
             theme: theme,
             isPhysical: false,
             onTouch: {
-                let ball = self.createBall(radius: 30, color: .systemYellow, name: "flickable-ball", particleCollider: false)
+                let ball = self.createBall(radius: 30, color: .systemYellow, name: "flickable-ball", particleCollider: true)
                 self.objectsLayer.addChild(ball)
             }
         )
@@ -578,7 +771,7 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
             theme: theme,
             isPhysical: false,
             onTouch: {
-                self.resetActiveCamera()
+                self.resetCamera()
             }
         )
         
@@ -598,7 +791,21 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
             }
         )
         
-        let buttonArray = [gravityButton, resetCameraButton, toggleCameraControlButton]
+        let AButton = ButtonPhysical(
+            view: view,
+            shape: .square,
+            size: CGSize(width: 60, height: 60),
+            iconInactive: SKTexture(imageNamed: "a-icon"),
+            iconActive: SKTexture(imageNamed: "a-icon"),
+            iconSize: CGSize(width: 32, height: 32),
+            theme: theme,
+            isPhysical: false,
+            onTouch: {
+                print("This button does nothing")
+            }
+        )
+        
+        let buttonArray = [gravityButton, resetCameraButton, toggleCameraControlButton, AButton]
         return buttonArray
     }
     
@@ -607,6 +814,9 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     private var touchPreviousDistance: CGFloat = 0
     
     override func update(_ currentTime: TimeInterval) {
+        /// UI Field update
+        updateSpringFields()
+        
         /// camera inertia
         if let inertialCamera = camera as? InertialCamera {
             inertialCamera.updateInertia()
@@ -766,19 +976,16 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
     private var touchOffsets: [UITouch: CGPoint] = [:]
     private var originalDynamicStates: [UITouch: Bool] = [:]
     
+    /// debug fields
+    func sampleFields(point: CGPoint) {
+        let positionVector = vector_float3(Float(point.x), Float(point.y), 0)
+        let force = physicsWorld.sampleFields(at: positionVector)
+        print(force)
+    }
+    
     // MARK: Touches Began
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        /// UI Field update
-        enumerateChildNodes(withName: "//*UIField*", using: {node, _ in
-            if let field = node as? SKFieldNode, let camera = self.camera {
-                let originalStrength: Float = 40
-                let factor = pow(camera.xScale, 2)
-                field.strength = originalStrength * Float(factor)
-                print(field.strength)
-            }
-        })
-        
         for touch in touches {
             let location = touch.location(in: self)
             let touchedNode = atPoint(location)
@@ -788,6 +995,10 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
                 guard let body = touchedNode.physicsBody else {
                     print("Touched node has no physical body")
                     return
+                }
+                
+                if let inertialCamera = scene?.camera as? InertialCamera {
+                    inertialCamera.lock = true
                 }
 
                 velocityNodes[touch] = touchedNode
@@ -811,10 +1022,10 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
                     velocityOffsets[touch] = location - touchedNode.position
                 }
                 
-                body.density *= 10000
+                //body.density *= 10000
                 body.affectedByGravity = false
-                body.collisionBitMask = 0
-                body.fieldBitMask = 0
+                //body.collisionBitMask = 0
+                //body.fieldBitMask = 0
                 
                 body.velocity = .zero
                 body.angularVelocity = .zero
@@ -984,6 +1195,12 @@ class PhysicsPlaygroundScene: SKScene, PhysicalButtonDelegate {
             
             if let arrow = draggingVisualization.removeValue(forKey: touch) {
                 arrow.removeFromParent()
+            }
+            
+            if velocityNodes.isEmpty {
+                if let inertialCamera = scene?.camera as? InertialCamera {
+                    inertialCamera.lock = false
+                }
             }
             
             /// verlet integration --------------------------------------------------------------

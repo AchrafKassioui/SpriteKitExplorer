@@ -36,7 +36,6 @@ class IndicationArrow: SKSpriteNode {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for _ in touches {
-            print("yo")
             self.removeAllActions() // Stop any ongoing actions
             self.alpha = 1 // Reset to fully visible
         }

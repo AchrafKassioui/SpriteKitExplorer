@@ -293,29 +293,3 @@ class SpriteKitUIScene: SKScene {
     }
 }
 
-// MARK: - Helper methods
-
-/// Calculates the CGRect for the center part of a 9-slice sprite.
-/// - Parameter cornerWidth: The width of the corner parts
-/// - Parameter cornerHeight: The height of the corner parts
-/// - Parameter sprite: The SKSpriteNode for which to calculate the center rect
-/// - Returns: A CGRect representing the center rectangle for 9-slice scaling
-func setCenterRect(cornerWidth: CGFloat, cornerHeight: CGFloat, spriteNode: SKSpriteNode) -> CGRect {
-    guard let textureSize = spriteNode.texture?.size() else {
-        return .zero
-    }
-    
-    let totalWidth = textureSize.width
-    let totalHeight = textureSize.height
-    
-    let centerSliceWidth = totalWidth - (cornerWidth * 2)
-    let centerSliceHeight = totalHeight - (cornerHeight * 2)
-    
-    let centerSliceRect = CGRect(x: cornerWidth / totalWidth,
-                      y: cornerHeight / totalHeight,
-                      width: centerSliceWidth / totalWidth,
-                      height: centerSliceHeight / totalHeight)
-    
-    return centerSliceRect
-}
-

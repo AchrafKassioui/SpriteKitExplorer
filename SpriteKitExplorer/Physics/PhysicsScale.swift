@@ -37,13 +37,13 @@ struct PhysicsScaleView: View {
                 dockedMenuBar()
             }
         }
-        .background(Color(SKColor.darkGray))
+        .background(Color(SKColor.black))
     }
     
     private func dockedMenuBar() -> some View {
         HStack (spacing: 1) {
             Spacer()
-            togglePhysicsButton
+            playPauseButton
             toggleGravityButton
             resetCameraButton
             lockCameraButton
@@ -57,7 +57,7 @@ struct PhysicsScaleView: View {
     
     private func menuBar() -> some View {
         HStack (spacing: 1) {
-            togglePhysicsButton
+            playPauseButton
             toggleGravityButton
             resetCameraButton
             lockCameraButton
@@ -80,7 +80,6 @@ struct PhysicsScaleView: View {
             scene.toggleCameraLock()
         }, label: {
             Image(isCameraLocked ? "camera-lock-icon" : "camera-unlock-icon")
-                .colorInvert()
         })
         .buttonStyle(squareButtonStyle())
     }
@@ -90,17 +89,16 @@ struct PhysicsScaleView: View {
             scene.resetCamera()
         }, label: {
             Image("camera-reset-icon")
-                .colorInvert()
         })
         .buttonStyle(squareButtonStyle())
     }
     
-    private var togglePhysicsButton: some View {
+    private var playPauseButton: some View {
         Button(action: {
             isPaused.toggle()
-            scene.simulatePhysics = isPaused ? false : true
+            scene.pauseScene(isPaused)
         }) {
-            Image(isPaused ? "physics-off-icon" : "physics-on-icon")
+            Image(isPaused ? "play-icon" : "pause-icon")
         }
         .buttonStyle(squareButtonStyle())
     }
@@ -111,7 +109,6 @@ struct PhysicsScaleView: View {
             scene.sceneGravity = isGravityOn
         }) {
             Image(isGravityOn ? "gravity-icon" : "gravity-off-icon")
-                .colorInvert()
         }
         .buttonStyle(squareButtonStyle())
     }
@@ -122,8 +119,7 @@ struct PhysicsScaleView: View {
                 scene.toggleDebugOptions(view: view)
             }
         }, label: {
-            Image("square-dashed-icon")
-                .colorInvert()
+            Image("chart-bar-icon")
         })
         .buttonStyle(squareButtonStyle())
     }
@@ -143,17 +139,17 @@ class PhysicsScaleScene: SKScene {
         /// configure view
         size = view.bounds.size
         scaleMode = .resizeFill
-        //view.contentMode = .center
+        view.contentMode = .center
         backgroundColor = SKColor(displayP3Red: 0.9, green: 0.9, blue: 0.9, alpha: 1)
-        backgroundColor = .gray
-        //anchorPoint = CGPoint(x: 0.5, y: 0.5)
+        backgroundColor = .darkGray
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
         view.isMultipleTouchEnabled = true
         
         cleanPhysics()
         physicsWorld.gravity = CGVector(dx: 0, dy: 0)
         
         /// create background
-        let gridTexture = generateGridTexture(cellSize: 150, rows: 17, cols: 17, linesColor: SKColor(white: 0, alpha: 0.4))
+        let gridTexture = generateGridTexture(cellSize: 150, rows: 17, cols: 17, linesColor: SKColor(white: 1, alpha: 0.2))
         let gridbackground = SKSpriteNode(texture: gridTexture)
         gridbackground.zPosition = -1
         objectsLayer.addChild(gridbackground)
@@ -177,9 +173,8 @@ class PhysicsScaleScene: SKScene {
         updateZoomLabel()
         createPhysicalBoundaryForUIBodies(view: view, parent: uiLayer)
         createPhysicalBoundaryForSceneBodies(size: view.bounds.size)
-        
-        createUIBody(view: view, parent: uiLayer)
-        createSceneBody(view: view, parent: objectsLayer)
+
+        createPinnedObjectFromTwoPoints(parent: uiLayer, as: .UIBody)
     }
     
     // MARK: - Scene Setup
@@ -187,6 +182,11 @@ class PhysicsScaleScene: SKScene {
     let uiLayer = SKNode()
     let effectLayer = SKEffectNode()
     let objectsLayer = SKNode()
+    
+    func pauseScene(_ isPaused: Bool) {
+        self.objectsLayer.isPaused = isPaused
+        self.physicsWorld.speed = isPaused ? 0 : 1
+    }
     
     var sceneGravity = false {
         didSet {
@@ -216,6 +216,18 @@ class PhysicsScaleScene: SKScene {
     // MARK: - Camera
     
     var zoomLabel = SKLabelNode()
+    
+    func freeCamera() {
+        if let inertialCamera = camera as? InertialCamera {
+            inertialCamera.lock = false
+        }
+    }
+    
+    func lockCamera() {
+        if let inertialCamera = camera as? InertialCamera {
+            inertialCamera.lock = true
+        }
+    }
     
     func toggleCameraLock() {
         if let inertialCamera = camera as? InertialCamera {
@@ -261,9 +273,10 @@ class PhysicsScaleScene: SKScene {
         )
         
         let boundaryForSceneBodies = SKShapeNode(rect: physicsBoundaries)
-        boundaryForSceneBodies.lineWidth = 10
+        boundaryForSceneBodies.lineWidth = 3
         boundaryForSceneBodies.lineJoin = .round
         boundaryForSceneBodies.strokeColor = SKColor(white: 0, alpha: 1)
+        boundaryForSceneBodies.fillColor = SKColor(white: 1, alpha: 0.1)
         boundaryForSceneBodies.physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
         setupPhysicsCategories(node: boundaryForSceneBodies, as: .sceneBoundary)
         boundaryForSceneBodies.physicsBody?.restitution = 0
@@ -310,9 +323,220 @@ class PhysicsScaleScene: SKScene {
         parent.addChild(sprite)
     }
     
-    // MARK: - UI Objects
+    // MARK: - Debugging Joints
     
-    func createUIBody(view: SKView, parent: SKNode) {
+    let rectangle = SKSpriteNode()
+    let anchorPoint1 = SKNode()
+    let anchorPoint2 = SKNode()
+    
+    func createPinnedObjectFromTwoPoints(parent: SKNode, as physicsCategory: PhysicsCategory) {
+        
+        /// The pinned sprite
+        rectangle.texture = SKTexture(imageNamed: "rectangle-60-12-fill")
+        rectangle.colorBlendFactor = 1
+        rectangle.color = .systemYellow
+        rectangle.centerRect = setCenterRect(cornerWidth: 12, cornerHeight: 12, spriteNode: rectangle)
+        rectangle.size = CGSize(width: 140, height: 60)
+        rectangle.name = "flickable"
+        rectangle.physicsBody = SKPhysicsBody(rectangleOf: rectangle.size)
+        setupPhysicsCategories(node: rectangle, as: physicsCategory)
+        rectangle.physicsBody?.affectedByGravity = true
+        rectangle.physicsBody?.allowsRotation = true
+        rectangle.position = CGPoint(x: 0, y: -100)
+        parent.addChild(rectangle)
+        
+        /// Create the first anchor point
+        anchorPoint1.position = CGPoint(x: -50, y: 200)
+        anchorPoint1.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        setupPhysicsCategories(node: anchorPoint1, as: physicsCategory)
+        anchorPoint1.physicsBody?.isDynamic = false
+        anchorPoint1.physicsBody?.angularDamping = 0
+        parent.addChild(anchorPoint1)
+        
+        /// Create the second anchor point
+        anchorPoint2.position = CGPoint(x: 50, y: 200)
+        anchorPoint2.physicsBody = SKPhysicsBody(circleOfRadius: 1)
+        setupPhysicsCategories(node: anchorPoint2, as: physicsCategory)
+        anchorPoint2.physicsBody?.isDynamic = false
+        parent.addChild(anchorPoint2)
+        
+        /// Pin joints
+        let pinJoint1 = SKPhysicsJointPin.joint(
+            withBodyA: rectangle.physicsBody!,
+            bodyB: anchorPoint1.physicsBody!,
+            anchor: anchorPoint1.position
+        )
+        pinJoint1.frictionTorque = 1
+        pinJoint1.rotationSpeed = 1
+        
+        let pinJoint2 = SKPhysicsJointPin.joint(
+            withBodyA: rectangle.physicsBody!,
+            bodyB: anchorPoint2.physicsBody!,
+            anchor: anchorPoint2.position
+        )
+        pinJoint2.frictionTorque = 0
+        
+        //physicsWorld.add(pinJoint1)
+        //physicsWorld.add(pinJoint2)
+        
+        /// Spring joints
+        let springJoint1 = SKPhysicsJointSpring.joint(
+            withBodyA: rectangle.physicsBody!,
+            bodyB: anchorPoint1.physicsBody!,
+            anchorA: rectangle.position,
+            anchorB: anchorPoint1.position
+        )
+        springJoint1.frequency = 1
+        springJoint1.damping = 0
+        
+        let springJoint2 = SKPhysicsJointSpring.joint(
+            withBodyA: rectangle.physicsBody!,
+            bodyB: anchorPoint2.physicsBody!,
+            anchorA: rectangle.position,
+            anchorB: anchorPoint2.position
+        )
+        springJoint2.frequency = 1
+        springJoint2.damping = 0
+        
+        physicsWorld.add(springJoint1)
+        physicsWorld.add(springJoint2)
+    }
+    
+    // MARK: - UI
+    
+    func createPalette(view: SKView, parent: SKNode) {
+        let paletteSize = CGSize(width: 60, height: 380)
+        
+        let palette = generatePalette(size: paletteSize, view: view)
+        setupPhysicsCategories(node: palette, as: .UIBody)
+        palette.physicsBody?.affectedByGravity = true
+        palette.physicsBody?.allowsRotation = false
+        palette.physicsBody?.restitution = 0
+        palette.physicsBody?.linearDamping = 0
+        palette.constraints = [createConstraintsInView(view: view, node: palette, region: .leftEdge, margin: 10, vizParent: nil)]
+        parent.addChild(palette)
+        
+        let cameraControlToggle = ToggleSwitch(
+            iconON: SKTexture(imageNamed: "camera-unlock-icon"),
+            iconOFF: SKTexture(imageNamed: "camera-lock-icon"),
+            onTouchBegan: {
+                print("toggle touch began")
+                self.freeCamera()
+            },
+            onTouchEnded: {
+                print("toggle touch ended")
+                self.lockCamera()
+            }
+        )
+        cameraControlToggle.zPosition = 10
+        
+        let toggleArray = [cameraControlToggle]
+        distributeNodes(direction: .vertical, container: palette, nodes: toggleArray, spacing: 1)
+    }
+    
+    /**
+     
+     # Generate Palette with clipping
+     
+     */
+    func generatePaletteWithClipping(size paletteSize: CGSize, view: SKView) -> SKCropNode {
+        let strokeColor = SKColor(white: 0, alpha: 0.6)
+        let fillColor: SKColor = SKColor(white: 0, alpha: 0.8)
+        let strokeWidth: CGFloat = 2
+        let bodyExtension: Double = 0
+        let paletteSizeWithStroke = CGSize(width: paletteSize.width + strokeWidth, height: paletteSize.height + strokeWidth)
+        
+        /// palette shape
+        let paletteShape = SKShapeNode(rectOf: paletteSizeWithStroke, cornerRadius: 12)
+        paletteShape.lineWidth = strokeWidth
+        paletteShape.strokeColor = strokeColor
+        paletteShape.fillColor = fillColor
+        
+        /// palette
+        let paletteSprite = SKSpriteNode(texture: view.texture(from: paletteShape))
+        paletteSprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
+            width: paletteSizeWithStroke.width + bodyExtension,
+            height: paletteSizeWithStroke.height + bodyExtension
+        ))
+        
+        /// palette shadow
+        let shadowSprite = SKSpriteNode(
+            texture: generateShadowTexture(
+                width: paletteSizeWithStroke.width,
+                height: paletteSizeWithStroke.height,
+                cornerRadius: 12,
+                shadowOffset: CGSize(width: 0, height: 0),
+                shadowBlurRadius: 32,
+                shadowColor: SKColor(white: 0, alpha: 0.4)
+            )
+        )
+        shadowSprite.zPosition = -1
+        shadowSprite.blendMode = .alpha
+        paletteSprite.addChild(shadowSprite)
+        
+        /// mask node
+        let maskNode = SKShapeNode(rectOf: paletteSizeWithStroke, cornerRadius: 12)
+        maskNode.fillColor = .white
+        maskNode.lineWidth = 0
+        
+        /// crop node with mask
+        let cropNode = SKCropNode()
+        cropNode.maskNode = maskNode
+        cropNode.addChild(paletteSprite)
+        
+        return cropNode
+    }
+    
+    /**
+     
+     # Palette constructor
+     
+     */
+    func generatePalette(size paletteSize: CGSize, view: SKView) -> SKSpriteNode {
+        let strokeColor = SKColor(white: 0, alpha: 0.6)
+        let fillColor: SKColor = SKColor(white: 0, alpha: 0.8)
+        let strokeWidth: CGFloat = 2
+        let bodyExtension: Double = 0
+        let paletteSize = CGSize(width: paletteSize.width+strokeWidth, height: paletteSize.height+strokeWidth)
+        
+        /// palette shape
+        let paletteShape = SKShapeNode(rectOf: paletteSize, cornerRadius: 12)
+        paletteShape.lineWidth = strokeWidth
+        paletteShape.strokeColor = strokeColor
+        paletteShape.fillColor = fillColor
+        
+        /// palette
+        let paletteSprite = SKSpriteNode(texture: view.texture(from: paletteShape))
+        paletteSprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(
+            width: paletteSize.width + bodyExtension,
+            height: paletteSize.height + bodyExtension
+        ))
+        //paletteSprite.zPosition = 1
+        
+        /// palette shadow
+        let shadowSprite = SKSpriteNode(
+            texture: generateShadowTexture(
+                width: paletteSize.width,
+                height: paletteSize.height,
+                cornerRadius: 12,
+                shadowOffset: CGSize(width: 0, height: 0),
+                shadowBlurRadius: 32,
+                shadowColor: SKColor(white: 0, alpha: 0.4)
+            )
+        )
+        shadowSprite.zPosition = -1
+        shadowSprite.blendMode = .alpha
+        paletteSprite.addChild(shadowSprite)
+        
+        return paletteSprite
+    }
+    
+    /**
+     
+     # A body attached to the camera
+     
+     */
+    func createBodyInCamera(view: SKView, parent: SKNode) {
         let uiBody = SKSpriteNode(texture: SKTexture(imageNamed: "rectangle-60-20-fill"))
         uiBody.name = "UIBody"
         uiBody.colorBlendFactor = 1
@@ -326,7 +550,7 @@ class PhysicsScaleScene: SKScene {
         
         uiBody.constraints = [createConstraintsInView(view: view, node: uiBody, region: .view, margin: 20, vizParent: nil)]
         
-        let label = createSpriteLabel(view: view, text: "UI", color: .black, size: 20)
+        let label = createSpriteLabel(view: view, text: "UI", color: .white, size: 20)
         label.zPosition = 1
         uiBody.addChild(label)
         

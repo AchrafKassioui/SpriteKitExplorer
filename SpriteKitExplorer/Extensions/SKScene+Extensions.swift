@@ -27,6 +27,38 @@ extension SKScene {
      Updated: 24 May 2024
      
      */
+    enum CumulativeScale {
+        case x
+        case y
+        case xy
+    }
+    
+    func getScaleRelativeToScene(node: SKNode, axis: CumulativeScale) -> CGFloat {
+        var cumulativeScaleX: CGFloat = 1.0
+        var cumulativeScaleY: CGFloat = 1.0
+        
+        var currentNode: SKNode? = node.parent
+        while let node = currentNode {
+            cumulativeScaleX *= node.xScale
+            cumulativeScaleY *= node.yScale
+            currentNode = node.parent
+        }
+        
+        let cumulativeScaleXY = (cumulativeScaleX + cumulativeScaleY) / 2.0
+        
+        let value: CGFloat
+        
+        switch axis {
+        case .x:
+            value = cumulativeScaleX
+        case .y:
+            value = cumulativeScaleY
+        case .xy:
+            value = cumulativeScaleXY
+        }
+        
+        return value
+    }
     
     func removeCumulativeScale(from node: SKNode) -> CGFloat {
         var cumulativeScaleX: CGFloat = 1.0
@@ -41,6 +73,32 @@ extension SKScene {
         
         let cumulativeScale = (cumulativeScaleX + cumulativeScaleY) / 2.0
         return 1.0 / cumulativeScale
+    }
+    
+    // MARK: - 9 parts slicing
+    
+    /// Calculates the CGRect for the center part of a 9-slice sprite.
+    /// - Parameter cornerWidth: The width of the corner parts
+    /// - Parameter cornerHeight: The height of the corner parts
+    /// - Parameter sprite: The SKSpriteNode for which to calculate the center rect
+    /// - Returns: A CGRect representing the center rectangle for 9-slice scaling
+    func setCenterRect(cornerWidth: CGFloat, cornerHeight: CGFloat, spriteNode: SKSpriteNode) -> CGRect {
+        guard let textureSize = spriteNode.texture?.size() else {
+            return .zero
+        }
+        
+        let totalWidth = textureSize.width
+        let totalHeight = textureSize.height
+        
+        let centerSliceWidth = totalWidth - (cornerWidth * 2)
+        let centerSliceHeight = totalHeight - (cornerHeight * 2)
+        
+        let centerSliceRect = CGRect(x: cornerWidth / totalWidth,
+                                     y: cornerHeight / totalHeight,
+                                     width: centerSliceWidth / totalWidth,
+                                     height: centerSliceHeight / totalHeight)
+        
+        return centerSliceRect
     }
     
     // MARK: - Constraints
@@ -84,9 +142,10 @@ extension SKScene {
         shape.lineWidth = 2
         shape.fillColor = SKColor.red.withAlphaComponent(0.1)
         shape.zPosition = 9999
+        shape.isUserInteractionEnabled = false
         
         /// visualize the center
-        if let parent = vizParent {
+        if vizParent != nil {
             let plusSign = CGMutablePath()
             plusSign.move(to: CGPoint(x: 0, y: 22))
             plusSign.addLine(to: CGPoint(x: 0, y: -22))
@@ -97,6 +156,7 @@ extension SKScene {
             nodeCenter.lineWidth = 2
             nodeCenter.fillColor = SKColor.red.withAlphaComponent(0.1)
             nodeCenter.zPosition = 9999
+            nodeCenter.isUserInteractionEnabled = false
             node.addChild(nodeCenter)
             nodeCenter.setScale(removeCumulativeScale(from: nodeCenter))
         }
@@ -242,13 +302,13 @@ extension SKScene {
      Pre-made bitmasks for common use.
      
      Created: 10 May 2024
-     Updated: 19 May 2024
+     Updated: 27 May 2024
      
      */
     struct BitMasks {
         static let sceneBody: UInt32 = 0x1 << 0
         static let sceneField: UInt32 = 0x1 << 1
-        //static let sceneParticle: UInt32 = 0x1 << 2
+        static let sceneParticle: UInt32 = 0x1 << 2
         static let sceneParticleCollider: UInt32 = 0x1 << 3
         
         static let sceneBoundary: UInt32 = 0x1 << 4
@@ -266,18 +326,23 @@ extension SKScene {
     
     enum PhysicsCategory {
         case sceneBody
+        case sceneField
+        case sceneParticle
         case sceneParticleCollider
         case sceneBoundary
         
         case UIBody
         case UIBodyLeft
         case UIBodyRight
+        case UIParticle
         
         case UIField
         case UIFieldLeft
         case UIFieldRight
         
         case UIBoundary
+        
+        case ethereal
     }
     
     func setupPhysicsCategories(node: SKNode, as category: PhysicsCategory) {
@@ -288,25 +353,28 @@ extension SKScene {
             node.physicsBody?.fieldBitMask = BitMasks.uiField
             node.physicsBody?.affectedByGravity = false
             node.physicsBody?.allowsRotation = false
-            node.physicsBody?.restitution = 0.2
             node.physicsBody?.linearDamping = 4
+            node.physicsBody?.charge = 1
         case .UIBodyLeft:
             node.physicsBody?.categoryBitMask = BitMasks.uiBodyLeft
-            node.physicsBody?.collisionBitMask = BitMasks.uiBoundary | BitMasks.uiBody | BitMasks.uiBodyRight
+            node.physicsBody?.collisionBitMask = BitMasks.uiBoundary | BitMasks.uiBody | BitMasks.uiBodyRight | BitMasks.uiBodyLeft
             node.physicsBody?.fieldBitMask = BitMasks.uiFieldLeft
             node.physicsBody?.affectedByGravity = false
             node.physicsBody?.allowsRotation = false
-            node.physicsBody?.restitution = 0.02
             node.physicsBody?.linearDamping = 4
+            node.physicsBody?.charge = 1
         case .UIBodyRight:
             node.physicsBody?.categoryBitMask = BitMasks.uiBodyRight
             node.physicsBody?.collisionBitMask = BitMasks.uiBoundary | BitMasks.uiBody | BitMasks.uiBodyLeft
             node.physicsBody?.fieldBitMask = BitMasks.uiFieldRight
             node.physicsBody?.affectedByGravity = false
             node.physicsBody?.allowsRotation = false
-            node.physicsBody?.restitution = 0.02
             node.physicsBody?.linearDamping = 4
-            
+            node.physicsBody?.charge = 1
+        case .UIParticle:
+            if let particleEmitter = node as? SKEmitterNode {
+                particleEmitter.fieldBitMask = BitMasks.uiField | BitMasks.uiFieldLeft | BitMasks.uiFieldRight
+            }
         case .UIField:
             if let field = node as? SKFieldNode {
                 field.categoryBitMask = BitMasks.uiField
@@ -324,7 +392,6 @@ extension SKScene {
             node.physicsBody?.categoryBitMask = BitMasks.uiBoundary
             node.physicsBody?.collisionBitMask = BitMasks.uiBody | BitMasks.uiBodyLeft | BitMasks.uiBodyRight
             node.physicsBody?.fieldBitMask = 0
-            node.physicsBody?.restitution = 0
             
         case .sceneBody:
             node.physicsBody?.categoryBitMask = BitMasks.sceneBody
@@ -332,6 +399,14 @@ extension SKScene {
             node.physicsBody?.fieldBitMask = BitMasks.sceneField
             node.physicsBody?.charge = 1
             node.physicsBody?.density = 1
+        case .sceneField:
+            if let field = node as? SKFieldNode {
+                field.categoryBitMask = BitMasks.sceneField
+            }
+        case .sceneParticle:
+            if let particleEmitter = node as? SKEmitterNode {
+                particleEmitter.fieldBitMask = BitMasks.sceneField | BitMasks.sceneParticleCollider
+            }
         case .sceneParticleCollider:
             if let field = node as? SKFieldNode {
                 field.categoryBitMask = BitMasks.sceneParticleCollider
@@ -341,7 +416,13 @@ extension SKScene {
             node.physicsBody?.collisionBitMask = BitMasks.sceneBody
             node.physicsBody?.fieldBitMask = 0
             node.physicsBody?.isDynamic = false
-            node.physicsBody?.friction = 1
+            node.physicsBody?.restitution = 0.2
+        case .ethereal:
+            node.physicsBody?.isDynamic = false
+            node.physicsBody?.categoryBitMask = 0
+            node.physicsBody?.collisionBitMask = 0
+            node.physicsBody?.contactTestBitMask = 0
+            node.physicsBody?.fieldBitMask = 0
         }
     }
     

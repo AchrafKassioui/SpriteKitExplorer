@@ -10,6 +10,7 @@
 		DE020BF12BD2DF9000D897F8 /* CGGenerators.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE020BF02BD2DF9000D897F8 /* CGGenerators.swift */; };
 		DE020BF32BD32A0B00D897F8 /* ViewProperties.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE020BF22BD32A0B00D897F8 /* ViewProperties.swift */; };
 		DE020BF52BD33BEB00D897F8 /* PhysicsBenchmarks.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE020BF42BD33BEB00D897F8 /* PhysicsBenchmarks.swift */; };
+		DE0662A22C0693E100D5869A /* JointsWithCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0662A12C0693E100D5869A /* JointsWithCamera.swift */; };
 		DE0ABE172BF9774900C68A04 /* PhysicsObjects.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0ABE162BF9774900C68A04 /* PhysicsObjects.swift */; };
 		DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */; };
 		DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE0B6B222B9FC760006D75CB /* ColorWheel.swift */; };
@@ -99,6 +100,7 @@
 		DEF4F15B2BE44714003E3AD7 /* PhysicsPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */; };
 		DEF4F1602BE58FD0003E3AD7 /* SKScene+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF4F15F2BE58FD0003E3AD7 /* SKScene+Extensions.swift */; };
 		DEF4F1622BE924D6003E3AD7 /* Manipulation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF4F1612BE924D6003E3AD7 /* Manipulation.swift */; };
+		DEFDE3012C03CA560044DC8A /* VisualizationParticles.sks in Resources */ = {isa = PBXBuildFile; fileRef = DEFDE3002C03CA560044DC8A /* VisualizationParticles.sks */; };
 		DEFE9DA82BC49049002EDD9F /* UIScreen+ScreenCorners.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DA72BC49049002EDD9F /* UIScreen+ScreenCorners.swift */; };
 		DEFE9DAA2BC4A5DE002EDD9F /* IsometricCamera.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DA92BC4A5DE002EDD9F /* IsometricCamera.swift */; };
 		DEFE9DAF2BC4A81C002EDD9F /* CameraPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEFE9DAE2BC4A81C002EDD9F /* CameraPlayground.swift */; };
@@ -108,6 +110,7 @@
 		DE020BF02BD2DF9000D897F8 /* CGGenerators.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CGGenerators.swift; sourceTree = "<group>"; };
 		DE020BF22BD32A0B00D897F8 /* ViewProperties.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewProperties.swift; sourceTree = "<group>"; };
 		DE020BF42BD33BEB00D897F8 /* PhysicsBenchmarks.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsBenchmarks.swift; sourceTree = "<group>"; };
+		DE0662A12C0693E100D5869A /* JointsWithCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JointsWithCamera.swift; sourceTree = "<group>"; };
 		DE0ABE162BF9774900C68A04 /* PhysicsObjects.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsObjects.swift; sourceTree = "<group>"; };
 		DE0B6B202B9CAEED006D75CB /* SpriteNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteNodes.swift; sourceTree = "<group>"; };
 		DE0B6B222B9FC760006D75CB /* ColorWheel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ColorWheel.swift; sourceTree = "<group>"; };
@@ -201,6 +204,7 @@
 		DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsPlayground.swift; sourceTree = "<group>"; };
 		DEF4F15F2BE58FD0003E3AD7 /* SKScene+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKScene+Extensions.swift"; sourceTree = "<group>"; };
 		DEF4F1612BE924D6003E3AD7 /* Manipulation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Manipulation.swift; sourceTree = "<group>"; };
+		DEFDE3002C03CA560044DC8A /* VisualizationParticles.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = VisualizationParticles.sks; sourceTree = "<group>"; };
 		DEFE9DA72BC49049002EDD9F /* UIScreen+ScreenCorners.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIScreen+ScreenCorners.swift"; sourceTree = "<group>"; };
 		DEFE9DA92BC4A5DE002EDD9F /* IsometricCamera.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IsometricCamera.swift; sourceTree = "<group>"; };
 		DEFE9DAE2BC4A81C002EDD9F /* CameraPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CameraPlayground.swift; sourceTree = "<group>"; };
@@ -289,6 +293,7 @@
 				DE48FB4E2BE95FB800375EA6 /* Water.sks */,
 				DE2E6C2B2BC23792005C06F2 /* Tracer.sks */,
 				DE3F54242BDC3A8D000D4C6E /* Fire.sks */,
+				DEFDE3002C03CA560044DC8A /* VisualizationParticles.sks */,
 				DEF4F1562BE02E45003E3AD7 /* FireLarge.sks */,
 				DEB8750A2BC54EDE00A21BCB /* MagicParticles.sks */,
 				DE9C0B4C2BDDD2D500F88D4C /* Smoke.sks */,
@@ -404,9 +409,8 @@
 				DED58E102BD9690C00F8ED45 /* Scrap.swift */,
 				DE9C0B4A2BDD844900F88D4C /* FieldNodes.swift */,
 				DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */,
-				DE0ABE162BF9774900C68A04 /* PhysicsObjects.swift */,
-				DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */,
 				DEB55FDD2BFA788900C4303A /* PhysicsScale.swift */,
+				DE0662A12C0693E100D5869A /* JointsWithCamera.swift */,
 			);
 			path = Physics;
 			sourceTree = "<group>";
@@ -534,6 +538,8 @@
 			isa = PBXGroup;
 			children = (
 				DEF4F15F2BE58FD0003E3AD7 /* SKScene+Extensions.swift */,
+				DE0ABE162BF9774900C68A04 /* PhysicsObjects.swift */,
+				DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -614,6 +620,7 @@
 				DEB4ED3E2BAF91140097EEC0 /* Cars on Bridge - Legio Seven - SD.mp4 in Resources */,
 				DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */,
 				DEF4F1572BE02E45003E3AD7 /* FireLarge.sks in Resources */,
+				DEFDE3012C03CA560044DC8A /* VisualizationParticles.sks in Resources */,
 				DE48FB532BED532800375EA6 /* MyScene.sks in Resources */,
 				DEB8750B2BC54EDE00A21BCB /* MagicParticles.sks in Resources */,
 			);
@@ -669,6 +676,7 @@
 				DE3A68632B60378800D10D6E /* Lighting.swift in Sources */,
 				DE2E6C282BC0D5A2005C06F2 /* InertialCamera.swift in Sources */,
 				DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */,
+				DE0662A22C0693E100D5869A /* JointsWithCamera.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DE3F54282BDC59A9000D4C6E /* IndicationArrow.swift in Sources */,
 				DEABB9D82B6380B40023B79B /* FlingDrag.swift in Sources */,

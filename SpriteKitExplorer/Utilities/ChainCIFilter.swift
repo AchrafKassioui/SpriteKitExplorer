@@ -39,6 +39,10 @@
     let appliedFilters = chainFilter.chainedFilters
  }
  ```
+ ## Todo
+ 
+ When the output image exceeds the limit, return a cropped image.
+ 
  ## Credit
  
  Based on code from "zekel":  https://stackoverflow.com/questions/55553869/on-ios-can-you-add-multiple-cifilters-to-a-spritekit-node?noredirect=1&lq=1

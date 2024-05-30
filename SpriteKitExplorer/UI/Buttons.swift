@@ -11,20 +11,70 @@ import SpriteKit
 /**
  
  Toggle switch button
- - On touch began, the state is toggled
- - On touch end, if the duration since touch began
+ - On touch began, the toggle is active
+ - On touch end, the toggle is inactive
  
  */
 
 class ToggleSwitch: SKSpriteNode {
-    /// dependencies
-    weak var view: SKView?
+
+    /// Toggle settings
+    var buttonSize = CGSize(width: 60, height: 60)
+    var backgroundColor = SKColor.darkGray
     
+    /// Toggle components
+    var icon: SKSpriteNode
+    var iconON: SKTexture
+    var iconOFF: SKTexture
     var isOn = false
     
-    var label = SKLabelNode()
-    var icon = SKSpriteNode()
-   
+    let onTouchBegan: () -> Void
+    let onTouchEnded: () -> Void
+    
+    init(iconON: SKTexture, iconOFF: SKTexture, onTouchBegan: @escaping () -> Void, onTouchEnded: @escaping () -> Void, isOn: Bool? = false) {
+        self.iconON = iconON
+        self.iconOFF = iconOFF
+        self.isOn = isOn ?? false
+        self.onTouchBegan = onTouchBegan
+        self.onTouchEnded = onTouchEnded
+        
+        self.icon = SKSpriteNode(texture: self.isOn ? self.iconON : self.iconOFF)
+        self.icon.isUserInteractionEnabled = false
+        
+        super.init(texture: nil, color: backgroundColor, size: self.buttonSize)
+        self.isUserInteractionEnabled = true
+        self.addChild(self.icon)
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    func enableToggle() {
+        onTouchBegan()
+        self.icon.texture = iconON
+    }
+    
+    func disableToggle() {
+        onTouchEnded()
+        self.icon.texture = iconOFF
+    }
+    
+    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for _ in touches {
+            enableToggle()
+        }
+    }
+    
+    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+        for _ in touches {
+            disableToggle()
+        }
+    }
+    
+    override func touchesCancelled(_ touches: Set<UITouch>, with event: UIEvent?) {
+        touchesEnded(touches, with: event)
+    }
 }
 
 // MARK: - Physical Button
@@ -334,8 +384,6 @@ class ButtonWithDotPattern: SKShapeNode {
         for touch in touches {
             let location = touch.location(in: self)
             isHot = self.contains(location)
-            print(location)
-            print(isHot)
         }
     }
     
