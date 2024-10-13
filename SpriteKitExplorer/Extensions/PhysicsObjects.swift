@@ -22,26 +22,69 @@ extension SKScene {
         return randomColor
     }
     
+    func removeThisNode(_ node: SKNode) {
+        let duration: CGFloat = 0.1
+        let removalAnimation = SKAction.group([
+            SKAction.scale(to: 3, duration: duration),
+            SKAction.fadeOut(withDuration: duration)
+        ])
+        
+        node.run(removalAnimation) {
+            node.removeAllActions()
+            node.removeFromParent()
+        }
+    }
+    
     func removeNodes(withName name: String) {
         let duration: CGFloat = 0.1
-        let shrinkAndRemove = SKAction.sequence([
+        let removalAnimation = SKAction.sequence([
             SKAction.group([
-                SKAction.moveBy(x: 0, y: -100, duration: duration),
-                SKAction.scale(to: 0, duration: duration),
+                SKAction.scale(to: 3, duration: duration),
                 SKAction.fadeOut(withDuration: duration)
             ]),
             SKAction.removeFromParent()
         ])
         
         self.enumerateChildNodes(withName: "//*\(name)*", using: {node, _ in
-            node.run(shrinkAndRemove)
+            node.run(removalAnimation)
             //node.removeAllActions()
         })
     }
     
-    // MARK: - Square
+    // MARK: - Physical Sprites
     
-    func createSquare(size: CGSize, color: SKColor, name: String? = nil, particleCollider: Bool? = nil, constrainInside: SKNode? = nil) -> SKNode {
+    enum SpriteShape {
+        case roundedRectangle
+        case circle
+    }
+    
+    func spawnSpriteHere(shape: SpriteShape, sideLength: CGFloat, name: String, parent: SKNode, location: CGPoint) {
+        switch shape {
+        case .circle:
+            let sprite = createBall(radius: sideLength/2, color: generateRandomColor(), name: name)
+            sprite.position = location
+            parent.addChild(sprite)
+        case .roundedRectangle:
+            let sprite = createRoundedRectangle(size: CGSize(width: sideLength, height: sideLength), color: generateRandomColor())
+            sprite.position = location
+            parent.addChild(sprite)
+        }
+    }
+    
+    func spawnSpriteHere(location: CGPoint, parent: SKNode, fromSwiftUI: Bool) {
+        let sprite = SKSpriteNode(color: .systemRed, size: CGSize(width: 50, height: 50))
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: sprite.size)
+        setupPhysicsCategories(node: sprite, as: .sceneBody)
+        
+        if fromSwiftUI == true {
+            sprite.position = convertPoint(fromView: location)
+        } else if fromSwiftUI == false {
+            sprite.position = location
+        }
+        parent.addChild(sprite)
+    }
+    
+    func createRoundedRectangle(size: CGSize, color: SKColor, name: String? = nil, particleCollider: Bool? = nil, constrainInside: SKNode? = nil) -> SKNode {
         let square = SKSpriteNode(imageNamed: "rectangle-60-12-fill")
         square.name = name ?? nil
         square.size = size
@@ -63,8 +106,6 @@ extension SKScene {
         
         return square
     }
-    
-    // MARK: - Ball
     
     func createBall(radius: CGFloat, color: SKColor, name: String, particleCollider: Bool? = nil, constrainInside: SKNode? = nil) -> SKNode {
         let circle = SKSpriteNode(imageNamed: "circle-30-fill")
@@ -93,7 +134,7 @@ extension SKScene {
     
     // MARK: - Cloner
     
-    func cloner(node: SKNode, amount: Int, randomPosition: Bool, parent: SKNode) {
+    func cloner(node: SKSpriteNode, amount: Int, randomPosition: Bool, parent: SKNode) {
         for _ in 1...amount {
             let clonedNode = node.copy() as! SKSpriteNode
             clonedNode.name = "\(node.name ?? "")-\(UUID().uuidString)"

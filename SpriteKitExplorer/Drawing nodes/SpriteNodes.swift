@@ -38,7 +38,7 @@ class SpriteNodesScene: SKScene {
     
     override func sceneDidLoad() {
         anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        backgroundColor = .darkGray
+        backgroundColor = .gray
     }
     
     override func didMove(to view: SKView) {
@@ -111,58 +111,6 @@ class SpriteNodesScene: SKScene {
         addChild((concaveSprite))
     }
     
-}
-
-// MARK: - Core Image Filters
-
-/// A list of Core Image filters to speed up code writing
-///
-/// To do:
-/// - add default values
-/// - add ranges
-/// - add converters from SpriteKit data types to Core Image data types
-struct MyFilters {
-    static func dither(intensity: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIDither", parameters: ["inputIntensity": intensity])!
-    }
-    
-    static func gaussianBlur(radius: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIGaussianBlur", parameters: ["inputRadius": radius])!
-    }
-    
-    static func motionBlur(radius: CGFloat, angle: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIMotionBlur", parameters: ["inputRadius": radius, "inputAngle": angle])!
-    }
-    
-    static func vignette(intensity: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIVignette", parameters: ["inputIntensity": intensity])!
-    }
-    
-    static func bloom(intensity: CGFloat, radius: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIBloom", parameters: ["inputIntensity": intensity, "inputRadius": radius])!
-    }
-    
-    static func pixellate(scale: CGFloat) -> CIFilter {
-        return CIFilter(name: "CIPixellate", parameters: ["inputScale": scale])!
-    }
-    
-    // transform the center parameter into CGPoint type,
-    // then convert CGPoint to CIVector(x:y:) for CIFilter
-    static func zoomBlur(amount: CGFloat, center: CIVector) -> CIFilter {
-        return CIFilter(name: "CIZoomBlur", parameters: ["inputAmount": amount, "inputCenter": center])!
-    }
-    
-    static func CMYKHalftone(width: CGFloat, angle: CGFloat, sharpness: CGFloat) -> CIFilter {
-        return CIFilter(name: "CICMYKHalftone", parameters: ["inputWidth": width, "inputAngle": angle, "inputSharpness": sharpness])!
-    }
-    
-    static func xRay() -> CIFilter {
-        return CIFilter(name: "CIXRay")!
-    }
-    
-    static func monochrome(intensity: CGFloat, color: CIColor) -> CIFilter {
-        return CIFilter(name: "CIColorMonochrome", parameters: ["inputIntensity": intensity, "inputColor": color])!
-    }
 }
 
 

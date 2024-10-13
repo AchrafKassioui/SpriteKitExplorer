@@ -23,6 +23,8 @@ struct GKPlaygroundView: View {
                 debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS]
             )
             .ignoresSafeArea()
+            
+            
         }
     }
 }
@@ -45,13 +47,10 @@ class GKPlaygroundScene: SKScene {
     }
     
     func setupCamera() {
-        let camera = SKCameraNode()
-        let viewSize = view?.bounds.size
-        camera.xScale = (viewSize!.width / size.width)
-        camera.yScale = (viewSize!.height / size.height)
-        addChild(camera)
-        scene?.camera = camera
-        camera.setScale(1)
+        let inertialCamera = InertialCamera(scene: self)
+        inertialCamera.lockRotation = true
+        camera = inertialCamera
+        addChild(inertialCamera)
     }
     
     func setupLabel() {
@@ -95,7 +94,7 @@ class GKPlaygroundScene: SKScene {
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         guard touches.first != nil else { return }
         
-        nonClusteredRandomValues()
+        throwDice6()
     }
 }
 

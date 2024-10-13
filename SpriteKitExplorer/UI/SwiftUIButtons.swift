@@ -9,6 +9,105 @@
 
 import SwiftUI
 
+// MARK: - Toggle Switch
+
+public struct CustomToggleSwitch: View {
+    @Binding var isToggled: Bool
+    let iconOn: Image
+    let iconOff: Image
+    let labelOn: String
+    let labelOff: String
+    let onToggle: (Bool) -> Void
+    
+    let buttonWidth: Double = 60
+    let buttonheight: Double = 60
+    
+    public init(
+        isToggled: Binding<Bool>,
+        iconOn: Image,
+        labelOn: String,
+        iconOff: Image,
+        labelOff: String,
+        onToggle: @escaping (Bool) -> Void
+    ) {
+        self._isToggled = isToggled
+        self.iconOn = iconOn
+        self.labelOn = labelOn
+        self.iconOff = iconOff
+        self.labelOff = labelOff
+        self.onToggle = onToggle
+    }
+    
+    public var body: some View {
+        Rectangle()
+            .fill(Color.clear)
+            .frame(width: buttonWidth, height: buttonheight)
+//            .overlay(
+//                Circle()
+//                    .fill(isToggled ? Color.green : Color.clear)
+//                    .stroke(Color.black.opacity(0.3))
+//                    .offset(y: -buttonheight/2 + 10)
+//                    .frame(width: 8, height: 8)
+//            )
+            .overlay (
+                VStack (spacing: 10) {
+                    Circle()
+                        .fill(isToggled ? Color.green : Color.clear)
+                        .stroke(Color.black.opacity(0.3))
+                    //.offset(y: -buttonheight/2 + 10)
+                        .frame(width: 8, height: 8)
+                    
+                    (isToggled ? iconOn : iconOff)
+                        .resizable()
+                        .renderingMode(.template)
+                        .foregroundStyle(isToggled ? .black.opacity(0.8) : .black.opacity(0.3))
+                        .frame(width: 32, height: 32)
+                    
+//                    Text(isToggled ? labelOn : labelOff)
+//                        .font(.system(size: 10))
+//                        .multilineTextAlignment(.center)
+                }
+            )
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        isToggled = true
+                        onToggle(isToggled)
+                    }
+                    .onEnded { _ in
+                        isToggled = false
+                        onToggle(isToggled)
+                    }
+            )
+    }
+}
+
+// MARK: - Primitive button no background
+
+public struct iconNoBackground: PrimitiveButtonStyle {
+    @State private var isPressed = false
+    
+    public func makeBody(configuration: Configuration) -> some View {
+        configuration.label
+            .frame(width: 60, height: 60)
+            .contentShape(Rectangle())
+            .gesture(
+                DragGesture(minimumDistance: 0)
+                    .onChanged { _ in
+                        if !isPressed {
+                            isPressed = true
+                            configuration.trigger()
+                            UIImpactFeedbackGenerator(style: .medium).impactOccurred()
+                        }
+                    }
+                    .onEnded { _ in
+                        isPressed = false
+                    }
+            )
+    }
+}
+
 // MARK: - Primitive Buttons
 
 public struct squareButtonStyle: PrimitiveButtonStyle {
@@ -52,14 +151,15 @@ public struct roundButtonStyle: PrimitiveButtonStyle {
             .font(.system(size: 20, weight: .semibold))
             .foregroundStyle(.black)
             .frame(width: 60, height: 60)
-            .background(.thinMaterial.opacity(0.6))
-            .clipShape(Circle())
-            .overlay {
+            .background(
                 Circle()
-                    .stroke(.black.opacity(0.6), lineWidth: 1)
-                    //.fill(.black.opacity(isPressed ? 0.3 : 0))
-                    //.scaleEffect(isPressed ? 0.9 : 1)
-            }
+                    .fill(.ultraThinMaterial)
+                    .overlay(
+                        Circle()
+                            .stroke(.black.opacity(0.6), lineWidth: 1)
+                    )
+            )
+            .contentShape(Circle())
             .gesture(
                 DragGesture(minimumDistance: 0)
                     .onChanged { _ in

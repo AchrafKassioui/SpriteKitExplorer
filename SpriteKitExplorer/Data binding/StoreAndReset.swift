@@ -47,6 +47,10 @@ struct StoreAndReset: View {
     }
 }
 
+#Preview {
+    StoreAndReset()
+}
+
 // MARK: - Model
 
 struct SKObject {
@@ -99,8 +103,4 @@ class StoreAndResetScene: SKScene {
     func updateObjects() {
         myDataModel.aLabel.text = String(myDataModel.aNumber)
     }
-}
-
-#Preview {
-    StoreAndReset()
 }

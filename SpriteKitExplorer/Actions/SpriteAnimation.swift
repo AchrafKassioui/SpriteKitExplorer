@@ -113,11 +113,8 @@ class SpriteAnimationScene: SKScene {
     // MARK: Handle touch
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
-        
-        guard let scene = self.scene else { return }
-        
         for touch in touches {
-            let touchLocation = touch.location(in: scene)
+            let touchLocation = touch.location(in: self)
             let majorRadius = touch.majorRadius
             
             self.enumerateChildNodes(withName: "horizontal_line*") { node, stop in

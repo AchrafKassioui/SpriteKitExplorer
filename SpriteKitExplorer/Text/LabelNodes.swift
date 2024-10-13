@@ -43,9 +43,9 @@ class LabelNodesScene: SKScene {
         
         /// comment and uncomment the following functions to see various text effects
         //createMultipleLines()
-        //highlightedText()
+        highlightedText()
         //longParagraph(with: view)
-        strokedText(with: view)
+        //strokedText(with: view)
     }
     
     func createMultipleLines() {

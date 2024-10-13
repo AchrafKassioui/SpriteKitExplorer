@@ -43,8 +43,8 @@ class CameraDemoScene: SKScene {
         view.contentMode = .center
         backgroundColor = SKColor(red: 0.89, green: 0.89, blue: 0.84, alpha: 1)
         
-        physicsWorld.gravity = CGVector(dx: 0, dy: -9.8)
-        physicsWorld.speed = 0
+        physicsWorld.gravity = CGVector(dx: 0, dy: -20)
+        physicsWorld.speed = 1
         let physicsBoundaries = CGRect(
             x: -view.frame.width / 2,
             y: -view.frame.height / 2,
@@ -52,7 +52,7 @@ class CameraDemoScene: SKScene {
             height: view.frame.height
         )
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
-        physicsBody?.restitution = 1
+        //physicsBody?.restitution = 0.8
         
         let viewFrame = SKShapeNode(rect: physicsBoundaries)
         viewFrame.lineWidth = 3
@@ -61,12 +61,14 @@ class CameraDemoScene: SKScene {
         
         /// create objects
         let sprite = SKSpriteNode(color: .systemRed, size: CGSize(width: 60, height: 60))
-        sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 60, height: 60))
-        sprite.physicsBody?.restitution = 1
-        sprite.physicsBody?.linearDamping = 0
+        sprite.name = "square"
+        sprite.physicsBody = SKPhysicsBody(rectangleOf: CGSize(width: 56, height: 56))
+        sprite.physicsBody?.restitution = 0.5
+        //sprite.physicsBody?.linearDamping = 0
+        //sprite.physicsBody?.angularDamping = 0
         sprite.zPosition = 10
         sprite.position.y = 300
-        sprite.zRotation = .pi * 0.25
+        sprite.zRotation = .pi * 0.2
         addChild(sprite)
         
         let gridTexture = generateGridTexture(cellSize: 60, rows: 20, cols: 20, linesColor: SKColor(white: 0, alpha: 0.15))
@@ -94,14 +96,42 @@ class CameraDemoScene: SKScene {
         addChild(gestureVisualizationHelper)
         
         /// create UI
-        createResetCameraButton(with: view)
+        createResetSceneButton(with: view)
         createCameraLockButton(with: view)
+        createIsometricViewButton(with: view)
     }
     
     // MARK: UI
     
     let spacing: CGFloat = 20
     let buttonSize = CGSize(width: 60, height: 60)
+    
+    /// isometric view
+    func createIsometricViewButton(with view: SKView) {
+        let toggleIsometricButton = ButtonWithIconAndPattern(
+            size: buttonSize,
+            icon1: "isometric-icon",
+            icon2: "grid-icon",
+            iconSize: CGSize(width: 32, height: 32),
+            onTouch: {
+                if let myCamera = self.camera as? InertialCamera {
+                    myCamera.isometric.toggle()
+                    if myCamera.isometric == true {
+                        myCamera.lockRotation = true
+                    } else {
+                        myCamera.lockRotation = false
+                    }
+                }
+            }
+        )
+        
+        toggleIsometricButton.position = CGPoint(
+            x: 0,
+            y: -view.frame.height/2 + view.safeAreaInsets.bottom + buttonSize.height/2 + spacing
+        )
+        
+        camera?.addChild(toggleIsometricButton)
+    }
     
     /// lock camera
     func createCameraLockButton(with view: SKView) {
@@ -126,8 +156,8 @@ class CameraDemoScene: SKScene {
         camera?.addChild(lockCameraButton)
     }
     
-    /// reset camera
-    func createResetCameraButton(with view: SKView) {
+    /// reset scene
+    func createResetSceneButton(with view: SKView) {
         let resetCameraButton = ButtonWithIconAndPattern(
             size: buttonSize,
             icon1: "arrow-counterclockwise",
@@ -136,6 +166,8 @@ class CameraDemoScene: SKScene {
             onTouch: {
                 if let inertialCamera = self.camera as? InertialCamera {
                     inertialCamera.stopInertia()
+                    inertialCamera.isometric = false
+                    inertialCamera.lockRotation = false
                     inertialCamera.setTo(
                         position: .zero,
                         xScale: 1,
@@ -143,11 +175,19 @@ class CameraDemoScene: SKScene {
                         rotation: 0
                     )
                 }
+                
+                if let sprite = self.childNode(withName: "square"), let body = sprite.physicsBody {
+                    sprite.position.y = 300
+                    sprite.position.x = 0
+                    sprite.zRotation = .pi * 0.2
+                    body.velocity = CGVector(dx: 0, dy: 0)
+                    body.angularVelocity = 0
+                }
             }
         )
         
         resetCameraButton.position = CGPoint(
-            x: 0,
+            x: view.frame.width/2 - view.safeAreaInsets.left - buttonSize.width/2 - spacing,
             y: -view.frame.height/2 + view.safeAreaInsets.bottom + buttonSize.height/2 + spacing
         )
         

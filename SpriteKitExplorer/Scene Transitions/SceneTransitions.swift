@@ -1,15 +1,8 @@
-//
-//  SceneTransitions.swift
-//  SpriteKitExplorer
-//
-//  Created by Achraf Kassioui on 16/3/2024.
-//
-
 /**
  
  # SpriteKit scene transitions
  
- In SpriteKit, we can use SKTransition to replace one scene with another
+ In SpriteKit, we can use SKTransition to replace one scene with another.
  
  Created: 16 March 2024
  

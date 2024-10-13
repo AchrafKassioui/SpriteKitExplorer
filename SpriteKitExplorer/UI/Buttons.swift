@@ -466,9 +466,9 @@ class ButtonWithIconAndPattern: SKShapeNode {
     /// interaction
     private func updateIcon() {
         let iconName = buttonState == .base ? iconName1 : iconName2
-        let iconColor: SKColor = buttonState == .base ? SKColor(white: 0, alpha: 1) : SKColor.systemRed
         icon.texture = SKTexture(imageNamed: iconName)
-        icon.color = iconColor
+        //let iconColor: SKColor = buttonState == .base ? SKColor(white: 0, alpha: 1) : SKColor.systemRed
+        //icon.color = iconColor
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {

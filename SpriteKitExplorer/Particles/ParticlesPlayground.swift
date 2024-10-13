@@ -4,7 +4,7 @@
  
  Achraf Kassioui
  Created: 1 May 2024
- Updated: 2 May 2024
+ Updated: 12 June 2024
  
  */
 
@@ -20,7 +20,7 @@ struct ParticlesPlaygroundView: View {
         SpriteView(
             scene: ParticlesPlaygroundScene(),
             options: [.ignoresSiblingOrder, .shouldCullNonVisibleNodes],
-            debugOptions: [.showsFPS, .showsDrawCount, .showsNodeCount]
+            debugOptions: [.showsFPS, .showsDrawCount, .showsNodeCount, .showsQuadCount]
         )
         /// force recreation using the unique ID
         .id(sceneId)
@@ -45,6 +45,16 @@ class ParticlesPlaygroundScene: SKScene {
     private var physicalFrame = SKShapeNode()
     private let margin: CGFloat = 20
     
+    var isDragging = false {
+        didSet {
+            guard let inertialCamera = camera as? InertialCamera else { return }
+            if isDragging == true {
+                inertialCamera.lock = true
+            } else if isDragging == false {
+                inertialCamera.lock = false
+            }
+        }
+    }
     private var draggingNodes: [UITouch: SKNode] = [:]
     private var touchOffsets: [UITouch: CGPoint] = [:]
     
@@ -73,19 +83,42 @@ class ParticlesPlaygroundScene: SKScene {
         camera = inertialCamera
         addChild(inertialCamera)
         inertialCamera.zPosition = 99999
-        inertialCamera.lockPan = true
+        inertialCamera.lockRotation = true
         
         ///
         createPhysicalBoundaries(view)
         createVizButton(view)
         createParticles(view)
-        createRadialGravityField(radius: 50, strength: -5)
+        createRadialGravityFieldWithPolygonRegion(strength: 1)
     }
 }
 
-// MARK: - Particles Presets
-
 extension ParticlesPlaygroundScene {
+    
+    // MARK: Fields Region
+    
+    func createRadialGravityFieldWithPolygonRegion(strength: Float) {
+        
+        let path = CGMutablePath()
+        path.move(to: CGPoint(x: 0, y: 200))
+        path.addLine(to: CGPoint(x: -100, y: 0))
+        path.addLine(to: CGPoint(x: 100, y: 0))
+        path.closeSubpath()
+        
+        let field = SKFieldNode.electricField()
+        field.name = "draggable"
+        field.categoryBitMask = PhysicsCategory.field
+        field.region = SKRegion(path: path)
+        field.strength = strength
+        addChild(field)
+        
+        let shape = SKShapeNode(path: path)
+        shape.lineWidth = 0.1
+        shape.strokeColor = SKColor(white: 0, alpha: 1)
+        field.addChild(shape)
+    }
+    
+    // MARK: Particles
     
     func createParticles(_ view: SKView) {
         let orientationNode = SKNode()
@@ -95,7 +128,7 @@ extension ParticlesPlaygroundScene {
         particleEmitter.fieldBitMask = PhysicsCategory.field | PhysicsCategory.particleCollider
         particleEmitter.targetNode = orientationNode
         
-        particleEmitter.particleBirthRate = 120000
+        particleEmitter.particleBirthRate = 5000
         particleEmitter.numParticlesToEmit = 0
         particleEmitter.particleLifetime = 3
         particleEmitter.particleLifetimeRange = 0
@@ -114,7 +147,7 @@ extension ParticlesPlaygroundScene {
         particleEmitter.particleRotationRange = 0
         particleEmitter.particleRotationSpeed = 0
         
-        particleEmitter.particleScale = 0.02
+        particleEmitter.particleScale = 0.2
         particleEmitter.particleScaleRange = 0.01
         particleEmitter.particleScaleSpeed = 0
         particleEmitter.particleScaleSequence = nil
@@ -150,7 +183,7 @@ extension ParticlesPlaygroundScene {
         particleEmitter.particleAlphaSequence = nil
         particleEmitter.particleAlpha = 0.2
         particleEmitter.particleAlphaRange = -0.5
-        particleEmitter.particleAlphaSpeed = 0
+        particleEmitter.particleAlphaSpeed = 0.5
         
         let up = SKAction.moveBy(x: 0, y: 75, duration: 1)
         let right = SKAction.moveBy(x: 75, y: 0, duration: 1)
@@ -583,6 +616,7 @@ extension ParticlesPlaygroundScene {
             let touchedNodes = nodes(at: location)
             
             if let selectedNode = touchedNodes.first(where: { $0.name?.contains("draggable") ?? false }) {
+                isDragging = true
                 touchOffsets[touch] = location - selectedNode.position
                 selectedNode.physicsBody?.isDynamic = false
                 draggingNodes[touch] = selectedNode
@@ -616,6 +650,10 @@ extension ParticlesPlaygroundScene {
             draggingNodes[touch] = nil
             touchOffsets[touch] = nil
             /// end dragging logic
+        }
+        
+        if draggingNodes.isEmpty {
+            isDragging = false
         }
     }
     

@@ -4,7 +4,7 @@
  
  Achraf Kassioui
  Created: 3 May 2024
- Updated: 3 May 2024
+ Updated: 7 June 2024
  
  */
 
@@ -285,15 +285,23 @@ extension SKScene {
     /**
      
      Created: 19 May 2024
+     Updated: 7 June 2024
      
      */
-    func toggleDebugOptions(view: SKView) {
+    enum SKViewDebugOptions {
+        case base
+        case extended
+    }
+    
+    func toggleDebugOptions(view: SKView, extended: Bool = false) {
         view.showsFPS.toggle()
-        view.showsPhysics.toggle()
         view.showsNodeCount.toggle()
-        view.showsDrawCount.toggle()
-        view.showsFields.toggle()
-        view.showsQuadCount.toggle()
+        if extended == true {
+            view.showsPhysics.toggle()
+            view.showsDrawCount.toggle()
+            view.showsFields.toggle()
+            view.showsQuadCount.toggle()
+        }
     }
     
     // MARK: - Physics Categories
@@ -417,6 +425,7 @@ extension SKScene {
             node.physicsBody?.fieldBitMask = 0
             node.physicsBody?.isDynamic = false
             node.physicsBody?.restitution = 0.2
+            
         case .ethereal:
             node.physicsBody?.isDynamic = false
             node.physicsBody?.categoryBitMask = 0
@@ -528,7 +537,7 @@ extension SKScene {
      
      */
     func cleanPhysics() {
-        self.physicsWorld.enumerateBodies(in:(self.frame)) { body, stop in
+        self.physicsWorld.enumerateBodies(in:(self.frame)) { body, _ in
             body.collisionBitMask = 0
         }
     }

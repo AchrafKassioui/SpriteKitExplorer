@@ -18,6 +18,7 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             List {
+                NavigationLink("Preferred FPS", destination: PreferredFPSView())
                 NavigationLink("Combine", destination: Combine())
                 NavigationLink("Simulation Speed", destination: SimulationSpeed())
                 NavigationLink("Lighting", destination: Lighting())

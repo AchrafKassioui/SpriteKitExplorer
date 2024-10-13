@@ -39,7 +39,7 @@ public func sinFloat(_ num: Float) -> Float {
     return sin(num)
 }
 
-/// In the easing functions below, the parameter p 
+/// In the easing functions below, the parameter p
 
 /// Modeled after the line y = x
 public func LinearInterpolation(_ p: Float) -> Float {

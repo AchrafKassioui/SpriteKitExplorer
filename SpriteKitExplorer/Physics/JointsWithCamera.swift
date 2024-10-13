@@ -81,7 +81,7 @@ struct JointsWithCameraView: View {
     JointsWithCameraView()
 }
 
-class JointsWithCameraScene: SKScene {
+class JointsWithCameraScene: SKScene, InertialCameraDelegate {
     
     override func didMove(to view: SKView) {
         size = view.bounds.size
@@ -97,8 +97,8 @@ class JointsWithCameraScene: SKScene {
         createZoomLabel(view: view, parent: uiLayer)
         
         createPhysicalBoundaryForUIBodies(view: view, parent: uiLayer)
-        createUIPhysicsJoint(parent: uiLayer)
-        //createSpringJointAndWheels(parent: uiLayer)
+        createbasicSpringJoint(parent: uiLayer)
+        createSpringJointAndWheels(parent: uiLayer)
         
         createSceneObjects(parent: objectsLayer)
     }
@@ -163,27 +163,27 @@ class JointsWithCameraScene: SKScene {
     
     func setCameraScale(_ scale: CGFloat) {
         if let camera = self.camera {
+            
             let beforeScale = SKAction.run {
-                
+                print("base camera will scale")
             }
             
-            let ScaleAction = SKAction.scale(to: scale, duration: 0.2)
-            ScaleAction.timingMode = .easeInEaseOut
+            let scaleAction = SKAction.scale(to: scale, duration: 0.2)
+            scaleAction.timingMode = .easeInEaseOut
             
             let afterScale = SKAction.run {
-
+                print("base camera did scale")
             }
             
-            let sequence = SKAction.sequence([beforeScale, ScaleAction, afterScale])
+            let sequence = SKAction.sequence([beforeScale, scaleAction, afterScale])
             camera.run(sequence)
         }
     }
 
     func createInertialCamera(scene: SKScene) {
         let inertialCamera = InertialCamera(scene: scene)
+        inertialCamera.delegate = self
         inertialCamera.lockRotation = true
-        inertialCamera.minScale = 0.2
-        inertialCamera.maxScale = 20
         scene.camera = inertialCamera
         scene.addChild(inertialCamera)
     }
@@ -192,6 +192,20 @@ class JointsWithCameraScene: SKScene {
         let myCamera = SKCameraNode()
         self.camera = myCamera
         addChild(myCamera)
+    }
+    
+    // MARK: - Inertial Camera protocol
+    
+    func cameraWillScale(to scale: (x: CGFloat, y: CGFloat)) {
+        //detachBasicJoint()
+    }
+    
+    func cameraDidScale(to scale: (x: CGFloat, y: CGFloat)) {
+        //reattachBasicJoint()
+    }
+    
+    func cameraDidMove(to position: CGPoint) {
+        
     }
     
     // MARK: - UI Physics
@@ -230,21 +244,52 @@ class JointsWithCameraScene: SKScene {
         parent.addChild(uiFrame)
     }
     
-    // MARK: - UI Objects
+    // MARK: - Basic spring joint
     
+    var springJoint1 = SKPhysicsJointSpring()
     var bodyA = SKSpriteNode()
     var bodyB = SKSpriteNode()
-    var springJoint1 = SKPhysicsJointSpring()
+    var previousBodyAState: Bool = true
+    var previousBodyBState: Bool = true
     
-    func createUIPhysicsJoint(parent: SKNode) {
+    func detachBasicJoint() {
+        previousBodyAState = bodyA.physicsBody!.isDynamic
+        previousBodyBState = bodyB.physicsBody!.isDynamic
+        
+        bodyA.physicsBody?.isDynamic = false
+        bodyB.physicsBody?.isDynamic = false
+        
+        //bodyB.position = bodyA.position
+        physicsWorld.remove(springJoint1)
+    }
+    
+    func reattachBasicJoint() {
+        let newAnchorAPosition = convert(bodyA.position, from: bodyA.parent!)
+        let newAnchorBPosition = convert(bodyB.position, from: bodyB.parent!)
+        
+        self.springJoint1 = SKPhysicsJointSpring.joint(
+            withBodyA: bodyA.physicsBody!,
+            bodyB: bodyB.physicsBody!,
+            anchorA: newAnchorAPosition,
+            anchorB: newAnchorBPosition
+        )
+        springJoint1.frequency = 1
+        springJoint1.damping = 1
+        physicsWorld.add(springJoint1)
+        
+        bodyA.physicsBody?.isDynamic = previousBodyAState
+        bodyB.physicsBody?.isDynamic = previousBodyBState
+    }
+    
+    func createbasicSpringJoint(parent: SKNode) {
         /// The first body
         bodyA = SKSpriteNode(color: .systemYellow, size: CGSize(width: 50, height: 50))
         bodyA.physicsBody = SKPhysicsBody(rectangleOf: bodyA.size)
         bodyA.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
         bodyA.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBoundary | PhysicsBitMasks.uiBody
-        bodyA.physicsBody?.isDynamic = true
-        bodyA.physicsBody?.affectedByGravity = false
-        bodyA.position = CGPoint(x: 0, y: 100)
+        bodyA.physicsBody?.isDynamic = false
+        bodyA.physicsBody?.affectedByGravity = true
+        bodyA.position = CGPoint(x: 0, y: 300)
         parent.addChild(bodyA)
         
         /// The second body
@@ -254,7 +299,7 @@ class JointsWithCameraScene: SKScene {
         bodyB.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBoundary | PhysicsBitMasks.uiBody
         bodyB.physicsBody?.isDynamic = true
         bodyB.physicsBody?.affectedByGravity = false
-        bodyB.position = CGPoint(x: 0, y: -100)
+        bodyB.position = CGPoint(x: 0, y: 200)
         parent.addChild(bodyB)
         
         /// Spring joints
@@ -270,6 +315,40 @@ class JointsWithCameraScene: SKScene {
         physicsWorld.add(springJoint1)
     }
     
+    // MARK: - Colliding wheels with spring joint
+    
+    var previousWheelAnchorAState: Bool = true
+    var previousWheelAnchorBState: Bool = true
+    
+    func detachWheelsJoint() {
+        previousWheelAnchorAState = bodyA.physicsBody!.isDynamic
+        previousWheelAnchorAState = bodyB.physicsBody!.isDynamic
+        
+        bodyA.physicsBody?.isDynamic = false
+        bodyB.physicsBody?.isDynamic = false
+        
+        //bodyB.position = bodyA.position
+        physicsWorld.remove(springJoint1)
+    }
+    
+    func reattachWheelsJoint() {
+        let newAnchorAPosition = convert(bodyA.position, from: bodyA.parent!)
+        let newAnchorBPosition = convert(bodyB.position, from: bodyB.parent!)
+        
+        self.springJoint1 = SKPhysicsJointSpring.joint(
+            withBodyA: bodyA.physicsBody!,
+            bodyB: bodyB.physicsBody!,
+            anchorA: newAnchorAPosition,
+            anchorB: newAnchorBPosition
+        )
+        springJoint1.frequency = 1
+        springJoint1.damping = 1
+        physicsWorld.add(springJoint1)
+        
+        bodyA.physicsBody?.isDynamic = previousBodyAState
+        bodyB.physicsBody?.isDynamic = previousBodyBState
+    }
+    
     func createSpringJointAndWheels(parent: SKNode) {
         let anchorSize = CGSize(width: 2, height: 20)
         let bodyRadius: CGFloat = 30
@@ -277,42 +356,28 @@ class JointsWithCameraScene: SKScene {
         let margin: CGFloat = 4
         
         /// Joint anchors
-        let springStart = SKSpriteNode(color: .systemBlue, size: anchorSize)
-        springStart.physicsBody = SKPhysicsBody(rectangleOf: springStart.size)
-        springStart.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
-        springStart.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBody | PhysicsBitMasks.uiBoundary
-        springStart.position = CGPoint(x: 0, y: 0)
-        springStart.zPosition = 10
-        parent.addChild(springStart)
+        let wheelAnchorA = SKSpriteNode(color: .systemBlue, size: anchorSize)
+        wheelAnchorA.physicsBody = SKPhysicsBody(rectangleOf: wheelAnchorA.size)
+        wheelAnchorA.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
+        wheelAnchorA.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBody | PhysicsBitMasks.uiBoundary
+        wheelAnchorA.position = CGPoint(x: 0, y: 0)
+        wheelAnchorA.zPosition = 10
+        parent.addChild(wheelAnchorA)
         
-        let springEnd = SKSpriteNode(color: .systemGreen, size: anchorSize)
-        springEnd.physicsBody = SKPhysicsBody(rectangleOf: springEnd.size)
-        springEnd.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
-        springEnd.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBody | PhysicsBitMasks.uiBoundary
-        springEnd.position = CGPoint(x: 50, y: -150)
-        springEnd.zPosition = 10
-        parent.addChild(springEnd)
+        let WheelAnchorB = SKSpriteNode(color: .systemGreen, size: anchorSize)
+        WheelAnchorB.physicsBody = SKPhysicsBody(rectangleOf: WheelAnchorB.size)
+        WheelAnchorB.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
+        WheelAnchorB.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBody | PhysicsBitMasks.uiBoundary
+        WheelAnchorB.position = CGPoint(x: 50, y: -150)
+        WheelAnchorB.zPosition = 10
+        parent.addChild(WheelAnchorB)
         
         /// spring joint
-        let anchorBPositionInScene: CGPoint
-        if let parent = springEnd.parent {
-            anchorBPositionInScene = self.convert(springEnd.position, from: parent)
-        } else {
-            anchorBPositionInScene = .zero
-        }
-        
-        let anchorAPositionInScene: CGPoint
-        if let parent = springStart.parent {
-            anchorAPositionInScene = self.convert(springStart.position, from: parent)
-        } else {
-            anchorAPositionInScene = .zero
-        }
-        
         let springJoint = SKPhysicsJointSpring.joint(
-            withBodyA: springStart.physicsBody!,
-            bodyB: springEnd.physicsBody!,
-            anchorA: anchorAPositionInScene,
-            anchorB: anchorBPositionInScene
+            withBodyA: wheelAnchorA.physicsBody!,
+            bodyB: WheelAnchorB.physicsBody!,
+            anchorA: wheelAnchorA.position,
+            anchorB: WheelAnchorB.position
         )
         springJoint.frequency = 30
         springJoint.damping = 0.5
@@ -342,7 +407,7 @@ class JointsWithCameraScene: SKScene {
         wheel2.physicsBody?.categoryBitMask = PhysicsBitMasks.uiBody
         wheel2.physicsBody?.collisionBitMask = PhysicsBitMasks.uiBody | PhysicsBitMasks.uiBoundary
         wheel2.physicsBody?.friction = 1
-        wheel2.position = springEnd.position
+        wheel2.position = WheelAnchorB.position
         parent.addChild(wheel2)
         
         let dot2 = SKShapeNode(circleOfRadius: dotRadius)
@@ -354,14 +419,14 @@ class JointsWithCameraScene: SKScene {
         
         /// fixed joints that link the anchors with the wheels
         let fixedJointStart = SKPhysicsJointFixed.joint(
-            withBodyA: springStart.physicsBody!,
+            withBodyA: wheelAnchorA.physicsBody!,
             bodyB: wheel1.physicsBody!,
             anchor: wheel1.position
         )
         physicsWorld.add(fixedJointStart)
         
         let fixedJointEnd = SKPhysicsJointFixed.joint(
-            withBodyA: springEnd.physicsBody!,
+            withBodyA: WheelAnchorB.physicsBody!,
             bodyB: wheel2.physicsBody!,
             anchor: wheel2.position
         )

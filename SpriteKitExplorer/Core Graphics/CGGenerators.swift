@@ -2,7 +2,7 @@
  
  # Core Graphics Generators
  
- Methods that generate textures for use in SpriteKit
+ Methods that generate textures for use in SpriteKit.
  
  Created: 18 March 2024
  Updated: 19 April 2024
@@ -35,7 +35,7 @@ func generateStripedTexture(size: CGSize, colorA: SKColor, colorB: SKColor, stri
 
 // MARK: - Dot Pattern
 
-enum ButtonPattern {
+enum DotPatternType {
     case regular
     case staggered
 }
@@ -43,7 +43,7 @@ enum ButtonPattern {
 func generateDotPatternTexture(
     size: CGSize,
     color: SKColor,
-    pattern: ButtonPattern,
+    pattern: DotPatternType,
     dotSize: CGFloat? = 2,
     cornerRadius: CGFloat? = nil,
     rotation: CGFloat? = nil
@@ -211,7 +211,7 @@ func generateCheckerboardTexture(cellSize: CGFloat, rows: Int, cols: Int) -> SKT
 // MARK: - SpriteKit Grid Generator
 /**
  
- The function returns a empty texture of the expected size exceeds Metal texture size limit.
+ This function returns a empty texture if the expected size exceeds Metal texture size limit.
  The current limit is 8192x8192, which is the maximum size allowed in Xcode live preview.
  
  */

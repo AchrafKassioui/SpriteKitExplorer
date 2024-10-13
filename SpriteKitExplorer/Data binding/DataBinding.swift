@@ -49,6 +49,10 @@ struct DataBinding: View {
     }
 }
 
+#Preview {
+    DataBinding()
+}
+
 @Observable class MyModel {
     var arrayOfNumbers: [Int] = [1, 2, 3]
     
@@ -63,8 +67,4 @@ struct DataBinding: View {
 
 class MyPlayground {
     var myModel = MyModel()
-}
-
-#Preview {
-    DataBinding()
 }
