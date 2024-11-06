@@ -12,35 +12,14 @@ import SpriteKit
 // MARK: - SwiftUI for previewing the sublcass
 
 struct ToolButtonPreview: View {
-    var myScene = ToolButtonExampleScene()
-    @State private var debugOptions: SpriteView.DebugOptions = [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
-    
     var body: some View {
-        VStack {
-            ZStack {
-                SpriteView(
-                    scene: myScene,
-                    preferredFramesPerSecond: 120,
-                    options: [.ignoresSiblingOrder],
-                    debugOptions: debugOptions
-                )
-                .ignoresSafeArea()
-                
-                HStack {
-                    Spacer()
-                    VStack {
-                        Button("Debug") {
-                            
-                        }
-                        .padding()
-                        Spacer()
-                    }
-                }
-            }
-            HStack {
-                Spacer()
-            }
-        }
+        SpriteView(
+            scene: ToolButtonExampleScene(),
+            preferredFramesPerSecond: 120,
+            options: [.ignoresSiblingOrder],
+            debugOptions: [.showsNodeCount, .showsFPS, .showsQuadCount, .showsDrawCount]
+        )
+        .ignoresSafeArea()
         .background(.black)
     }
 }
@@ -64,18 +43,17 @@ class ToolButtonExampleScene: SKScene {
         scaleMode = .resizeFill
         view.isMultipleTouchEnabled = true
         scene?.anchorPoint = CGPoint(x: 0.5, y: 0.5)
-        createObjects(in: view)
+        createObjects()
     }
     
-    func createObjects(in view: SKView) {
-        guard let scene = scene else { return }
-        let _ = ButtonWithIconAndLabel(
+    func createObjects() {
+        let button = ButtonWithIconAndLabel(
             name: "button",
             size: CGSize(width: 60, height: 60),
             icon: "material_tool",
-            parent: scene,
             label: "Color"
         )
+        addChild(button)
     }
 }
 

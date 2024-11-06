@@ -15,7 +15,6 @@ import SpriteKit
  - On touch end, the toggle is inactive
  
  */
-
 class ToggleSwitch: SKSpriteNode {
 
     /// Toggle settings
@@ -411,8 +410,8 @@ class ButtonWithDotPattern: SKShapeNode {
 
 class ButtonWithIconAndPattern: SKShapeNode {
     
-    /// a call back function to execute
-    /// the function to execute is passed as an argument during initialization
+    /// A function to execute when the button is touched
+    /// The function to execute is passed as an argument during initialization
     let onTouch: () -> Void
     
     enum ButtonState {
@@ -450,7 +449,7 @@ class ButtonWithIconAndPattern: SKShapeNode {
         self.path = CGPath(ellipseIn: CGRect(origin: CGPoint(x: -size.width/2, y: -size.height/2), size: size), transform: nil)
         
         /// styling
-        let dotTexture = generateDotPatternTexture(size: size, color: SKColor(white: 0, alpha: 1), pattern: .staggered, cornerRadius: size.width/2)
+        let dotTexture = generateDotPatternTexture(size: size, color: .black, pattern: .staggered, dotSize: 1, spacing: 1)
         fillTexture = dotTexture
         strokeColor = SKColor(white: 0, alpha: 1)
         fillColor = SKColor(white: 1, alpha: 0.4)
@@ -464,11 +463,14 @@ class ButtonWithIconAndPattern: SKShapeNode {
     }
     
     /// interaction
+    let action1 = SKAction.scale(to: 0.8, duration: 0.1)
+    let action2 = SKAction.scale(to: 1, duration: 0.1)
+    
     private func updateIcon() {
         let iconName = buttonState == .base ? iconName1 : iconName2
         icon.texture = SKTexture(imageNamed: iconName)
-        //let iconColor: SKColor = buttonState == .base ? SKColor(white: 0, alpha: 1) : SKColor.systemRed
-        //icon.color = iconColor
+        self.removeAllActions()
+        self.run(SKAction.sequence([action1, action2]))
     }
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -489,7 +491,6 @@ class ButtonWithIconAndPattern: SKShapeNode {
  - Parameter onTouch: a function to execute whenever the button is touched. A touch toggles the `isActive` property
  
  */
-
 class ButtonWithLabel: SKShapeNode {
     
     /// properties
@@ -553,7 +554,7 @@ class ButtonWithLabel: SKShapeNode {
 
 class ButtonWithIconAndLabel: SKShapeNode {
     
-    init(name: String, size: CGSize, icon: String, parent: SKNode, label: String? = nil) {
+    init(name: String, size: CGSize, icon: String, label: String? = nil) {
         super.init()
         
         let origin = CGPoint(x: -size.width / 2, y: -size.height / 2)
@@ -563,7 +564,7 @@ class ButtonWithIconAndLabel: SKShapeNode {
         self.name = name
         self.lineWidth = 1
         self.strokeColor = .black.withAlphaComponent(0.6)
-        self.fillColor = SKColor.white.withAlphaComponent(0.6)
+        self.fillColor = .white.withAlphaComponent(0.6)
         
         /// add the icon as a child
         let iconNode = SKSpriteNode(imageNamed: icon)
@@ -585,8 +586,6 @@ class ButtonWithIconAndLabel: SKShapeNode {
             
             self.addChild(labelNode)
         }
-        
-        parent.addChild(self)
     }
     
     required init?(coder aDecoder: NSCoder) {

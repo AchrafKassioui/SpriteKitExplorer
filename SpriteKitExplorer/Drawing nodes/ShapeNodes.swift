@@ -22,7 +22,7 @@ import SpriteKit
 
 struct ShapeNodes: View {
     var myScene = ShapeNodesScene()
-    @State var selectedShape: ShapeToDraw = .PointingArrow
+    @State var selectedShape: ShapeToDraw = .VariousShapes
     
     var body: some View {
         ZStack {
@@ -503,7 +503,12 @@ class ShapeNodesScene: SKScene {
         
         /// Shape from spline points
         /// pairs of points are joined with a quadratic curve
-        var splinePoints: [CGPoint] = [CGPoint(x: -200, y: 0), CGPoint(x: 0, y: 25), CGPoint(x: 25, y: -25), CGPoint(x: 100, y: 50)]
+        var splinePoints: [CGPoint] = [
+            CGPoint(x: -200, y: 0),
+            CGPoint(x: 0, y: 25),
+            CGPoint(x: 25, y: -25),
+            CGPoint(x: 100, y: 50)
+        ]
         let splineShape = SKShapeNode(splinePoints: &splinePoints, count: splinePoints.count)
         splineShape.strokeColor = SKColor.magenta
         splineShape.lineWidth = 4

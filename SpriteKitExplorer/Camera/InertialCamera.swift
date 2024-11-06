@@ -79,7 +79,7 @@ protocol InertialCameraDelegate: AnyObject {
 
 // MARK: Camera
 
-/// we subclass SKCameraNode, and add a delegate for UIKit gesture recognizers
+/// Subclass SKCameraNode, and add the protocol that allows simulatenous gesture recognition
 class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     
     /**
@@ -87,11 +87,11 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
      # Inertia Settings
      
      */
-    /// toggle panning inertia
+    /// Toggle panning inertia
     var enablePanInertia = true
-    /// toggle scale inertia
+    /// Toggle scale inertia
     var enableScaleInertia = true
-    /// toggle rotation inertia
+    /// Toggle rotation inertia
     var enableRotationInertia = true
     
     /**
@@ -642,12 +642,20 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     
     // MARK: Gesture recognizers
     
+    /// Allow multiple gesture recognizers to recognize gestures at the same time.
+    /// For this function to work, the protocol `UIGestureRecognizerDelegate` must be added to this class,
+    /// and a delegate must be set on the recognizer that needs to work with others
+    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
+        return true
+    }
+    
     private func setupGestureRecognizers(view: SKView) {
-        let panRecognizer = UIPanGestureRecognizer(target: self, action: #selector(panCamera(gesture:)))
+        let panRecognizer = InstantPanGestureRecognizer(target: self, action: #selector(panCamera(gesture:)))
         let pinchRecognizer = UIPinchGestureRecognizer(target: self, action: #selector(scaleCamera(gesture:)))
         let rotationRecognizer = UIRotationGestureRecognizer(target: self, action: #selector(rotateCamera(gesture:)))
         let tapRecognizer = UITapGestureRecognizer(target: self, action: #selector(resetCamera(gesture:)))
         
+        /// Delegates are set to allow simultaneous gesture recognition
         panRecognizer.delegate = self
         pinchRecognizer.delegate = self
         rotationRecognizer.delegate = self
@@ -656,28 +664,22 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
         panRecognizer.maximumNumberOfTouches = 2
         tapRecognizer.numberOfTapsRequired = 2
         
-        /// this prevents the recognizer from cancelling touch events once a gesture is recognized
+        /// Prevent the recognizers from cancelling touch events once a gesture is recognized
         /// In UIKit, this property is set to true by default
         panRecognizer.cancelsTouchesInView = false
         pinchRecognizer.cancelsTouchesInView = false
         rotationRecognizer.cancelsTouchesInView = false
         tapRecognizer.cancelsTouchesInView = false
         
-        /// Allows touches ended event to fire immediately
+        /// Allow touchesEnded events to fire immediately
         tapRecognizer.delaysTouchesEnded = false
         tapRecognizer.delaysTouchesBegan = false
         
+        /// Attach the recognizers to the view
         view.addGestureRecognizer(panRecognizer)
         view.addGestureRecognizer(pinchRecognizer)
         view.addGestureRecognizer(rotationRecognizer)
         view.addGestureRecognizer(tapRecognizer)
-    }
-    
-    /// allow multiple gesture recognizers to recognize gestures at the same time
-    /// for this function to work, the protocol `UIGestureRecognizerDelegate` must be added to this class
-    /// and a delegate must be set on the recognizer that needs to work with others
-    func gestureRecognizer(_ gestureRecognizer: UIGestureRecognizer, shouldRecognizeSimultaneouslyWith otherGestureRecognizer: UIGestureRecognizer) -> Bool {
-        return true
     }
     
     /// Use this function to determine if gesture recognizers should be triggered
@@ -686,5 +688,26 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
         /// for example, if some area is touched, return false to disable the gesture recognition
         /// for this camera, we disable the gestures if the `lock` property is false
         return !lock
+    }
+}
+
+/**
+ 
+ # Custom pan gesture recognizer
+ 
+ By default, UIKit's pan gesture recognizer starts recognizing a pan after touches have moved across 10 points.
+ This sublcass of UIPanGestureRecognizer forces the recognition to happen immediately upon touchesMoved.
+ 
+ */
+class InstantPanGestureRecognizer: UIPanGestureRecognizer {
+    
+   /// Override the touchesMoved function to make it trigger immediately
+    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent) {
+        super.touchesMoved(touches, with: event)
+        
+        /// Force the gesture recognizer to start recognizing the gesture immediately
+        if state == .possible {
+            state = .began
+        }
     }
 }

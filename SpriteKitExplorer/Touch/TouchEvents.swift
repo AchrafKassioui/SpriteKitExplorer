@@ -2,9 +2,10 @@
  
  # Touch events
  
- Exploring touch handling in SpriteKit
+ Exploring touch handling in SpriteKit.
  
  Created: 19 March 2024
+ Updated: 15 October 2024
  
  */
 
@@ -13,15 +14,33 @@ import SpriteKit
 
 struct TouchEventsView: View {
     var myScene = TouchEventsScene()
+    @State private var isCameraLocked = true
     
     var body: some View {
         ZStack {
             SpriteView(
                 scene: myScene,
                 options: [.ignoresSiblingOrder],
-                debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS, .showsPhysics]
+                debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS]
             )
             .ignoresSafeArea()
+            VStack {
+                Spacer()
+                HStack {
+                    Button("Draw grid") {
+                        myScene.drawGrid()
+                    }
+                    .buttonStyle(.borderedProminent)
+                    
+                    Button(isCameraLocked ? "Unlock Camera" : "Lock Camera") {
+                        if let inertialCamera = myScene.camera as? InertialCamera {
+                            isCameraLocked.toggle()
+                            inertialCamera.lock = isCameraLocked
+                        }
+                    }
+                    .buttonStyle(.borderedProminent)
+                }
+            }
         }
     }
 }
@@ -32,81 +51,90 @@ struct TouchEventsView: View {
 
 class TouchEventsScene: SKScene {
     
-    // MARK: - Scene setup
+    // MARK: Scene setup
     
     override func didMove(to view: SKView) {
-        name = "scene"
         view.isMultipleTouchEnabled = true
         size = view.bounds.size
         scaleMode = .resizeFill
         backgroundColor = .gray
         setupCamera()
-        drawGrid()
     }
     
     func setupCamera() {
-        let camera = SKCameraNode()
-        camera.name = "camera"
-        let viewSize = view?.bounds.size
-        camera.xScale = (viewSize!.width / size.width)
-        camera.yScale = (viewSize!.height / size.height)
-        addChild(camera)
-        scene?.camera = camera
-        camera.setScale(1)
+        if camera is InertialCamera { return }
+        let inertialCamera = InertialCamera(scene: self)
+        inertialCamera.lock = true
+        camera = inertialCamera
+        addChild(inertialCamera)
     }
     
     /**
      
-     # Create a grid an animate its creation
+     # Create a grid and animate its creation
      
      Not relevant to touch events. This is a cosmetic experiment.
      
      */
     func drawGrid() {
-        let scaleDuration: TimeInterval = 0.5
-        let moveDuration: TimeInterval = 0 // Use the same duration for simultaneous scaling and moving
+        guard let view = view else { return }
         
-        // Starting size for both line types to ensure they grow from a point.
+        let scaleDuration: TimeInterval = 1
+        let moveDuration: TimeInterval = 0 /// Use the same duration for simultaneous scaling and moving
+        
+        /// Starting size for both line types to ensure they grow from a point.
         let startingSize = CGSize(width: 1, height: 1)
         let color = SKColor(white: 1, alpha: 0.3)
+        
+        enumerateChildNodes(withName: "//vLine") { node, _ in
+            node.removeFromParent()
+        }
+        
+        enumerateChildNodes(withName: "//hLine") { node, _ in
+            node.removeFromParent()
+        }
         
         for i in -8..<8 {
             let finalXPosition = CGFloat(i * 60)
             
             let vLine = SKSpriteNode(color: color, size: startingSize)
-            vLine.position = CGPoint(x: 0, y: 0) // Start from the center
+            vLine.name = "vLine"
+            vLine.position = CGPoint(x: 0, y: 0) /// Start from the center
             vLine.zPosition = -1
             addChild(vLine)
             
-            // Scale and move actions
-            let scaleYAction = SKAction.scaleY(to: 844, duration: scaleDuration)
+            /// Scale and move actions
+            let scaleYAction = SKAction.scaleY(to: view.bounds.height, duration: scaleDuration)
+            scaleYAction.timingMode = .easeOut
             let moveXAction = SKAction.moveTo(x: finalXPosition, duration: moveDuration)
             
-            vLine.run(SKAction.group([scaleYAction, moveXAction])) // Run simultaneously
+            vLine.run(SKAction.group([scaleYAction, moveXAction])) /// Run simultaneously
         }
         
         for i in -8..<8 {
             let finalYPosition = CGFloat(i * 60)
             
             let hLine = SKSpriteNode(color: color, size: startingSize)
-            hLine.position = CGPoint(x: 0, y: 0) // Start from the center
+            hLine.name = "hLine"
+            hLine.position = CGPoint(x: 0, y: 0) /// Start from the center
             hLine.zPosition = -1
             addChild(hLine)
             
-            // Scale and move actions
-            let scaleXAction = SKAction.scaleX(to: 844, duration: scaleDuration)
+            /// Scale and move actions
+            let scaleXAction = SKAction.scaleX(to: view.bounds.width, duration: scaleDuration)
+            scaleXAction.timingMode = .easeOut
             let moveYAction = SKAction.moveTo(y: finalYPosition, duration: moveDuration)
             
-            hLine.run(SKAction.group([scaleXAction, moveYAction])) // Run simultaneously
+            hLine.run(SKAction.group([scaleXAction, moveYAction])) /// Run simultaneously
         }
     }
     
-    // MARK: - Touch visualization
+    // MARK: Touch visualization
     /**
      
      For each touch point on screen:
-     - visualize the touch area
-     - display the touch point coordinates
+     - Visualize the touch area. The radius of the visualized area depends on the size of the touch that was reported by the hardware via `majorRadius`.
+     - Display the touch coordinates.
      
      */
     var touchLabels = [UITouch: SKLabelNode]()
@@ -156,11 +184,22 @@ class TouchEventsScene: SKScene {
         }
     }
     
-    // MARK: - Touch events
+    // MARK: Update Loop
+    
+    override func update(_ currentTime: TimeInterval) {
+        if let inertialCamera = camera as? InertialCamera {
+            inertialCamera.updateInertia()
+        }
+    }
+    
+    // MARK: Touch events
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
             visualizeTouchesBegan(touch)
+            if let inertialCamera = camera as? InertialCamera {
+                inertialCamera.stopInertia()
+            }
         }
     }
     

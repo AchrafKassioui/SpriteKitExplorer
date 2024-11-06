@@ -17,10 +17,10 @@
 
 /**
  
- Added Swift formatting
+ Edited by Achraf Kassioui.
+ Added Swift formatting and rewritten the math formulas in the comments
  
- Last update: 14 March 2024
- Achraf Kassioui
+ Last update: 17 October 2024
  
  */
 
@@ -39,7 +39,14 @@ public func sinFloat(_ num: Float) -> Float {
     return sin(num)
 }
 
-/// In the easing functions below, the parameter p
+/**
+ 
+ p represents the progression of the animation from start to finish.
+ p = 0 represent the start of the animation.
+ p = 1 represent the end of the animation.
+ The range [0, 1] is a normalized range that represent the duration of the animation. Think of it as a progression percentage (if we multiply the values by 100).
+ 
+ */
 
 /// Modeled after the line y = x
 public func LinearInterpolation(_ p: Float) -> Float {
@@ -240,10 +247,13 @@ public func BackEaseInOut(_ p: Float) -> Float {
     }
 }
 
+/// Modeled after the reverse of the BounceEaseOut.
+/// Creates a bouncing effect that accelerates as it approaches the start (reverse bounce).
 public func BounceEaseIn(_ p: Float) -> Float {
     return 1 - BounceEaseOut(1 - p)
 }
 
+/// Models a bouncing effect where the object decelerates with each bounce, starting quickly and slowing down.
 public func BounceEaseOut(_ p: Float) -> Float {
     if p < 4 / 11.0 {
         return (121 * p * p) / 16.0
@@ -256,6 +266,7 @@ public func BounceEaseOut(_ p: Float) -> Float {
     }
 }
 
+/// Combines BounceEaseIn and BounceEaseOut to create an effect where the object first bounces in, and then bounces out.
 public func BounceEaseInOut(_ p: Float) -> Float {
     if p < 0.5 {
         return 0.5 * BounceEaseIn(p * 2)

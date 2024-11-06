@@ -526,7 +526,7 @@ extension SKScene {
     // MARK: - Clean Physics
     /**
      
-     SpriteKit physics world puts a small circular physics body at the origin of the scene. That body messes up with other physics bodies such as physics joints.
+     SpriteKit physics world puts a small circular physics body at the origin of the scene. That body messes up with some physics bodies such as physics joints.
      This function enumerates all physics bodies in the scene, and disable their collision with other bodies.
      Call this function before any physics setup.
      

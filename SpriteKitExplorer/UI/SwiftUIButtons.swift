@@ -51,21 +51,21 @@ public struct CustomToggleSwitch: View {
 //            )
             .overlay (
                 VStack (spacing: 10) {
-                    Circle()
-                        .fill(isToggled ? Color.green : Color.clear)
-                        .stroke(Color.black.opacity(0.3))
-                    //.offset(y: -buttonheight/2 + 10)
-                        .frame(width: 8, height: 8)
+//                    Circle()
+//                        .fill(isToggled ? Color.green : Color.clear)
+//                        .stroke(Color.black.opacity(0.3))
+//                    //.offset(y: -buttonheight/2 + 10)
+//                        .frame(width: 8, height: 8)
                     
                     (isToggled ? iconOn : iconOff)
                         .resizable()
                         .renderingMode(.template)
                         .foregroundStyle(isToggled ? .black.opacity(0.8) : .black.opacity(0.3))
-                        .frame(width: 32, height: 32)
+                        .frame(width: 24, height: 24)
                     
-//                    Text(isToggled ? labelOn : labelOff)
-//                        .font(.system(size: 10))
-//                        .multilineTextAlignment(.center)
+                    Text(isToggled ? labelOn : labelOff)
+                        .font(.system(size: 10))
+                        .multilineTextAlignment(.center)
                 }
             )
             .contentShape(Rectangle())
@@ -211,59 +211,95 @@ public struct firstButtonStyle: ButtonStyle {
 // MARK: - Preview
 
 struct firstButtonStylePreview: View {
+    @State var isToggled: Bool = false
     var body: some View {
-        
-        // ------------------------------------------------
-        
-        Button {
-            print("Primitive Button Style tapped")
-        } label: {
-            Image(systemName: "gearshape.2")
-        }
-        .buttonStyle(roundButtonStyle())
-        
-        // ------------------------------------------------
-        
-        Button {
-            print("Button Style tapped")
-        } label: {
-            Image(systemName: "play.fill")
-        }
-        .buttonStyle(roundButtonStyleWithStandardBehavior())
-        
-        // ------------------------------------------------
-        
-        Button {
+        VStack {
             
-        } label: {
-            Text("Tap")
+            CustomToggleSwitch(
+                isToggled: $isToggled,
+                iconOn: Image(systemName: "togglepower"),
+                labelOn: "ON",
+                iconOff: Image(systemName: "poweroff"),
+                labelOff: "OFF",
+                onToggle: { isToggled in
+                    print(isToggled)
+                }
+            )
+            .background(.white.opacity(0.7))
+            
+            // ------------------------------------------------
+            
+            Button {
+                print("iconNoBackground tapped")
+            } label: {
+                Image(systemName: "square")
+            }
+            .buttonStyle(iconNoBackground())
+            .background(.white.opacity(0.7))
+            
+            // ------------------------------------------------
+            
+            Button {
+                print("squareButtonStyle tapped")
+            } label: {
+                Image(systemName: "square")
+            }
+            .buttonStyle(squareButtonStyle())
+            .background(.white.opacity(0.7))
+            
+            // ------------------------------------------------
+            
+            Button {
+                print("roundButtonStyle tapped")
+            } label: {
+                Image(systemName: "gearshape.2")
+            }
+            .buttonStyle(roundButtonStyle())
+            
+            // ------------------------------------------------
+            
+            Button {
+                print("roundButtonStyleWithStandardBehavior tapped")
+            } label: {
+                Image(systemName: "play.fill")
+            }
+            .buttonStyle(roundButtonStyleWithStandardBehavior())
+            
+            // ------------------------------------------------
+            
+            Button {
+                
+            } label: {
+                Text("Tap")
+            }
+            /// Apply the custom style like this
+            .buttonStyle(firstButtonStyle())
+            
+            /// Various tap and press listeners
+            .simultaneousGesture(LongPressGesture().onChanged { _ in
+                /// beginning of a long press
+                print("Long Press Started")
+            })
+            .simultaneousGesture(LongPressGesture().onEnded { _ in
+                print("Taaaaaaap")
+                /// haptic feedback
+                UIImpactFeedbackGenerator(style: .light).impactOccurred()
+            })
+            .simultaneousGesture(TapGesture().onEnded {
+                print("Tap")
+            })
+            .simultaneousGesture(TapGesture(count: 2).onEnded {
+                print("Tap tap")
+            })
+            .simultaneousGesture(TapGesture(count: 3).onEnded {
+                print("Tap tap tap")
+            })
+            .simultaneousGesture(TapGesture(count: 4).onEnded {
+                print("Tap tap tap tap")
+            })
         }
-        /// Apply the custom style like this
-        .buttonStyle(firstButtonStyle())
-        
-        /// Various tap and press listeners
-        .simultaneousGesture(LongPressGesture().onChanged { _ in
-            /// beginning of a long press
-        })
-        .simultaneousGesture(LongPressGesture().onEnded { _ in
-            print("Taaaaaaap")
-            /// haptic feedback
-            UIImpactFeedbackGenerator(style: .light).impactOccurred()
-        })
-        .simultaneousGesture(TapGesture().onEnded {
-            print("Tap")
-        })
-        .simultaneousGesture(TapGesture(count: 2).onEnded {
-            print("Tap tap")
-        })
-        .simultaneousGesture(TapGesture(count: 3).onEnded {
-            print("Tap tap tap")
-        })
-        .simultaneousGesture(TapGesture(count: 4).onEnded {
-            print("Tap tap tap tap")
-        })
-        
-        // ------------------------------------------------
+        .frame(maxWidth: .infinity, maxHeight: .infinity)
+        .background(.black.opacity(0.3))
     }
 }
 

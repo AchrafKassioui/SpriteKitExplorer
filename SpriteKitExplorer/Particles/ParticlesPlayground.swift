@@ -195,6 +195,7 @@ extension ParticlesPlaygroundScene {
     }
 }
 
+/*
 struct Particles {
     
     let preset1 = {
@@ -249,6 +250,7 @@ struct Particles {
         particleEmitter.particleAlphaSpeed = 0
     }
 }
+ */
 
 extension ParticlesPlaygroundScene {
     

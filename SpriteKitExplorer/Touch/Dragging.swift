@@ -14,10 +14,6 @@ import SwiftUI
 import SpriteKit
 import GameplayKit
 
-class DraggingScene: SKScene {
-    
-}
-
 // MARK: - With GKAgent
 
 class SeekingSprite: SKSpriteNode, GKAgentDelegate {
@@ -202,12 +198,7 @@ class DraggableSprite: SKSpriteNode {
             if isDragging == true {
                 let touchLocation = touch.location(in: parent)
                 let newPosition = touchLocation - touchOffset
-                let action = SKAction.move(to: newPosition, duration: 1)
-                let _ = SKEase.move(easeFunction: .curveTypeElastic, easeType: .easeTypeInOut, time: 1, from: self.position, to: newPosition)
-                action.timingFunction = { time in
-                    return ElasticEaseInOut(time)
-                }
-                self.run(action)
+                self.position = newPosition
             }
         }
     }

@@ -48,7 +48,7 @@ struct ManipulationView: View {
     
     private func rightPalette() -> some View {
         VStack (spacing: 0) {
-            settingsButton
+            debugButton
             pauseButton
             addButton
         }

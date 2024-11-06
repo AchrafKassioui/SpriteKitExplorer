@@ -45,95 +45,59 @@ func generateDotPatternTexture(
     color: SKColor,
     pattern: DotPatternType,
     dotSize: CGFloat? = 2,
+    spacing: CGFloat? = nil,
     cornerRadius: CGFloat? = nil,
     rotation: CGFloat? = nil
 ) -> SKTexture {
     let dotRadius: CGFloat = (dotSize ?? 1) * 0.5
-    let spacing: CGFloat = dotRadius * 0.5
+    let spacing: CGFloat = spacing ?? (dotRadius * 0.5)
     let renderer = UIGraphicsImageRenderer(size: size)
     
     let image = renderer.image { context in
-        /// if you need to set a background fill color, uncomment these 2 lines
-        /// the color is set in the first line, the filling is done in the second line
-        SKColor(white: 1, alpha: 0).setFill()
+        /// The background color of the texture.
+        /// By default, it's transparent.
+        SKColor.clear.setFill()
         context.fill(CGRect(origin: .zero, size: size))
         
-        /// rotate the texture around its visual center
-        /// the origin of the coordinate system in Core Graphics is in the top left
-        /// to pivot around the center, we move the origin (the rotation pivot) to the center then put it back
+        /// If asked, rotate the texture around its visual center
+        /// The origin of the coordinate system with UIGraphicsImageRenderer is in the top left
+        /// To pivot around the center, we move the origin (the rotation pivot) to the center, rotate, then put it back.
         if let rotation = rotation {
             context.cgContext.translateBy(x: size.width / 2, y: size.height / 2)
             context.cgContext.rotate(by: rotation)
             context.cgContext.translateBy(x: -size.width / 2, y: -size.height / 2)
         }
         
-        /// if provided, clip the context with a rounded rect
+        /// If asked, clip the context with a rounded rect
         if let cornerRadius = cornerRadius {
             let clippingPath = UIBezierPath(roundedRect: CGRect(origin: .zero, size: size), cornerRadius: cornerRadius)
             clippingPath.addClip()
         }
         
-        /// set a color to fill the path later, default is black
+        /// Set a color for the drawing
         color.setFill()
         
         switch pattern {
-            case .regular:
-                for y in stride(from: 0, to: size.height, by: dotRadius * 2 + spacing) {
-                    for x in stride(from: 0, to: size.width, by: dotRadius * 2 + spacing) {
-                        let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
-                        dotPath.fill()
-                    }
+        case .regular:
+            for y in stride(from: 0, to: size.height, by: dotRadius * 2 + spacing) {
+                for x in stride(from: 0, to: size.width, by: dotRadius * 2 + spacing) {
+                    let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
+                    dotPath.fill()
                 }
-                
-            case .staggered:
-                for y in stride(from: dotRadius, to: size.height, by: dotRadius * 2 + spacing) {
-                    let xOffset = (y / dotRadius).truncatingRemainder(dividingBy: 2) == 0 ? 0 : dotRadius + spacing / 2
-                    for x in stride(from: xOffset, to: size.width, by: dotRadius * 2 + spacing) {
-                        let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
-                        dotPath.fill()
-                    }
+            }
+            
+        case .staggered:
+            var rowIndex = 0
+            for y in stride(from: dotRadius, to: size.height, by: dotRadius * 2 + spacing) {
+                /// Alternate xOffset based on whether the row is odd or even
+                let xOffset = rowIndex % 2 == 0 ? 0 : dotRadius + spacing / 2
+                for x in stride(from: xOffset, to: size.width, by: dotRadius * 2 + spacing) {
+                    let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
+                    dotPath.fill()
                 }
-        }
-    }
-    
-    /// Convert the image to an SKTexture
-    return SKTexture(image: image)
-}
-
-func generateDotPatternTextureOld(size: CGSize, color: SKColor) -> SKTexture {
-    let dotRadius: CGFloat = 0.5
-    let spacing: CGFloat = 0.5
-    let renderer = UIGraphicsImageRenderer(size: size)
-    
-    let image = renderer.image { context in
-        /// if you need to set a background fill color, uncomment these 2 lines
-        /// the color is set in the first line, the filling is done in the second line
-        SKColor(white: 1, alpha: 0).setFill()
-        context.fill(CGRect(origin: .zero, size: size))
-        
-        /// set a color to fill the path later, default is black
-        color.setFill()
-        
-        /// the pattern
-        /// a regular pattern
-        /*
-         for y in stride(from: 0, to: size.height, by: dotRadius * 2 + spacing) {
-         for x in stride(from: 0, to: size.width, by: dotRadius * 2 + spacing) {
-         let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
-         dotPath.fill()
-         }
-         }
-         */
-        
-        /// a staggered pattern
-        for y in stride(from: dotRadius, to: size.height, by: dotRadius * 2 + spacing) {
-            let xOffset = (y / dotRadius).truncatingRemainder(dividingBy: 2) == 0 ? 0 : dotRadius + spacing / 2
-            for x in stride(from: xOffset, to: size.width, by: dotRadius * 2 + spacing) {
-                let dotPath = UIBezierPath(ovalIn: CGRect(x: x, y: y, width: dotRadius * 2, height: dotRadius * 2))
-                dotPath.fill()
+                rowIndex += 1
             }
         }
-        
     }
     
     /// Convert the image to an SKTexture
@@ -208,7 +172,7 @@ func generateCheckerboardTexture(cellSize: CGFloat, rows: Int, cols: Int) -> SKT
     return SKTexture(image: image)
 }
 
-// MARK: - SpriteKit Grid Generator
+// MARK: - Grid Generator
 /**
  
  This function returns a empty texture if the expected size exceeds Metal texture size limit.
@@ -288,4 +252,76 @@ func generateGridTexture(cellSize: CGFloat, rows: Int, cols: Int, linesColor: SK
     }
     
     return SKTexture(image: image)
+}
+
+// MARK: - Grid Generator, for Swift 6
+/**
+ 
+ This function returns a empty texture if the expected size exceeds Metal texture size limit.
+ The current limit is 8192x8192, which is the maximum size allowed in Xcode live preview.
+ 
+ */
+
+func generateGridTexture(cellSize: CGFloat, rows: Int, cols: Int, linesColor: SKColor) async -> UIImage {
+    return await withCheckedContinuation { continuation in
+        /// Perform work in a background task
+        Task.detached {
+            let backgroundColor: SKColor = .clear
+            let lineShadowColor: SKColor = .clear
+            let lineShadowOffset: CGSize = CGSize(width: 3, height: 3)
+            let shadowBlur: CGFloat = 3
+            
+            let widthInPoints = CGFloat(cols) * cellSize + 1
+            let heightInPoints = CGFloat(rows) * cellSize + 1
+            let widthInPixels = widthInPoints
+            let heightInPixels = heightInPoints
+            
+            if widthInPixels > 8192 || heightInPixels > 8192 {
+                print("generateGridTexture: size exceeds Metal texture size limit.")
+                let emptyRenderer = UIGraphicsImageRenderer(size: CGSize(width: 1, height: 1))
+                let emptyImage = emptyRenderer.image { _ in }
+                //continuation.resume(returning: SKTexture(image: emptyImage))
+                continuation.resume(returning: emptyImage)
+                return
+            }
+            
+            let size = CGSize(width: CGFloat(cols) * cellSize + 1, height: CGFloat(rows) * cellSize + 1)
+            let renderer = UIGraphicsImageRenderer(size: size)
+            
+            // Create the image in the background task
+            let image = renderer.image { ctx in
+                let context = ctx.cgContext
+                if lineShadowColor != .clear {
+                    let shadowColor = lineShadowColor.cgColor
+                    context.setShadow(offset: lineShadowOffset, blur: shadowBlur, color: shadowColor)
+                }
+                
+                if backgroundColor != .clear {
+                    context.setFillColor(backgroundColor.cgColor)
+                    context.fill(CGRect(origin: .zero, size: size))
+                }
+                
+                let bezierPath = UIBezierPath()
+                let offset: CGFloat = 0.5
+                for i in 0...cols {
+                    let x = CGFloat(i) * cellSize + offset
+                    bezierPath.move(to: CGPoint(x: x, y: 0))
+                    bezierPath.addLine(to: CGPoint(x: x, y: size.height))
+                }
+                
+                for i in 0...rows {
+                    let y = CGFloat(i) * cellSize + offset
+                    bezierPath.move(to: CGPoint(x: 0, y: y))
+                    bezierPath.addLine(to: CGPoint(x: size.width, y: y))
+                }
+                
+                linesColor.setStroke()
+                bezierPath.lineWidth = 1
+                bezierPath.stroke()
+            }
+            
+            // Return the generated image
+            continuation.resume(returning: image)
+        }
+    }
 }

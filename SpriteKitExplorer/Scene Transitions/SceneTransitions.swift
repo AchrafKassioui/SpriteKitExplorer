@@ -5,11 +5,14 @@
  In SpriteKit, we can use SKTransition to replace one scene with another.
  
  Created: 16 March 2024
+ Updated: 16 October 2024
  
  */
 
 import SwiftUI
 import SpriteKit
+
+// MARK: SwiftUI
 
 struct SceneTransitionsView: View {
     var myScene = SceneToTransitionFrom()
@@ -28,107 +31,95 @@ struct SceneTransitionsView: View {
     SceneTransitionsView()
 }
 
-/// a list of different transtion effects
+// MARK: Scene Transitions Catalog
 
-//enum TransitionEffect {
-//    case pushDown(duration: TimeInterval)
-//    case pushUp(duration: TimeInterval)
-//    case pushLeft(duration: TimeInterval)
-//    case pushRight(duration: TimeInterval)
-//    case doorway(duration: TimeInterval)
-//    case pushUp(duration: TimeInterval)
-//    case pushUp(duration: TimeInterval)
-//    
-//    var transition: SKTransition {
-//        switch self {
-//        case .pushDown(let duration):
-//            return SKTransition.push(with: .down, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        case .pushUp(let duration):
-//            return SKTransition.push(with: .up, duration: duration)
-//        }
-//    }
-//    
-//}
+/// Use lazy properties to ensure the transitions are created only when accessed
+struct TransitionManager {
+    static var transitionEffect1: SKTransition {
+        SKTransition.push(with: .down, duration: 0.5)
+    }
+    
+    static var transitionEffect2: SKTransition {
+        SKTransition.doorway(withDuration: 1)
+    }
+    
+    static var transitionEffect3: SKTransition {
+        SKTransition.flipVertical(withDuration: 0.5)
+    }
+    
+    static var transitionFilter1: CIFilter? {
+        CIFilter(name: "CIAccordionFoldTransition", parameters: [
+            "inputBottomHeight": 1,
+            "inputNumberOfFolds": 5,
+            "inputFoldShadowAmount": 1,
+            "inputTime": 0.1
+        ])
+    }
+    
+    static var transitionFilter2: CIFilter? {
+        CIFilter(name: "CIBarsSwipeTransition", parameters: [
+            "inputAngle": 3.14,
+            "inputWidth": 30,
+            "inputBarOffset": 1,
+            "inputTime": 0
+        ])
+    }
+    
+    static var transitionFilter3: CIFilter? {
+        CIFilter(name: "CICopyMachineTransition", parameters: [
+            "inputExtent": CIVector(x: 0, y: 0, z: 1170, w: 2532),
+            "inputColor": CIColor(red: 0.6, green: 1, blue: 0.8, alpha: 1),
+            "inputTime": 1,
+            "inputAngle": 1.57,
+            "inputWidth": 1170,
+            "inputOpacity": 0.5
+        ])
+    }
+    
+    static var transitionFilter4: CIFilter? {
+        CIFilter(name: "CIFlashTransition", parameters: [
+            "inputCenter": CIVector(x: 1170/2, y: 2532/2),
+            "inputExtent": CIVector(x: 0, y: 0, z: 30, w: 30),
+            "inputColor": CIColor(red: 0.5, green: 0.2, blue: 1, alpha: 1),
+            "inputTime": 0,
+            "inputMaxStriationRadius": 2.58,
+            "inputStriationStrength": 1.5,
+            "inputStriationContrast": 1.375,
+            "inputFadeThreshold": 0.85
+        ])
+    }
+    
+    static var transitionFilter5: CIFilter? {
+        CIFilter(name: "CIModTransition", parameters: [
+            "inputCenter": CIVector(x: 1170/2, y: 2532/2),
+            "inputTime": 0,
+            "inputAngle": 0,
+            "inputRadius": 30,
+            "inputCompression": 2532
+        ])
+    }
+    
+    static var transitionFilter6: CIFilter? {
+        CIFilter(name: "CIPageCurlWithShadowTransition", parameters: [
+            "inputExtent": CIVector(x: 1000, y: 1000, z: 300, w: 300),
+            "inputTime": 0,
+            "inputAngle": 1.57,
+            "inputRadius": 300,
+            "inputShadowSize": 0.5,
+            "inputShadowAmount": 0.7,
+            "inputShadowExtent": CIVector(x: 0, y: 0, z: 300, w: 0)
+        ])
+    }
+    
+    static var ciTransition: SKTransition? {
+        if let filter = transitionFilter3 {
+            return SKTransition(ciFilter: filter, duration: 1)
+        }
+        return nil
+    }
+}
 
-let transitionEffect1 = SKTransition.push(with: .down, duration: 0.5)
-let transitionEffect2 = SKTransition.doorway(withDuration: 1)
-let transitionEffect3 = SKTransition.flipVertical(withDuration: 0.5)
-
-let transitionFilter1 = CIFilter(
-    name: "CIAccordionFoldTransition",
-    parameters: [
-        "inputBottomHeight": 1,
-        "inputNumberOfFolds": 5,
-        "inputFoldShadowAmount": 1,
-        "inputTime": 0.1
-    ]
-)
-let transitionFilter2 = CIFilter(
-    name: "CIBarsSwipeTransition",
-    parameters: [
-        "inputAngle": 3.14,
-        "inputWidth": 30,
-        "inputBarOffset": 1,
-        "inputTime": 0
-    ]
-)
-let transitionFilter3 = CIFilter(
-    name: "CICopyMachineTransition",
-    parameters: [
-        "inputExtent": CIVector(x: 0, y: 0, z: 1170, w: 2532),
-        "inputColor": CIColor(red: 0.6, green: 1, blue: 0.8, alpha: 1),
-        "inputTime": 1,
-        "inputAngle": 1.57,
-        "inputWidth": 1170,
-        "inputOpacity": 0.5,
-    ]
-)
-let transitionFilter4 = CIFilter(
-    name: "CIFlashTransition",
-    parameters: [
-        "inputCenter": CIVector(x: 1170/2, y: 2532/2),
-        "inputExtent": CIVector(x: 0, y: 0, z: 30, w: 30),
-        "inputColor": CIColor(red: 0.5, green: 0.2, blue: 1, alpha: 1),
-        "inputTime": 0,
-        "inputMaxStriationRadius": 2.58,
-        "inputStriationStrength": 1.5,
-        "inputStriationContrast": 1.375,
-        "inputFadeThreshold": 0.85
-    ]
-)
-let transitionFilter5 = CIFilter(
-    name: "CIModTransition",
-    parameters: [
-        "inputCenter": CIVector(x: 1170/2, y: 2532/2),
-        "inputTime": 0,
-        "inputAngle": 0,
-        "inputRadius": 30,
-        "inputCompression": 2532
-    ]
-)
-let transitionFilter6 = CIFilter(
-    name: "CIPageCurlWithShadowTransition",
-    parameters: [
-        "inputExtent": CIVector(x: 1000, y: 1000, z: 300, w: 300),
-        "inputTime": 0,
-        "inputAngle": 1.57,
-        "inputRadius": 300,
-        "inputShadowSize": 0.5,
-        "inputShadowAmount": 0.7,
-        "inputShadowExtent": CIVector(x: 0, y: 0, z: 300, w: 0)
-    ]
-)
-let CITransition = SKTransition.init(ciFilter: transitionFilter3!, duration: 1)
+// MARK: SpriteKit Scenes
 
 class SceneToTransitionFrom: SKScene {
     
@@ -157,7 +148,9 @@ class SceneToTransitionFrom: SKScene {
         for node in touchedNodes {
             if node.name == "button" {
                 /// change the transition parameter to try different transition effects
-                view.presentScene(SceneToTransitionTo(), transition: CITransition)
+                if let transition = TransitionManager.ciTransition {
+                    view.presentScene(SceneToTransitionTo(), transition: transition)
+                }
             }
         }
     }
@@ -189,13 +182,16 @@ class SceneToTransitionTo: SKScene {
         for node in touchedNodes {
             if node.name == "button" {
                 /// change the transition parameter to try different transition effects
-                view.presentScene(SceneToTransitionFrom(), transition: CITransition)
+                if let transition = TransitionManager.ciTransition {
+                    view.presentScene(SceneToTransitionFrom(), transition: transition)
+                }
             }
         }
     }
 }
 
-func createButton() -> SKNode {
+
+fileprivate func createButton() -> SKNode {
     let label = SKLabelNode(text: "Transition Scene")
     label.fontName = "Menlo-Bold"
     label.fontSize = 20
@@ -208,7 +204,7 @@ func createButton() -> SKNode {
     button.lineWidth = 1.5
     button.strokeColor = SKColor(white: 1, alpha: 0.2)
     button.fillColor = SKColor(white: 1, alpha: 0.1)
-
+    
     button.addChild(label)
     return button
 }

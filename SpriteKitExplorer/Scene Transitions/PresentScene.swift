@@ -17,13 +17,20 @@ import SpriteKit
 struct SpriteKitView: View {
     var scene: SKScene
     var isPaused = false
-    @State private var sceneId = UUID()
+    @State private var scale: CGSize = CGSize(width: 0.5, height: 0.5)
     
     var body: some View {
         SpriteView(scene: scene, isPaused: isPaused)
-            .id(sceneId)
-            .onAppear { sceneId = UUID() }
+            .scaleEffect(scale)
+            .onAppear {
+                scale = CGSize(width: 1, height: 1)
+            }
+            .onDisappear {
+                scale = CGSize(width: 0, height: 0)
+            }
             .ignoresSafeArea()
+            .animation(.bouncy(duration: 0.3), value: scale)
+            .background(.black)
     }
 }
 
@@ -66,6 +73,10 @@ class PresentSceneScene: SKScene {
         view.isMultipleTouchEnabled = true
         scaleMode = .resizeFill
         backgroundColor = .lightGray
+        
+        let myCamera = InertialCamera(scene: self)
+        camera = myCamera
+        addChild(myCamera)
         
         runAroundTrack()
     }

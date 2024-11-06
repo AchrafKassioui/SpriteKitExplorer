@@ -164,6 +164,7 @@ class CameraDemoScene: SKScene {
             icon2: "arrow-counterclockwise",
             iconSize: CGSize(width: 32, height: 32),
             onTouch: {
+                /*
                 if let inertialCamera = self.camera as? InertialCamera {
                     inertialCamera.stopInertia()
                     inertialCamera.isometric = false
@@ -175,6 +176,7 @@ class CameraDemoScene: SKScene {
                         rotation: 0
                     )
                 }
+                 */
                 
                 if let sprite = self.childNode(withName: "square"), let body = sprite.physicsBody {
                     sprite.position.y = 300

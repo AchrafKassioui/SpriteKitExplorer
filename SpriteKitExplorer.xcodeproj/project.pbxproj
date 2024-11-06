@@ -70,6 +70,8 @@
 		DE66AF442C1F64E9006D78B1 /* OneWayObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF432C1F64E9006D78B1 /* OneWayObservation.swift */; };
 		DE66AF462C1FAAD4006D78B1 /* TwoWayObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF452C1FAAD4006D78B1 /* TwoWayObservation.swift */; };
 		DE66AF482C1FECC2006D78B1 /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF472C1FECC2006D78B1 /* ModelObservation.swift */; };
+		DE71BD1C2CDB4D5900ABC133 /* SceneCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */; };
+		DE798A642CBF6E7D0084445C /* RotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE798A632CBF6E670084445C /* RotationController.swift */; };
 		DE7F08832BF68D7600F97B21 /* PhysicsJoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */; };
 		DE91203F2BB4B45A00B3B63F /* VideoPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */; };
 		DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9120402BB4EE2400B3B63F /* Numbers.swift */; };
@@ -103,11 +105,13 @@
 		DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BAFC2BAD254700563A99 /* VideoNode.swift */; };
 		DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEC9BB042BAD44C300563A99 /* AVPlayer.swift */; };
 		DEC9BB072BAD482700563A99 /* Multi-touch typography.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */; };
+		DED1B64A2CC188480060CA5E /* EasingPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED1B6492CC188420060CA5E /* EasingPlayground.swift */; };
 		DED58E112BD9690C00F8ED45 /* Scrap.swift in Sources */ = {isa = PBXBuildFile; fileRef = DED58E102BD9690C00F8ED45 /* Scrap.swift */; };
 		DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */; };
 		DEE3DA952CB8788A00F59245 /* PreferredFPS.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE3DA942CB8788300F59245 /* PreferredFPS.swift */; };
 		DEE3DA972CBC44FB00F59245 /* PresentScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE3DA962CBC44F300F59245 /* PresentScene.swift */; };
 		DEE84EE92BF33F9B00FD58BD /* SKShapeNode+Arrow.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEE84EE82BF33F9B00FD58BD /* SKShapeNode+Arrow.swift */; };
+		DEF47E672CC753C50063D7D2 /* HapticPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF47E662CC753BF0063D7D2 /* HapticPlayground.swift */; };
 		DEF4F1572BE02E45003E3AD7 /* FireLarge.sks in Resources */ = {isa = PBXBuildFile; fileRef = DEF4F1562BE02E45003E3AD7 /* FireLarge.sks */; };
 		DEF4F1592BE293A5003E3AD7 /* ParticlesPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF4F1582BE293A5003E3AD7 /* ParticlesPlayground.swift */; };
 		DEF4F15B2BE44714003E3AD7 /* PhysicsPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */; };
@@ -187,6 +191,8 @@
 		DE66AF432C1F64E9006D78B1 /* OneWayObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OneWayObservation.swift; sourceTree = "<group>"; };
 		DE66AF452C1FAAD4006D78B1 /* TwoWayObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayObservation.swift; sourceTree = "<group>"; };
 		DE66AF472C1FECC2006D78B1 /* ModelObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
+		DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinates.swift; sourceTree = "<group>"; };
+		DE798A632CBF6E670084445C /* RotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationController.swift; sourceTree = "<group>"; };
 		DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsJoints.swift; sourceTree = "<group>"; };
 		DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPhysics.swift; sourceTree = "<group>"; };
 		DE9120402BB4EE2400B3B63F /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
@@ -220,11 +226,13 @@
 		DEC9BAFC2BAD254700563A99 /* VideoNode.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoNode.swift; sourceTree = "<group>"; };
 		DEC9BB042BAD44C300563A99 /* AVPlayer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AVPlayer.swift; sourceTree = "<group>"; };
 		DEC9BB062BAD482700563A99 /* Multi-touch typography.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Multi-touch typography.mp4"; sourceTree = "<group>"; };
+		DED1B6492CC188420060CA5E /* EasingPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EasingPlayground.swift; sourceTree = "<group>"; };
 		DED58E102BD9690C00F8ED45 /* Scrap.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Scrap.swift; sourceTree = "<group>"; };
 		DEE20AA82BA56AE300D4B4D1 /* SceneTransitions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneTransitions.swift; sourceTree = "<group>"; };
 		DEE3DA942CB8788300F59245 /* PreferredFPS.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreferredFPS.swift; sourceTree = "<group>"; };
 		DEE3DA962CBC44F300F59245 /* PresentScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PresentScene.swift; sourceTree = "<group>"; };
 		DEE84EE82BF33F9B00FD58BD /* SKShapeNode+Arrow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SKShapeNode+Arrow.swift"; sourceTree = "<group>"; };
+		DEF47E662CC753BF0063D7D2 /* HapticPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HapticPlayground.swift; sourceTree = "<group>"; };
 		DEF4F1562BE02E45003E3AD7 /* FireLarge.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = FireLarge.sks; sourceTree = "<group>"; };
 		DEF4F1582BE293A5003E3AD7 /* ParticlesPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ParticlesPlayground.swift; sourceTree = "<group>"; };
 		DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsPlayground.swift; sourceTree = "<group>"; };
@@ -263,6 +271,7 @@
 		DE22B9F02B95967800CC6BCB /* SpriteKitEasing */ = {
 			isa = PBXGroup;
 			children = (
+				DED1B6492CC188420060CA5E /* EasingPlayground.swift */,
 				DE22B9E92B95956400CC6BCB /* Easing.swift */,
 				DE22B9EA2B95956400CC6BCB /* EasingDeclarations.swift */,
 				DE22B9EB2B95956400CC6BCB /* SKEase.swift */,
@@ -292,8 +301,10 @@
 		DE22BA0E2B9834EB00CC6BCB /* UI */ = {
 			isa = PBXGroup;
 			children = (
-				DE66AF3B2C1A9384006D78B1 /* SwiftUIPlayground.swift */,
+				DEF47E662CC753BF0063D7D2 /* HapticPlayground.swift */,
+				DE798A632CBF6E670084445C /* RotationController.swift */,
 				DE36F24E2C108EA3006C7073 /* WheelSpinner.swift */,
+				DE66AF3B2C1A9384006D78B1 /* SwiftUIPlayground.swift */,
 				DE66AF3F2C1ACCD9006D78B1 /* ValueRotationInertia.swift */,
 				DE36F2522C109431006C7073 /* simpleRotationInertia.swift */,
 				DE22BA172B99091B00CC6BCB /* ToolButton.swift */,
@@ -354,6 +365,7 @@
 		DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				DE71BD1A2CDB4D4000ABC133 /* Scene Graph */,
 				DEE84EE72BF33F7C00FD58BD /* MoreSpriteKit */,
 				DE9E962B2BD66AFF006B54C0 /* Actions */,
 				DE2F263F2B5A2875004003C3 /* Assets.xcassets */,
@@ -405,6 +417,14 @@
 				DE3F54272BDC59A9000D4C6E /* IndicationArrow.swift */,
 			);
 			path = Visualization;
+			sourceTree = "<group>";
+		};
+		DE71BD1A2CDB4D4000ABC133 /* Scene Graph */ = {
+			isa = PBXGroup;
+			children = (
+				DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */,
+			);
+			path = "Scene Graph";
 			sourceTree = "<group>";
 		};
 		DE91203B2BB499EC00B3B63F /* Camera */ = {
@@ -672,6 +692,7 @@
 				DEB55FDE2BFA788900C4303A /* PhysicsScale.swift in Sources */,
 				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
 				DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */,
+				DED1B64A2CC188480060CA5E /* EasingPlayground.swift in Sources */,
 				DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
 				DEAFED8F2BA8F7DD0030857E /* CGDemo.swift in Sources */,
@@ -683,6 +704,7 @@
 				DE4BA9FF2BB8A25B009B418F /* Shaders2.swift in Sources */,
 				DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */,
 				DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */,
+				DE798A642CBF6E7D0084445C /* RotationController.swift in Sources */,
 				DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */,
 				DE0ABE172BF9774900C68A04 /* PhysicsObjects.swift in Sources */,
 				DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */,
@@ -703,6 +725,7 @@
 				DEB4ED462BB25E970097EEC0 /* FilterSpin.swift in Sources */,
 				DE22B9EE2B95956400CC6BCB /* SKEase.swift in Sources */,
 				DE22BA012B95AA7300CC6BCB /* SKTTimingFunctions.swift in Sources */,
+				DE71BD1C2CDB4D5900ABC133 /* SceneCoordinates.swift in Sources */,
 				DEFE9DA82BC49049002EDD9F /* UIScreen+ScreenCorners.swift in Sources */,
 				DE022EF22C24E244004D3973 /* Agents.swift in Sources */,
 				DE22BA052B95AA7300CC6BCB /* CGPoint+Extensions.swift in Sources */,
@@ -723,6 +746,7 @@
 				DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */,
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
+				DEF47E672CC753C50063D7D2 /* HapticPlayground.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
 				DEACDF652B9FE88B00D496D2 /* HexSKColor.swift in Sources */,
 				DE020BF52BD33BEB00D897F8 /* PhysicsBenchmarks.swift in Sources */,
@@ -895,12 +919,11 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -931,12 +954,11 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
-				INFOPLIST_KEY_UIRequiresFullScreen = YES;
 				INFOPLIST_KEY_UIStatusBarHidden = YES;
 				INFOPLIST_KEY_UIStatusBarStyle = "";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.6;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

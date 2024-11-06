@@ -66,7 +66,7 @@ struct NotificationOverlay: View {
 // MARK: Inertial Wheel
 
 struct InertialWheel: View {
-    @State var rotationAngle: Angle = Angle(degrees: 10)
+    @State var rotationAngle: Angle = Angle(degrees: 0)
     
     var body: some View {
         ZStack {
@@ -135,7 +135,7 @@ struct WheelSpinnerView: View {
                 }
                 Spacer()
                 NotificationOverlay(message: $message)
-                InertialWheel()
+                //InertialWheel()
                 menuBar()
             }
             .padding()
@@ -260,6 +260,10 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
         createPhysicalBoundaryForSceneBodies(rectangle: self.frame, parent: objectsLayer)
         
         createUI(view: view, parent: uiLayer)
+        
+        let square = DraggableSprite(texture: nil, color: .systemRed, size: CGSize(width: 60, height: 60))
+        square.name = "square"
+        objectsLayer.addChild(square)
     }
     
     // MARK: Global Variables
@@ -278,7 +282,7 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
     var zoomLabel = SKLabelNode()
     
     func pauseScene(_ isPaused: Bool) {
-        self.objectsLayer.isPaused = isPaused
+        self.isPaused = isPaused
         self.physicsWorld.speed = isPaused ? 0 : 1
     }
     
@@ -320,7 +324,7 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
         if inertial == true {
             let inertialCamera = InertialCamera(scene: self)
             inertialCamera.delegate = self
-            inertialCamera.lockRotation = false
+            inertialCamera.lock = true
             inertialCamera.setTo(position: .zero, xScale: scale, yScale: scale, rotation: 0)
             self.camera = inertialCamera
             //cameraData.scale = "\(self.camera?.xScale ?? 1.0)"
@@ -365,7 +369,13 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
     // MARK: Wheel Spinner Protocol Methods
     
     func wheelWillSpin(zRotation: CGFloat) {
+        if let _ = childNode(withName: "//square") as? SKSpriteNode {
+            //square.zRotation = zRotation
+        }
         
+        if let inertialCamera = self.camera as? InertialCamera {
+            inertialCamera.zRotation = -zRotation
+        }
     }
     
     func wheelDidSpin(zRotation: CGFloat) {
@@ -416,17 +426,15 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
     }
     
     func createUI(view: SKView, parent: SKNode) {
-        
         let wheel = createWheelSpinnerControl(view: view)
-        wheel.position.y = 260
+        wheel.position.y = -view.bounds.height / 2 + view.safeAreaInsets.bottom + wheel.frame.height / 2 + 100
         parent.addChild(wheel)
-        
     }
     
     func createWheelSpinnerControl(view: SKView) -> SKSpriteNode {
-        let cornerRadius: CGFloat = 20
+        let cornerRadius: CGFloat = 90
         let strokeColor = SKColor(white: 0, alpha: 0.1)
-        let fillColor = SKColor(white: 1, alpha: 0.6)
+        let fillColor = SKColor(white: 0, alpha: 0.2)
         
         let containerShape = SKShapeNode(rectOf: CGSize(width: 180, height: 180), cornerRadius: cornerRadius)
         containerShape.lineWidth = 0
@@ -450,7 +458,7 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
         
         let wheel = WheelSpinner(
             view: view,
-            radius: 72,
+            radius: 86,
             stroke: strokeColor,
             fill: fillColor
         )
@@ -593,7 +601,7 @@ class WheelSpinner: SKSpriteNode {
         wheel.lineWidth = 1
         wheel.strokeColor = SKColor(white: 0, alpha: 0.4)
         wheel.fillColor = self.fillColor
-        //wheel.fillTexture = generateDotPatternTexture(size: wheel.frame.size, color: .white, pattern: .regular, dotSize: 14)
+        //wheel.fillTexture = generateDotPatternTexture(size: wheel.frame.size, color: SKColor(white: 1, alpha: 0.5), pattern: .staggered, dotSize: 4)
         
         let axle = SKShapeNode(circleOfRadius: 26)
         axle.isUserInteractionEnabled = true
@@ -614,11 +622,11 @@ class WheelSpinner: SKSpriteNode {
         anchorY.zRotation = .pi * 0.25
         wheel.addChild(anchorY)
         
-        let handle = SKShapeNode(circleOfRadius: 21)
+        let handle = SKShapeNode(rectOf: CGSize(width: 10, height: 52), cornerRadius: 3)
         handle.fillColor = SKColor(red: 247/255, green: 208/255, blue: 84/255, alpha: 1)
         handle.strokeColor = SKColor(white: 0, alpha: 0.6)
-        handle.lineWidth = 3
-        handle.position.y = wheelRadius - handle.frame.width/2
+        handle.lineWidth = 1
+        handle.position.y = wheelRadius - handle.frame.height/2 - 3
         wheel.addChild(handle)
         
         self.noGoZone = axle
@@ -657,7 +665,7 @@ class WheelSpinner: SKSpriteNode {
         
         let angleDifference = atan2(startVector.dy * endVector.dx - startVector.dx * endVector.dy,
                                     startVector.dx * endVector.dx + startVector.dy * endVector.dy)
-        // Inverted to match the natural touch rotation direction
+        /// Inverted to match the natural touch rotation direction
         return -angleDifference
     }
     
@@ -676,7 +684,7 @@ class WheelSpinner: SKSpriteNode {
     
     // MARK: Inertial rotation
     
-    var angularVelocityFactor: CGFloat = 1
+    var angularVelocityFactor: CGFloat = 0.99
     
     func update(_ currentTime: TimeInterval) {
         
@@ -684,9 +692,9 @@ class WheelSpinner: SKSpriteNode {
         
         if (abs(angularVelocity) < 0.001) {
             angularVelocity = 0
+        } else {
+            self.zRotation += angularVelocity
         }
-        
-        self.zRotation += angularVelocity
         
     }
     
@@ -732,7 +740,6 @@ class WheelSpinner: SKSpriteNode {
             let distance = touch.location(in: parent) - previousTouchPosition
             let deltaTime = touch.timestamp - previousTouchTime
             let velocity = distance.length() / deltaTime
-            print(distance)
             let direction: CGFloat = previousAngle >= 0 ? 1 : -1
             angularVelocity = direction * velocity/1000
             

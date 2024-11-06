@@ -7,7 +7,7 @@
  This file explores various hit detection strategies.
  
  Created: 25 March 2024
- Updated: 31 March 2024
+ Updated: 15 October 2024
  
  */
 
@@ -27,11 +27,18 @@ struct HitDetectionView: View {
                 debugOptions: [.showsNodeCount, .showsDrawCount, .showsFPS, .showsPhysics]
             )
             .ignoresSafeArea()
+            VStack {
+                Spacer()
+                Button("Push") {
+                    myScene.pushTriangel()
+                }
+                .buttonStyle(.borderedProminent)
+                .buttonRepeatBehavior(.enabled)
+            }
         }
     }
 }
 
-/// this is for Xcode live preview
 #Preview {
     HitDetectionView()
 }
@@ -44,35 +51,37 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         view.isMultipleTouchEnabled = true
         size = view.bounds.size
         scaleMode = .resizeFill
+        anchorPoint = CGPoint(x: 0.5, y: 0.5)
         backgroundColor = .gray
         physicsWorld.contactDelegate = self
-        setupCamera()
-        createSomeBodies()
+
+        createScenePhysicalBoundaries(view: view)
+        createSomeBodies(view: view)
         createTouchBody()
     }
     
-    func setupCamera() {
-        let camera = SKCameraNode()
-        camera.name = "camera"
-        let viewSize = view?.bounds.size
-        camera.xScale = (viewSize!.width / size.width)
-        camera.yScale = (viewSize!.height / size.height)
-        addChild(camera)
-        scene?.camera = camera
-        camera.setScale(1)
+    func createScenePhysicalBoundaries(view: SKView) {
+        if self.physicsBody != nil { return }
+        let physicsBoundaries = CGRect(
+            x: -view.frame.width / 2,
+            y: -view.frame.height / 2,
+            width: view.frame.width,
+            height: view.frame.height
+        )
+        physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
     }
     
-    func createSomeBodies() {
+    func createSomeBodies(view: SKView) {
         let orangeRickyTexture = SKTexture(imageNamed: "orange-ricky")
         let orangeRicky = SKSpriteNode(texture: orangeRickyTexture, size: orangeRickyTexture.size())
-        orangeRicky.name = "orange-ricky"
+        orangeRicky.name = "Sprite with orange texture"
         orangeRicky.colorBlendFactor = 1
         orangeRicky.color = .systemOrange
         orangeRicky.alpha = 1
         orangeRicky.position = CGPoint(x: -10, y: -10)
         orangeRicky.zPosition = 10
         
-        /// used later to do hit detection with physics body
+        /// Physics bodies can be used for hit detection
         let physicsTextureSize = CGSize(
             width: orangeRickyTexture.size().width,
             height: orangeRickyTexture.size().height
@@ -87,7 +96,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         
         let clevelandTexture = SKTexture(imageNamed: "cleveland")
         let cleveland = SKSpriteNode(texture: clevelandTexture, size: clevelandTexture.size())
-        cleveland.name = "cleveland"
+        cleveland.name = "Sprite with green texture"
         cleveland.colorBlendFactor = 1
         cleveland.color = .systemGreen
         cleveland.position = CGPoint(x: 10, y: 10)
@@ -105,7 +114,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         addChild(cleveland)
         
         let rectangle = SKSpriteNode(color: SKColor.systemRed, size: CGSize(width: 240, height: 60))
-        rectangle.name = "rectangle"
+        rectangle.name = "Red sprite with no texture"
         rectangle.zRotation = .pi * 0.1
         rectangle.zPosition = 5
         
@@ -122,7 +131,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         path.closeSubpath()
         
         let triangle = SKShapeNode(path: path)
-        triangle.name = "triangle"
+        triangle.name = "Triangle shape"
         triangle.strokeColor = .orange
         triangle.lineWidth = 3
         triangle.fillColor = SKColor(white: 1, alpha: 0.2)
@@ -131,11 +140,19 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         triangle.physicsBody = SKPhysicsBody(polygonFrom: path)
         triangle.physicsBody?.affectedByGravity = false
         triangle.physicsBody?.contactTestBitMask = 1
+        let boundaries = SKShapeNode(
+            rectOf: CGSize(
+                width: view.bounds.width + 100,
+                height: view.bounds.height + 100
+            )
+        )
+        addChild(boundaries)
+        triangle.constraints = [createConstraintsWithRectangle(node: triangle, rectangle: boundaries)]
         
         addChild(triangle)
         
         let label = SKLabelNode(text: "Hit Detection")
-        label.name = "label"
+        label.name = "Label node"
         label.verticalAlignmentMode = .center
         label.fontName = "Menlo-Bold"
         label.fontColor = SKColor(white: 1, alpha: 0.6)
@@ -143,13 +160,19 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         label.zPosition = 30
         label.position = CGPoint(x: 0, y: 200)
         
-        if let labelTexture = view?.texture(from: label) {
+        if let labelTexture = view.texture(from: label) {
             label.physicsBody = SKPhysicsBody(texture: labelTexture, size: labelTexture.size())
         }
         label.physicsBody?.affectedByGravity = false
         label.physicsBody?.collisionBitMask = 0
         
         addChild(label)
+    }
+    
+    func pushTriangel() {
+        if let triangle = childNode(withName: "//Triangle shape") {
+            triangle.physicsBody?.applyImpulse(CGVector(dx: 0, dy: 1000))
+        }
     }
     
     // MARK: - Hit detection
@@ -161,22 +184,22 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
      # Bounding box hit detection
      
      Given a point in space, return the nodes whose bounding box, aka the accumulated frame, contains the point.
-     Note that the accumulated frame of a node is axis aligned. It does not rotate with the node. For example, it expands to enclose a rotated node.
+     Note that the accumulated frame of a node is axis aligned. It does not rotate with the node. If the node rotates, it may expand to enclose the rotated node.
      Fully transparent or hidden nodes are not returned.
-     This method is not suitable for precise hit detection of semi-transparent or non-rectangular looking entities.
+     This method is not suitable for precise hit detection of part-transparent or non-rectangular looking entities.
      
      */
     func hitDetectionWithBoundingBox(location: CGPoint) {
-        /// returns all nodes under the touch location
-        /// The array returned by `nodes(at:)` is ordered from front to back
+        /// Return all nodes under the touch location.
+        /// The array returned by `nodes(at:)` is ordered from front to back.
         /// The first element in the array is the node that visually appears on top at the touch location
         let touchedNodes = nodes(at: location)
         for node in touchedNodes {
-            print("Bounding box of node named \(node.name ?? unnamed) has been touched")
+            print("\(node.name ?? unnamed) has been touched")
         }
         
-        /// returns the deepest node in the hierarchy (the "childest" node)
-        /// if it finds nodes with the same parent, it returns the node with the largest z position
+        /// Return the deepest node in the hierarchy (the "childest" node)
+        /// if it finds nodes with the same parent, it returns the node with the bigger z position.
         let foremostNode = atPoint(location)
         print("The foremost found node is \(foremostNode.name ?? unnamed)")
     }
@@ -185,7 +208,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
      
      # Physics based hit detection
      
-     Relies on the shape created by SKPhysicsBody
+     Relies on the shape created by SKPhysicsBody.
      Get the first physics body found. There might or might not be other physics bodies at this location.
      This method returns only the first body found by the physics engine.
      
@@ -196,14 +219,14 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
             return
         }
         
-        print("Physics body with name \(touchedBody.node?.name ?? unnamed) found")
+        print("\(touchedBody.node?.name ?? unnamed) found")
     }
     
     /**
      
      # Physics based hit detection
      
-     Relies on the shape created by SKPhysicsBody
+     Relies on the shape created by SKPhysicsBody.
      Get all physical bodies found under the touch location.
      This method is effective, but it requires that the target node has an accurate physics body shape.
      
@@ -253,7 +276,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         
         for node in touchedNodes {
             if isTouchOnTransparentArea(touch: touch, node: node) {
-                print("Node named \(node.name ?? unnamed) has been touched")
+                print("\(node.name ?? unnamed) has been touched")
             }
         }
     }
@@ -357,6 +380,15 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
         touchCircle.physicsBody?.contactTestBitMask = 1
     }
     
+    // MARK: - Physics Contact Delegate
+    /**
+     
+     This function is called two physics bodies contact each other.
+     The protocol `SKPhysicsContactDelegate` must be added to the scene, and a delegate must be assigned to physicsWorld with `physicsWorld.contactDelegate = self`
+     The delegate is the object that implement the `didBegin` function.
+     
+     */
+    
     func didBegin(_ contact: SKPhysicsContact) {
         var otherNode: SKNode?
         
@@ -374,7 +406,7 @@ class HitDetectionScene: SKScene, SKPhysicsContactDelegate {
     
     override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         for touch in touches {
-            /// we need a point specified in the scene's coordinate system
+            /// We need a point specified in the scene's coordinate system
             let touchLocation = touch.location(in: self)
             
             /// replace the function with 1 of the 4 hit detection strategies above

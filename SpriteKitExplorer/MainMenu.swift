@@ -18,6 +18,8 @@ struct MainMenu: View {
     var body: some View {
         NavigationView {
             List {
+                NavigationLink("Wheel Spinner", destination: WheelSpinnerView())
+                NavigationLink("Touch Events", destination: TouchEventsView())
                 NavigationLink("Preferred FPS", destination: PreferredFPSView())
                 NavigationLink("Combine", destination: Combine())
                 NavigationLink("Simulation Speed", destination: SimulationSpeed())
