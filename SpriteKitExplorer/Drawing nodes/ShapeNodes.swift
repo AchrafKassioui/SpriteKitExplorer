@@ -22,7 +22,7 @@ import SpriteKit
 
 struct ShapeNodes: View {
     var myScene = ShapeNodesScene()
-    @State var selectedShape: ShapeToDraw = .VariousShapes
+    @State var selectedShape: ShapeToDraw = .ConcaveShapes
     
     var body: some View {
         ZStack {
@@ -554,11 +554,14 @@ class ShapeNodesScene: SKScene {
         path1.addLine(to: CGPoint(x: 50, y: 40))
         path1.closeSubpath()
         
-        let shapeNode = SKShapeNode(path: path1, centered: true)
+        let shapeNode = SKShapeNode(path: path1, centered: false)
         shapeNode.lineWidth = 0
-        shapeNode.fillColor = .systemGreen
+        shapeNode.fillColor = SKColor(red: 0, green: 1, blue: 0, alpha: 0.2)
+        shapeNode.physicsBody = SKPhysicsBody(polygonFrom: path1)
+        addChild(shapeNode)
         
         if let view = view, let shapeTexture = view.texture(from: shapeNode) {
+            return
             let sprite = SKSpriteNode(texture: shapeTexture)
             sprite.physicsBody = SKPhysicsBody(texture: shapeTexture, size: shapeTexture.size())
             sprite.position = CGPoint(x: 50, y: 50)
@@ -577,10 +580,14 @@ class ShapeNodesScene: SKScene {
         angledPath.closeSubpath()
         
         let angledShape = SKShapeNode(path: angledPath)
-        angledShape.lineWidth = 2
-        angledShape.fillColor = .systemBlue
+        angledShape.position = CGPoint(x: 0, y: 200)
+        angledShape.lineWidth = 0
+        angledShape.fillColor = SKColor(red: 0, green: 1, blue: 1, alpha: 0.1)
+        angledShape.physicsBody = SKPhysicsBody(polygonFrom: angledPath)
+        addChild(angledShape)
         
         if let view = view, let angledShapeTexture = view.texture(from: angledShape) {
+            return
             let sprite = SKSpriteNode(texture: angledShapeTexture)
             sprite.physicsBody = SKPhysicsBody(texture: angledShapeTexture, size: angledShapeTexture.size())
             sprite.position = CGPoint(x: -10, y: 200)

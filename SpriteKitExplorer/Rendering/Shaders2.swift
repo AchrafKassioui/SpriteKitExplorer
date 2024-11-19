@@ -49,7 +49,7 @@ class Shaders2Scene: SKScene {
         physicsBody = SKPhysicsBody(edgeLoopFrom: physicsBoundaries)
         
         setupNavigationCamera(with: view)
-        createSomeObjects(with: view, random: true, iteration: 1)
+        createSomeObjects(with: view)
     }
     
     // MARK: - Create objects
@@ -67,8 +67,7 @@ class Shaders2Scene: SKScene {
         addChild(navigationCamera)
     }
     
-    func createSomeObjects(with view: SKView, random: Bool, iteration: Int) {
-        
+    func createSomeObjects(with view: SKView) {
         let square = SKSpriteNode(color: SKColor.red, size: CGSize(width: 60, height: 60))
         square.texture = SKTexture(imageNamed: "basketball-94")
         square.zPosition = 1

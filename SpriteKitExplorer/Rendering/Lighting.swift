@@ -168,7 +168,7 @@ struct Lighting: View {
         
         for i in stride(from: leftViewBound, to: rightViewBound, by: gap) {
             for j in stride(from: bottomViewBound, to: topViewBound, by: gap) {
-                let _texture = SKTexture(imageNamed: "disc_132")
+                let _texture = SKTexture(imageNamed: "circle-30-fill")
                 let physics_size = CGSize(width: _texture.size().width - 3, height: _texture.size().height - 3 )
                 let gridObject = SKSpriteNode(texture: _texture)
                 gridObject.name = "draggable"

@@ -120,9 +120,9 @@ class PhysicsPlaygroundScene: SKScene, InertialCameraDelegate {
         setupCamera()
         
         /// filters for testing
-        //let myFilter = CIFilter.motionBlur()
-        //filter = ChainCIFilter(filters: [myFilter])
-        //shouldEnableEffects = false
+        let myFilter = CIFilter.motionBlur()
+        filter = ChainCIFilter(filters: [myFilter])
+        shouldEnableEffects = false
         
         /// populate scene
         createSceneLayers()
@@ -133,7 +133,7 @@ class PhysicsPlaygroundScene: SKScene, InertialCameraDelegate {
         updateZoomLabel()
         
         /// This applies a random shaking motion to the camera
-        //createNoiseField(parent: uiLayer)
+        createNoiseField(parent: uiLayer)
     }
     
     // MARK: - Global Variables

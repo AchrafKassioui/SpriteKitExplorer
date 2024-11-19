@@ -142,6 +142,9 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     /// a full `lock` disables the gesture recognizers
     var lock = false
     
+    /// toggle double tap gesture to reset camera position, scale, and rotation
+    var doubleTapToReset = true
+    
     // MARK: Initialization
     /**
      
@@ -571,7 +574,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
     // MARK: Double tap
     
     @objc private func resetCamera(gesture: UITapGestureRecognizer) {
-        if lock { return }
+        if lock || !doubleTapToReset { return }
         
         self.setTo(position: .zero, xScale: 1, yScale: 1, rotation: 0)
     }

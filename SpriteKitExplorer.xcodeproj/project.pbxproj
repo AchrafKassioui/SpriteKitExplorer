@@ -42,6 +42,9 @@
 		DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263B2B5A2873004003C3 /* SpriteKitExplorerApp.swift */; };
 		DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F263D2B5A2873004003C3 /* MainMenu.swift */; };
 		DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE2F26492B5A29AF004003C3 /* Combine.swift */; };
+		DE31E2512CE7BED600C0E405 /* FollowPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E2502CE7BED600C0E405 /* FollowPath.swift */; };
+		DE31E28A2CE7BF1E00C0E405 /* BoilerplateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E2892CE7BF1E00C0E405 /* BoilerplateScene.swift */; };
+		DE31E28C2CEBA13400C0E405 /* AttractionRepulsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */; };
 		DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */; };
 		DE36F24F2C108EA3006C7073 /* WheelSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F24E2C108EA3006C7073 /* WheelSpinner.swift */; };
 		DE36F2532C109431006C7073 /* simpleRotationInertia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F2522C109431006C7073 /* simpleRotationInertia.swift */; };
@@ -71,8 +74,11 @@
 		DE66AF462C1FAAD4006D78B1 /* TwoWayObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF452C1FAAD4006D78B1 /* TwoWayObservation.swift */; };
 		DE66AF482C1FECC2006D78B1 /* ModelObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF472C1FECC2006D78B1 /* ModelObservation.swift */; };
 		DE71BD1C2CDB4D5900ABC133 /* SceneCoordinates.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */; };
+		DE71BD1E2CDCCA7300ABC133 /* CompoundBody.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD1D2CDCCA6A00ABC133 /* CompoundBody.swift */; };
+		DE71BD202CDCDD0A00ABC133 /* ConcaveBodies.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD1F2CDCDD0300ABC133 /* ConcaveBodies.swift */; };
+		DE71BD222CDCFE9F00ABC133 /* PhysicsJoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD212CDCFE9600ABC133 /* PhysicsJoints.swift */; };
 		DE798A642CBF6E7D0084445C /* RotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE798A632CBF6E670084445C /* RotationController.swift */; };
-		DE7F08832BF68D7600F97B21 /* PhysicsJoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */; };
+		DE7F08832BF68D7600F97B21 /* Joints+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F08822BF68D7600F97B21 /* Joints+Extensions.swift */; };
 		DE91203F2BB4B45A00B3B63F /* VideoPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */; };
 		DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9120402BB4EE2400B3B63F /* Numbers.swift */; };
 		DE9C0B4B2BDD844900F88D4C /* FieldNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9C0B4A2BDD844900F88D4C /* FieldNodes.swift */; };
@@ -162,6 +168,9 @@
 		DE2F263D2B5A2873004003C3 /* MainMenu.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainMenu.swift; sourceTree = "<group>"; };
 		DE2F263F2B5A2875004003C3 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		DE2F26492B5A29AF004003C3 /* Combine.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Combine.swift; sourceTree = "<group>"; };
+		DE31E2502CE7BED600C0E405 /* FollowPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowPath.swift; sourceTree = "<group>"; };
+		DE31E2892CE7BF1E00C0E405 /* BoilerplateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoilerplateScene.swift; sourceTree = "<group>"; };
+		DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionRepulsion.swift; sourceTree = "<group>"; };
 		DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainCIFilter.swift; sourceTree = "<group>"; };
 		DE3607442B64F6140005BDE4 /* Core Image Filters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Core Image Filters.md"; sourceTree = "<group>"; };
 		DE36F24E2C108EA3006C7073 /* WheelSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSpinner.swift; sourceTree = "<group>"; };
@@ -192,8 +201,11 @@
 		DE66AF452C1FAAD4006D78B1 /* TwoWayObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TwoWayObservation.swift; sourceTree = "<group>"; };
 		DE66AF472C1FECC2006D78B1 /* ModelObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ModelObservation.swift; sourceTree = "<group>"; };
 		DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneCoordinates.swift; sourceTree = "<group>"; };
+		DE71BD1D2CDCCA6A00ABC133 /* CompoundBody.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompoundBody.swift; sourceTree = "<group>"; };
+		DE71BD1F2CDCDD0300ABC133 /* ConcaveBodies.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConcaveBodies.swift; sourceTree = "<group>"; };
+		DE71BD212CDCFE9600ABC133 /* PhysicsJoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsJoints.swift; sourceTree = "<group>"; };
 		DE798A632CBF6E670084445C /* RotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationController.swift; sourceTree = "<group>"; };
-		DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsJoints.swift; sourceTree = "<group>"; };
+		DE7F08822BF68D7600F97B21 /* Joints+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Joints+Extensions.swift"; sourceTree = "<group>"; };
 		DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPhysics.swift; sourceTree = "<group>"; };
 		DE9120402BB4EE2400B3B63F /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
 		DE9C0B4A2BDD844900F88D4C /* FieldNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldNodes.swift; sourceTree = "<group>"; };
@@ -365,6 +377,7 @@
 		DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				DE31E2522CE7BEF200C0E405 /* Boilerplates */,
 				DE71BD1A2CDB4D4000ABC133 /* Scene Graph */,
 				DEE84EE72BF33F7C00FD58BD /* MoreSpriteKit */,
 				DE9E962B2BD66AFF006B54C0 /* Actions */,
@@ -395,6 +408,14 @@
 				DE48FB522BED532800375EA6 /* MyScene.sks */,
 			);
 			path = SpriteKitExplorer;
+			sourceTree = "<group>";
+		};
+		DE31E2522CE7BEF200C0E405 /* Boilerplates */ = {
+			isa = PBXGroup;
+			children = (
+				DE31E2892CE7BF1E00C0E405 /* BoilerplateScene.swift */,
+			);
+			path = Boilerplates;
 			sourceTree = "<group>";
 		};
 		DE3607412B64EE8C0005BDE4 /* Utilities */ = {
@@ -450,6 +471,9 @@
 		DE9ADF8D2BA279B000B58429 /* Physics */ = {
 			isa = PBXGroup;
 			children = (
+				DE71BD212CDCFE9600ABC133 /* PhysicsJoints.swift */,
+				DE71BD1F2CDCDD0300ABC133 /* ConcaveBodies.swift */,
+				DE71BD1D2CDCCA6A00ABC133 /* CompoundBody.swift */,
 				DE4292F72B5B23A2004326C9 /* SimulationSpeed.swift */,
 				DEABB9D72B6380B40023B79B /* FlingDrag.swift */,
 				DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */,
@@ -460,6 +484,7 @@
 				DEF4F15A2BE44714003E3AD7 /* PhysicsPlayground.swift */,
 				DEB55FDD2BFA788900C4303A /* PhysicsScale.swift */,
 				DE0662A12C0693E100D5869A /* JointsWithCamera.swift */,
+				DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */,
 			);
 			path = Physics;
 			sourceTree = "<group>";
@@ -469,6 +494,7 @@
 			children = (
 				DEC9BAF62BAB579100563A99 /* SpriteAnimation.swift */,
 				DE9E962C2BD66B15006B54C0 /* ActionsPlayground.swift */,
+				DE31E2502CE7BED600C0E405 /* FollowPath.swift */,
 			);
 			path = Actions;
 			sourceTree = "<group>";
@@ -590,7 +616,7 @@
 			children = (
 				DEF4F15F2BE58FD0003E3AD7 /* SKScene+Extensions.swift */,
 				DE0ABE162BF9774900C68A04 /* PhysicsObjects.swift */,
-				DE7F08822BF68D7600F97B21 /* PhysicsJoints.swift */,
+				DE7F08822BF68D7600F97B21 /* Joints+Extensions.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -684,6 +710,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				DE71BD1E2CDCCA7300ABC133 /* CompoundBody.swift in Sources */,
 				DE66AF3C2C1A9384006D78B1 /* SwiftUIPlayground.swift in Sources */,
 				DEF4F1602BE58FD0003E3AD7 /* SKScene+Extensions.swift in Sources */,
 				DEC9BAFA2BAC95F800563A99 /* GenerateGridImage.swift in Sources */,
@@ -737,6 +764,7 @@
 				DE2E6C282BC0D5A2005C06F2 /* InertialCamera.swift in Sources */,
 				DEAFED8C2BA8C4B00030857E /* UIKits.swift in Sources */,
 				DE0662A22C0693E100D5869A /* JointsWithCamera.swift in Sources */,
+				DE31E28A2CE7BF1E00C0E405 /* BoilerplateScene.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
 				DE66AF3E2C1ABEC0006D78B1 /* DataModels.swift in Sources */,
 				DEE3DA972CBC44FB00F59245 /* PresentScene.swift in Sources */,
@@ -745,6 +773,7 @@
 				DE2F263E2B5A2873004003C3 /* MainMenu.swift in Sources */,
 				DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */,
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
+				DE71BD222CDCFE9F00ABC133 /* PhysicsJoints.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
 				DEF47E672CC753C50063D7D2 /* HapticPlayground.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
@@ -759,12 +788,14 @@
 				DE66AF422C1B8690006D78B1 /* Dragging.swift in Sources */,
 				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
 				DEE3DA952CB8788A00F59245 /* PreferredFPS.swift in Sources */,
+				DE31E28C2CEBA13400C0E405 /* AttractionRepulsion.swift in Sources */,
 				DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */,
 				DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */,
 				DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */,
 				DE020BF32BD32A0B00D897F8 /* ViewProperties.swift in Sources */,
 				DE0B6B212B9CAEED006D75CB /* SpriteNodes.swift in Sources */,
 				DE9E962F2BD752FE006B54C0 /* GestureVisualization.swift in Sources */,
+				DE71BD202CDCDD0A00ABC133 /* ConcaveBodies.swift in Sources */,
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
@@ -774,10 +805,11 @@
 				DEE84EE92BF33F9B00FD58BD /* SKShapeNode+Arrow.swift in Sources */,
 				DEAFED942BAA22E90030857E /* Misc.swift in Sources */,
 				DEFE9DAF2BC4A81C002EDD9F /* CameraPlayground.swift in Sources */,
-				DE7F08832BF68D7600F97B21 /* PhysicsJoints.swift in Sources */,
+				DE7F08832BF68D7600F97B21 /* Joints+Extensions.swift in Sources */,
 				DE36F2532C109431006C7073 /* simpleRotationInertia.swift in Sources */,
 				DE2F263C2B5A2873004003C3 /* SpriteKitExplorerApp.swift in Sources */,
 				DEF4F1622BE924D6003E3AD7 /* Manipulation.swift in Sources */,
+				DE31E2512CE7BED600C0E405 /* FollowPath.swift in Sources */,
 				DE5F4C862BD8DD63007E353D /* PhysicsLayout.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
