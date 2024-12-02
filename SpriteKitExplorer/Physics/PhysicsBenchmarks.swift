@@ -249,7 +249,7 @@ class PhysicsBenchmarksScene: SKScene {
         }
         
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
     }
     

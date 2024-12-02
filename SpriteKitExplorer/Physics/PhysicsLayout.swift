@@ -782,7 +782,7 @@ class PhysicsLayoutScene: SKScene, PhysicalButtonDelegate, InertialCameraDelegat
         
         /// camera inertia
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
         
         /// dragging with physics

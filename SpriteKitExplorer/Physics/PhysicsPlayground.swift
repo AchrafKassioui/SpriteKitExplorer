@@ -344,7 +344,7 @@ class PhysicsPlaygroundScene: SKScene, InertialCameraDelegate {
         
         /// camera inertia
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
             updateZoomLabel()
         }
         

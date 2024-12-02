@@ -18,8 +18,7 @@ import SpriteKit
 
 /// The main SwiftUI view
 struct FollowPathView: View {
-    var myScene = FollowPathScene()
-    @State private var isPaused: Bool = false
+    let myScene = FollowPathScene()
     var body: some View {
         ZStack {
             SpriteView(
@@ -29,7 +28,7 @@ struct FollowPathView: View {
             .ignoresSafeArea()
             VStack {
                 Spacer()
-                SWUIRoundButton(scene: myScene)
+                SWUIScenePauseButton(scene: myScene, isPaused: false)
             }
         }
         .background(Color(SKColor.black))

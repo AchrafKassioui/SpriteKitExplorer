@@ -468,7 +468,7 @@ class JointsWithCameraScene: SKScene, InertialCameraDelegate {
         updateZoomLabel()
         
         if let inertialCamera = self.camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
     }
     

@@ -528,7 +528,7 @@ class WheelSpinnerScene: SKScene, InertialCameraDelegate, WheelSpinnerDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
         
         enumerateChildNodes(withName: "//wheel-spinner", using: { node, _ in

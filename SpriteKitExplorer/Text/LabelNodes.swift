@@ -216,7 +216,7 @@ There are 2 aspects that these experiments make me think about.
     
     override func update(_ currentTime: TimeInterval) {
         if let myCamera = camera as? InertialCamera {
-            myCamera.updateInertia()
+            myCamera.update()
         }
     }
     

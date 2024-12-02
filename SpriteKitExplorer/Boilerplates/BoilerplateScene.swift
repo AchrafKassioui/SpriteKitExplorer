@@ -13,49 +13,51 @@ import SpriteKit
 
 // MARK: SwiftUI
 
-/// A SwiftUI button component. An instance of the SpriteKit scene must be passed to it.
-/// Todo: Make the button trigger on touchesBegan, not touchesEnded
-struct SWUIRoundButton: View {
+struct SWUIScenePauseButton: View {
     let scene: SKScene
-    @State private var isPaused: Bool = false
+    @State var isPaused: Bool
+    
     var body: some View {
-        Button(action: {
-            scene.isPaused.toggle()
-            isPaused = scene.isPaused
-        }) {
-            ZStack {
-                Circle()
-                    .stroke(Color.black.opacity(0.2), lineWidth: 2)
-                    .frame(width: 60, height: 60)
-                Image(systemName: isPaused ? "play.fill" : "pause.fill")
-                    .font(.system(size: 24))
-                    .frame(width: 60, height: 60)
-                    .background(.white.opacity(0.1))
-                    .background(.ultraThinMaterial)
-                    .clipShape(Circle())
-            }
+        ZStack {
+            Circle()
+                .stroke(Color.black.opacity(0.2), lineWidth: 2)
+                .frame(width: 60, height: 60)
+            Image(systemName: isPaused ? "play.fill" : "pause.fill")
+                .font(.system(size: 24))
+                .frame(width: 60, height: 60)
+                .background(.white.opacity(0.1))
+                .background(.ultraThinMaterial)
+                .clipShape(Circle())
         }
         .foregroundStyle(.black)
+        .gesture(
+            DragGesture(minimumDistance: 0)
+                .onChanged { _ in
+                    isPaused.toggle()
+                    scene.isPaused = isPaused
+                }
+        )
     }
 }
 
 /// The main SwiftUI view
 struct BoilerplateView: View {
-    var myScene = BoilerplateScene()
-    @State private var isPaused: Bool = false
+    let myScene = BoilerplateScene()
+    
     var body: some View {
         ZStack {
             SpriteView(
-                scene: myScene,
-                debugOptions: [.showsFPS, .showsNodeCount, .showsDrawCount, .showsQuadCount]
+                scene: myScene
+                ,debugOptions: [.showsFPS, .showsNodeCount, .showsDrawCount, .showsQuadCount]
             )
+            .ignoresSafeArea()
             VStack {
                 Spacer()
-                SWUIRoundButton(scene: myScene)
+                SWUIScenePauseButton(scene: myScene, isPaused: false)
             }
-            .padding(20)
         }
         .background(Color(SKColor.black))
+        .persistentSystemOverlays(.hidden)
     }
 }
 

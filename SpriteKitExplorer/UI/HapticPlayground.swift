@@ -149,7 +149,7 @@ class HapticPlaygroundScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if let inerterialCamera = camera as? InertialCamera {
-            inerterialCamera.updateInertia()
+            inerterialCamera.update()
         }
         
         doActionEachInterval(currentTime: currentTime, interval: 0.3) {

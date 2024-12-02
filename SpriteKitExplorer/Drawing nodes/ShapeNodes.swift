@@ -562,10 +562,10 @@ class ShapeNodesScene: SKScene {
         
         if let view = view, let shapeTexture = view.texture(from: shapeNode) {
             return
-            let sprite = SKSpriteNode(texture: shapeTexture)
-            sprite.physicsBody = SKPhysicsBody(texture: shapeTexture, size: shapeTexture.size())
-            sprite.position = CGPoint(x: 50, y: 50)
-            parent.addChild(sprite)
+            //let sprite = SKSpriteNode(texture: shapeTexture)
+            //sprite.physicsBody = SKPhysicsBody(texture: shapeTexture, size: shapeTexture.size())
+            //sprite.position = CGPoint(x: 50, y: 50)
+            //parent.addChild(sprite)
         }
         
         /// But do not draw a path with lines that intersect, like this angled shape
@@ -588,11 +588,11 @@ class ShapeNodesScene: SKScene {
         
         if let view = view, let angledShapeTexture = view.texture(from: angledShape) {
             return
-            let sprite = SKSpriteNode(texture: angledShapeTexture)
-            sprite.physicsBody = SKPhysicsBody(texture: angledShapeTexture, size: angledShapeTexture.size())
-            sprite.position = CGPoint(x: -10, y: 200)
-            sprite.alpha = 0.1
-            parent.addChild(sprite)
+            //let sprite = SKSpriteNode(texture: angledShapeTexture)
+            //sprite.physicsBody = SKPhysicsBody(texture: angledShapeTexture, size: angledShapeTexture.size())
+            //sprite.position = CGPoint(x: -10, y: 200)
+            //sprite.alpha = 0.1
+            //parent.addChild(sprite)
         }
     }
 
@@ -632,7 +632,7 @@ class ShapeNodesScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
     }
     

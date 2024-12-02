@@ -9,5 +9,7 @@
 		<string>SF-Pro.ttf</string>
 		<string>CormorantGaramond-Regular.ttf</string>
 	</array>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>We need access to save snapshots to your Photos library.</string>
 </dict>
 </plist>

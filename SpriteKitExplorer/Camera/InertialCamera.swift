@@ -63,7 +63,7 @@
  
  Achraf Kassioui
  Created: 8 April 2024
- Updated: 10 June 2024
+ Updated: 28 November 2024
  
  */
 
@@ -586,7 +586,7 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
      This method should be called by the update loop of the scene that instantiates the camera.
      
      */
-    func updateInertia() {
+    func update() {
         
         /// reduce the load by checking the current position velocity first
         if (enablePanInertia && (positionVelocity.x != 0 || positionVelocity.y != 0)) {
@@ -641,6 +641,17 @@ class InertialCamera: SKCameraNode, UIGestureRecognizerDelegate {
             
             self.zRotation += rotationVelocity
         }
+    }
+    
+    // MARK: Touch
+    /**
+     
+     If the camera needs something done with user input, call the appropriate functions below from the appropriate event handlers of the parent scene.
+     For example, call `touchesBegan()` inside `override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {}` to get something done on touches began.
+     
+     */
+    func touchesBegan() {
+        stopInertia()
     }
     
     // MARK: Gesture recognizers

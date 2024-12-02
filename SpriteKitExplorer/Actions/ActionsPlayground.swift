@@ -499,7 +499,7 @@ class ActionsPlaygroundScene: SKScene, InertialCameraDelegate {
     
     override func update(_ currentTime: TimeInterval) {
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
             updateZoomLabel()
         }
         

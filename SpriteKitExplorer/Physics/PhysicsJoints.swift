@@ -275,7 +275,7 @@ class PhysicsJointsScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if let inertialCamera = self.camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
     }
     

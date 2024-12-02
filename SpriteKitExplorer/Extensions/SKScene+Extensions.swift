@@ -537,7 +537,7 @@ extension SKScene {
      
      */
     func cleanPhysics() {
-        self.physicsWorld.enumerateBodies(in:(self.frame)) { body, _ in
+        physicsWorld.enumerateBodies(in:(self.frame)) { body, _ in
             body.collisionBitMask = 0
         }
     }

@@ -16,6 +16,8 @@ import GameplayKit
 
 // MARK: - With GKAgent
 
+/// I wanted to implement dragging using GameplayKit Agent behavior.
+/// Unfinished.
 class SeekingSprite: SKSpriteNode, GKAgentDelegate {
     
     var agent: GKAgent2D!
@@ -37,12 +39,26 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
     
     // MARK: Properties and Init
     
-    var isDragging = false
-    var touchOffset: CGPoint = .zero
+    var spriteColor: SKColor
+    var draggingColor: SKColor
+    var isDragging = false {
+        didSet {
+            if isDragging {
+                self.color = .systemRed
+            } else {
+                self.color = spriteColor
+            }
+        }
+    }
+    
     var startPosition: CGPoint = .zero
     
-    override init(texture: SKTexture?, color: SKColor, size: CGSize) {
-        super.init(texture: texture, color: color, size: size)
+    // MARK: Init
+    
+    init(texture: SKTexture?, color: SKColor, size: CGSize, draggingColor: SKColor = .clear) {
+        self.spriteColor = color
+        self.draggingColor = draggingColor
+        super.init(texture: texture, color: self.spriteColor, size: size)
         self.colorBlendFactor = 1
         self.isUserInteractionEnabled = true
     }
@@ -54,6 +70,7 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
     // MARK: Update
     
     /// This function is necessary so the node stays put after a touch move if the touch input is till active
+    /// Must be called from the scene update loop
     func update(currentTime: TimeInterval) {
         if isDragging, currentTime - previousTimestamp > movementThreshold {
             if let body = self.physicsBody {
@@ -73,6 +90,7 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
         case affectedByGravity
         case density
         case mass
+        case charge
         case velocity
         case angularVelocity
         case collisionBitMask
@@ -85,15 +103,14 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
         super.touchesBegan(touches, with: event)
         
         for touch in touches {
-            guard let parent = self.parent, let body = self.physicsBody else {
-                fatalError("DraggableSpriteWithPhysics: sprite has no parent or physics body")
+            guard let body = self.physicsBody else {
+                print("DraggableSpriteWithPhysics: sprite has no physics body")
+                return
             }
-            let touchLocation = touch.location(in: parent)
             
             /// Prepare for dragging
             isDragging = true
             startPosition = self.position
-            touchOffset = touchLocation - self.position
             previousTimestamp = touch.timestamp
             
             
@@ -103,6 +120,7 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
                 .affectedByGravity: body.affectedByGravity,
                 .density: body.density,
                 .mass: body.mass,
+                .charge: body.charge,
                 .collisionBitMask: body.collisionBitMask,
                 .fieldBitMask: body.fieldBitMask
             ]
@@ -110,6 +128,7 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
             /// Apply physics properties suitable for dragging
             body.affectedByGravity = false
             body.velocity = .zero
+            body.collisionBitMask = 0
             body.fieldBitMask = 0
         }
     }
@@ -143,8 +162,8 @@ class DraggableSpriteWithVelocity: SKSpriteNode {
         isDragging = false
         
         /// Restore physics body properties
-        body.isDynamic = originalPhysicsProperties[.dynamic] as? Bool ?? true
         body.affectedByGravity = originalPhysicsProperties[.affectedByGravity] as? Bool ?? true
+        //body.isDynamic = originalPhysicsProperties[.dynamic] as? Bool ?? true
         body.collisionBitMask = originalPhysicsProperties[.collisionBitMask] as? UInt32 ?? 0xFFFFFFFF
         body.fieldBitMask = originalPhysicsProperties[.fieldBitMask] as? UInt32 ?? 0xFFFFFFFF
     }

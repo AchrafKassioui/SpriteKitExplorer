@@ -188,7 +188,7 @@ class TouchEventsScene: SKScene {
     
     override func update(_ currentTime: TimeInterval) {
         if let inertialCamera = camera as? InertialCamera {
-            inertialCamera.updateInertia()
+            inertialCamera.update()
         }
     }
     

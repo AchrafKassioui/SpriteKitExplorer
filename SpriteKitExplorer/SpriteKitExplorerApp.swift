@@ -15,7 +15,7 @@ import SwiftUI
 struct SpriteKitExplorerApp: App {
     var body: some Scene {
         WindowGroup {
-            WheelSpinnerView()
+            ReplayKitBasicView()
         }
     }
 }

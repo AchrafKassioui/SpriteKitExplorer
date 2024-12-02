@@ -180,6 +180,8 @@ myFilter.refraction = 1.1
 
 ## Line Overlay
 
+Superb effect.
+
 ```swift
 let myFilter = CIFilter.lineOverlay()
 myFilter.threshold = 1

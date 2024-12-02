@@ -45,6 +45,8 @@
 		DE31E2512CE7BED600C0E405 /* FollowPath.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E2502CE7BED600C0E405 /* FollowPath.swift */; };
 		DE31E28A2CE7BF1E00C0E405 /* BoilerplateScene.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E2892CE7BF1E00C0E405 /* BoilerplateScene.swift */; };
 		DE31E28C2CEBA13400C0E405 /* AttractionRepulsion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */; };
+		DE31E28E2CED086D00C0E405 /* SFSymbol.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E28D2CED086D00C0E405 /* SFSymbol.swift */; };
+		DE31E2912CED6DD300C0E405 /* ConstraintsPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE31E2902CED6DD300C0E405 /* ConstraintsPlayground.swift */; };
 		DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */; };
 		DE36F24F2C108EA3006C7073 /* WheelSpinner.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F24E2C108EA3006C7073 /* WheelSpinner.swift */; };
 		DE36F2532C109431006C7073 /* simpleRotationInertia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE36F2522C109431006C7073 /* simpleRotationInertia.swift */; };
@@ -66,6 +68,14 @@
 		DE5F4C842BD8DC0C007E353D /* LayoutPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5F4C832BD8DC0C007E353D /* LayoutPlayground.swift */; };
 		DE5F4C862BD8DD63007E353D /* PhysicsLayout.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE5F4C852BD8DD63007E353D /* PhysicsLayout.swift */; };
 		DE60935F2C15DCF800FDC84C /* SpriteKitObservation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE60935E2C15DCF700FDC84C /* SpriteKitObservation.swift */; };
+		DE64FF892CF12223005BEC97 /* LeakInvestigation.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64FF882CF12223005BEC97 /* LeakInvestigation.swift */; };
+		DE64FF8B2CF1467B005BEC97 /* MemoryBuildUp.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64FF8A2CF1467B005BEC97 /* MemoryBuildUp.swift */; };
+		DE64FF9D2CF19E6F005BEC97 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DE64FF9B2CF19E6F005BEC97 /* Assets.xcassets */; };
+		DE64FF9E2CF19E6F005BEC97 /* HexTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE64FF9C2CF19E6F005BEC97 /* HexTileSet.sks */; };
+		DE64FFA02CF19EB5005BEC97 /* GridTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE64FF9F2CF19EB5005BEC97 /* GridTileSet.sks */; };
+		DE64FFA22CF19EF4005BEC97 /* IsoTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE64FFA12CF19EF4005BEC97 /* IsoTileSet.sks */; };
+		DE64FFA42CF19F17005BEC97 /* EmptyTileSet.sks in Resources */ = {isa = PBXBuildFile; fileRef = DE64FFA32CF19F17005BEC97 /* EmptyTileSet.sks */; };
+		DE64FFA62CF2D6A9005BEC97 /* RenderToTexture.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE64FFA52CF2D6A9005BEC97 /* RenderToTexture.swift */; };
 		DE66AF3C2C1A9384006D78B1 /* SwiftUIPlayground.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF3B2C1A9384006D78B1 /* SwiftUIPlayground.swift */; };
 		DE66AF3E2C1ABEC0006D78B1 /* DataModels.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF3D2C1ABEC0006D78B1 /* DataModels.swift */; };
 		DE66AF402C1ACCD9006D78B1 /* ValueRotationInertia.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE66AF3F2C1ACCD9006D78B1 /* ValueRotationInertia.swift */; };
@@ -79,6 +89,12 @@
 		DE71BD222CDCFE9F00ABC133 /* PhysicsJoints.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE71BD212CDCFE9600ABC133 /* PhysicsJoints.swift */; };
 		DE798A642CBF6E7D0084445C /* RotationController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE798A632CBF6E670084445C /* RotationController.swift */; };
 		DE7F08832BF68D7600F97B21 /* Joints+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F08822BF68D7600F97B21 /* Joints+Extensions.swift */; };
+		DE7F919E2CF7C86C00AA378F /* Recording+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F919D2CF7C86600AA378F /* Recording+Helpers.swift */; };
+		DE7F91A02CF825E500AA378F /* RenderRegion.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE7F919F2CF825D900AA378F /* RenderRegion.swift */; };
+		DE8CF1F62CEE7862009BDEE6 /* EMFields.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8CF1F52CEE7862009BDEE6 /* EMFields.swift */; };
+		DE8CF1F92CF016BE009BDEE6 /* DrawHierarchy.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE8CF1F82CF016BE009BDEE6 /* DrawHierarchy.swift */; };
+		DE9065732CFE5D0B004FB58C /* SpriteKitFonts.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9065722CFE5D03004FB58C /* SpriteKitFonts.swift */; };
+		DE9065752CFE62CD004FB58C /* ReplayKitBasic.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9065742CFE62C6004FB58C /* ReplayKitBasic.swift */; };
 		DE91203F2BB4B45A00B3B63F /* VideoPhysics.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */; };
 		DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9120402BB4EE2400B3B63F /* Numbers.swift */; };
 		DE9C0B4B2BDD844900F88D4C /* FieldNodes.swift in Sources */ = {isa = PBXBuildFile; fileRef = DE9C0B4A2BDD844900F88D4C /* FieldNodes.swift */; };
@@ -171,6 +187,8 @@
 		DE31E2502CE7BED600C0E405 /* FollowPath.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FollowPath.swift; sourceTree = "<group>"; };
 		DE31E2892CE7BF1E00C0E405 /* BoilerplateScene.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BoilerplateScene.swift; sourceTree = "<group>"; };
 		DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AttractionRepulsion.swift; sourceTree = "<group>"; };
+		DE31E28D2CED086D00C0E405 /* SFSymbol.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SFSymbol.swift; sourceTree = "<group>"; };
+		DE31E2902CED6DD300C0E405 /* ConstraintsPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConstraintsPlayground.swift; sourceTree = "<group>"; };
 		DE3607422B64EEC40005BDE4 /* ChainCIFilter.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainCIFilter.swift; sourceTree = "<group>"; };
 		DE3607442B64F6140005BDE4 /* Core Image Filters.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = "Core Image Filters.md"; sourceTree = "<group>"; };
 		DE36F24E2C108EA3006C7073 /* WheelSpinner.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WheelSpinner.swift; sourceTree = "<group>"; };
@@ -193,6 +211,14 @@
 		DE5F4C832BD8DC0C007E353D /* LayoutPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LayoutPlayground.swift; sourceTree = "<group>"; };
 		DE5F4C852BD8DD63007E353D /* PhysicsLayout.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsLayout.swift; sourceTree = "<group>"; };
 		DE60935E2C15DCF700FDC84C /* SpriteKitObservation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitObservation.swift; sourceTree = "<group>"; };
+		DE64FF882CF12223005BEC97 /* LeakInvestigation.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LeakInvestigation.swift; sourceTree = "<group>"; };
+		DE64FF8A2CF1467B005BEC97 /* MemoryBuildUp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MemoryBuildUp.swift; sourceTree = "<group>"; };
+		DE64FF9B2CF19E6F005BEC97 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DE64FF9C2CF19E6F005BEC97 /* HexTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = HexTileSet.sks; sourceTree = "<group>"; };
+		DE64FF9F2CF19EB5005BEC97 /* GridTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = GridTileSet.sks; sourceTree = "<group>"; };
+		DE64FFA12CF19EF4005BEC97 /* IsoTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = IsoTileSet.sks; sourceTree = "<group>"; };
+		DE64FFA32CF19F17005BEC97 /* EmptyTileSet.sks */ = {isa = PBXFileReference; lastKnownFileType = file.sks; path = EmptyTileSet.sks; sourceTree = "<group>"; };
+		DE64FFA52CF2D6A9005BEC97 /* RenderToTexture.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderToTexture.swift; sourceTree = "<group>"; };
 		DE66AF3B2C1A9384006D78B1 /* SwiftUIPlayground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SwiftUIPlayground.swift; sourceTree = "<group>"; };
 		DE66AF3D2C1ABEC0006D78B1 /* DataModels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataModels.swift; sourceTree = "<group>"; };
 		DE66AF3F2C1ACCD9006D78B1 /* ValueRotationInertia.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = ValueRotationInertia.swift; path = "../../../From GitHub/OneFingerRotation/Sources/OneFingerRotation/Version 1.0/ValueRotationInertia.swift"; sourceTree = "<group>"; };
@@ -206,6 +232,12 @@
 		DE71BD212CDCFE9600ABC133 /* PhysicsJoints.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PhysicsJoints.swift; sourceTree = "<group>"; };
 		DE798A632CBF6E670084445C /* RotationController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RotationController.swift; sourceTree = "<group>"; };
 		DE7F08822BF68D7600F97B21 /* Joints+Extensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Joints+Extensions.swift"; sourceTree = "<group>"; };
+		DE7F919D2CF7C86600AA378F /* Recording+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Recording+Helpers.swift"; sourceTree = "<group>"; };
+		DE7F919F2CF825D900AA378F /* RenderRegion.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RenderRegion.swift; sourceTree = "<group>"; };
+		DE8CF1F52CEE7862009BDEE6 /* EMFields.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EMFields.swift; sourceTree = "<group>"; };
+		DE8CF1F82CF016BE009BDEE6 /* DrawHierarchy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DrawHierarchy.swift; sourceTree = "<group>"; };
+		DE9065722CFE5D03004FB58C /* SpriteKitFonts.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpriteKitFonts.swift; sourceTree = "<group>"; };
+		DE9065742CFE62C6004FB58C /* ReplayKitBasic.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ReplayKitBasic.swift; sourceTree = "<group>"; };
 		DE91203E2BB4B45A00B3B63F /* VideoPhysics.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = VideoPhysics.swift; sourceTree = "<group>"; };
 		DE9120402BB4EE2400B3B63F /* Numbers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Numbers.swift; sourceTree = "<group>"; };
 		DE9C0B4A2BDD844900F88D4C /* FieldNodes.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FieldNodes.swift; sourceTree = "<group>"; };
@@ -377,6 +409,9 @@
 		DE2F263A2B5A2873004003C3 /* SpriteKitExplorer */ = {
 			isa = PBXGroup;
 			children = (
+				DE64FF872CF12212005BEC97 /* Tiling */,
+				DE8CF1F72CF0169F009BDEE6 /* Recording */,
+				DE31E28F2CED6DBE00C0E405 /* Constraints */,
 				DE31E2522CE7BEF200C0E405 /* Boilerplates */,
 				DE71BD1A2CDB4D4000ABC133 /* Scene Graph */,
 				DEE84EE72BF33F7C00FD58BD /* MoreSpriteKit */,
@@ -418,6 +453,14 @@
 			path = Boilerplates;
 			sourceTree = "<group>";
 		};
+		DE31E28F2CED6DBE00C0E405 /* Constraints */ = {
+			isa = PBXGroup;
+			children = (
+				DE31E2902CED6DD300C0E405 /* ConstraintsPlayground.swift */,
+			);
+			path = Constraints;
+			sourceTree = "<group>";
+		};
 		DE3607412B64EE8C0005BDE4 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
@@ -440,12 +483,38 @@
 			path = Visualization;
 			sourceTree = "<group>";
 		};
+		DE64FF872CF12212005BEC97 /* Tiling */ = {
+			isa = PBXGroup;
+			children = (
+				DE64FF882CF12223005BEC97 /* LeakInvestigation.swift */,
+				DE64FF8A2CF1467B005BEC97 /* MemoryBuildUp.swift */,
+				DE64FF9B2CF19E6F005BEC97 /* Assets.xcassets */,
+				DE64FF9C2CF19E6F005BEC97 /* HexTileSet.sks */,
+				DE64FF9F2CF19EB5005BEC97 /* GridTileSet.sks */,
+				DE64FFA12CF19EF4005BEC97 /* IsoTileSet.sks */,
+				DE64FFA32CF19F17005BEC97 /* EmptyTileSet.sks */,
+			);
+			path = Tiling;
+			sourceTree = "<group>";
+		};
 		DE71BD1A2CDB4D4000ABC133 /* Scene Graph */ = {
 			isa = PBXGroup;
 			children = (
 				DE71BD1B2CDB4D5900ABC133 /* SceneCoordinates.swift */,
 			);
 			path = "Scene Graph";
+			sourceTree = "<group>";
+		};
+		DE8CF1F72CF0169F009BDEE6 /* Recording */ = {
+			isa = PBXGroup;
+			children = (
+				DE9065742CFE62C6004FB58C /* ReplayKitBasic.swift */,
+				DE7F919F2CF825D900AA378F /* RenderRegion.swift */,
+				DE64FFA52CF2D6A9005BEC97 /* RenderToTexture.swift */,
+				DE8CF1F82CF016BE009BDEE6 /* DrawHierarchy.swift */,
+				DE7F919D2CF7C86600AA378F /* Recording+Helpers.swift */,
+			);
+			path = Recording;
 			sourceTree = "<group>";
 		};
 		DE91203B2BB499EC00B3B63F /* Camera */ = {
@@ -462,8 +531,10 @@
 		DE9ADF8C2BA2795800B58429 /* Text */ = {
 			isa = PBXGroup;
 			children = (
+				DE9065722CFE5D03004FB58C /* SpriteKitFonts.swift */,
 				DEACDF672BA12F4D00D496D2 /* LabelNodes.swift */,
 				DE9E96292BD4E327006B54C0 /* BMGlyph.swift */,
+				DE31E28D2CED086D00C0E405 /* SFSymbol.swift */,
 			);
 			path = Text;
 			sourceTree = "<group>";
@@ -485,6 +556,7 @@
 				DEB55FDD2BFA788900C4303A /* PhysicsScale.swift */,
 				DE0662A12C0693E100D5869A /* JointsWithCamera.swift */,
 				DE31E28B2CEBA13400C0E405 /* AttractionRepulsion.swift */,
+				DE8CF1F52CEE7862009BDEE6 /* EMFields.swift */,
 			);
 			path = Physics;
 			sourceTree = "<group>";
@@ -685,8 +757,11 @@
 				DE4BA9FD2BB8A085009B418F /* motion-blur.fsh in Resources */,
 				DEB4ED402BAF92850097EEC0 /* SF-Pro.ttf in Resources */,
 				DE4BA9FB2BB89D93009B418F /* water-movement.fsh in Resources */,
+				DE64FFA02CF19EB5005BEC97 /* GridTileSet.sks in Resources */,
 				DE48FB4F2BE95FB800375EA6 /* Water.sks in Resources */,
 				DE2E6C2D2BC23792005C06F2 /* Tracer.sks in Resources */,
+				DE64FFA22CF19EF4005BEC97 /* IsoTileSet.sks in Resources */,
+				DE64FFA42CF19F17005BEC97 /* EmptyTileSet.sks in Resources */,
 				DE2E6C2E2BC23792005C06F2 /* Assets.xcassets in Resources */,
 				DEACDF6D2BA1353200D496D2 /* CormorantGaramond-Regular.ttf in Resources */,
 				DE3F54252BDC3A8D000D4C6E /* Fire.sks in Resources */,
@@ -699,6 +774,8 @@
 				DEF4F1572BE02E45003E3AD7 /* FireLarge.sks in Resources */,
 				DEFDE3012C03CA560044DC8A /* VisualizationParticles.sks in Resources */,
 				DE48FB532BED532800375EA6 /* MyScene.sks in Resources */,
+				DE64FF9D2CF19E6F005BEC97 /* Assets.xcassets in Resources */,
+				DE64FF9E2CF19E6F005BEC97 /* HexTileSet.sks in Resources */,
 				DEB8750B2BC54EDE00A21BCB /* MagicParticles.sks in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -714,8 +791,10 @@
 				DE66AF3C2C1A9384006D78B1 /* SwiftUIPlayground.swift in Sources */,
 				DEF4F1602BE58FD0003E3AD7 /* SKScene+Extensions.swift in Sources */,
 				DEC9BAFA2BAC95F800563A99 /* GenerateGridImage.swift in Sources */,
+				DE8CF1F92CF016BE009BDEE6 /* DrawHierarchy.swift in Sources */,
 				DEC9BAFD2BAD254700563A99 /* VideoNode.swift in Sources */,
 				DEF4F15B2BE44714003E3AD7 /* PhysicsPlayground.swift in Sources */,
+				DE64FF8B2CF1467B005BEC97 /* MemoryBuildUp.swift in Sources */,
 				DEB55FDE2BFA788900C4303A /* PhysicsScale.swift in Sources */,
 				DEACDF682BA12F4D00D496D2 /* LabelNodes.swift in Sources */,
 				DE9120412BB4EE2400B3B63F /* Numbers.swift in Sources */,
@@ -723,6 +802,7 @@
 				DEAFED922BAA1EED0030857E /* TouchEvents.swift in Sources */,
 				DE3607432B64EEC40005BDE4 /* ChainCIFilter.swift in Sources */,
 				DEAFED8F2BA8F7DD0030857E /* CGDemo.swift in Sources */,
+				DE9065752CFE62CD004FB58C /* ReplayKitBasic.swift in Sources */,
 				DE22BA002B95AA7300CC6BCB /* Int+Extensions.swift in Sources */,
 				DE22BA092B95AA7300CC6BCB /* CGFloat+Extensions.swift in Sources */,
 				DEF4F1592BE293A5003E3AD7 /* ParticlesPlayground.swift in Sources */,
@@ -731,7 +811,9 @@
 				DE4BA9FF2BB8A25B009B418F /* Shaders2.swift in Sources */,
 				DE22B9FF2B95AA7300CC6BCB /* CGVector+Extensions.swift in Sources */,
 				DEE20AA92BA56AE300D4B4D1 /* SceneTransitions.swift in Sources */,
+				DE7F919E2CF7C86C00AA378F /* Recording+Helpers.swift in Sources */,
 				DE798A642CBF6E7D0084445C /* RotationController.swift in Sources */,
+				DE64FFA62CF2D6A9005BEC97 /* RenderToTexture.swift in Sources */,
 				DE0B6B232B9FC760006D75CB /* ColorWheel.swift in Sources */,
 				DE0ABE172BF9774900C68A04 /* PhysicsObjects.swift in Sources */,
 				DE22BA182B99091B00CC6BCB /* ToolButton.swift in Sources */,
@@ -742,8 +824,10 @@
 				DE66AF462C1FAAD4006D78B1 /* TwoWayObservation.swift in Sources */,
 				DE4BA9F52BB8937E009B418F /* Shaders.swift in Sources */,
 				DE66AF442C1F64E9006D78B1 /* OneWayObservation.swift in Sources */,
+				DE64FF892CF12223005BEC97 /* LeakInvestigation.swift in Sources */,
 				DE9C0B4B2BDD844900F88D4C /* FieldNodes.swift in Sources */,
 				DE5F4C842BD8DC0C007E353D /* LayoutPlayground.swift in Sources */,
+				DE8CF1F62CEE7862009BDEE6 /* EMFields.swift in Sources */,
 				DE60935F2C15DCF800FDC84C /* SpriteKitObservation.swift in Sources */,
 				DE22BA032B95AA7300CC6BCB /* SKAction+SpecialEffects.swift in Sources */,
 				DE9E96282BD4DAC9006B54C0 /* ShadersPlayground.swift in Sources */,
@@ -766,6 +850,7 @@
 				DE0662A22C0693E100D5869A /* JointsWithCamera.swift in Sources */,
 				DE31E28A2CE7BF1E00C0E405 /* BoilerplateScene.swift in Sources */,
 				DE22BA022B95AA7300CC6BCB /* SKAction+Extensions.swift in Sources */,
+				DE31E28E2CED086D00C0E405 /* SFSymbol.swift in Sources */,
 				DE66AF3E2C1ABEC0006D78B1 /* DataModels.swift in Sources */,
 				DEE3DA972CBC44FB00F59245 /* PresentScene.swift in Sources */,
 				DE3F54282BDC59A9000D4C6E /* IndicationArrow.swift in Sources */,
@@ -774,6 +859,7 @@
 				DEC9BB052BAD44C300563A99 /* AVPlayer.swift in Sources */,
 				DE22BA082B95AA7300CC6BCB /* Vector3.swift in Sources */,
 				DE71BD222CDCFE9F00ABC133 /* PhysicsJoints.swift in Sources */,
+				DE7F91A02CF825E500AA378F /* RenderRegion.swift in Sources */,
 				DE2F264A2B5A29AF004003C3 /* Combine.swift in Sources */,
 				DEF47E672CC753C50063D7D2 /* HapticPlayground.swift in Sources */,
 				DE22BA072B95AA7300CC6BCB /* SKTAudio.swift in Sources */,
@@ -789,6 +875,7 @@
 				DE22BA0B2B966AEF00CC6BCB /* SpriteKitUI.swift in Sources */,
 				DEE3DA952CB8788A00F59245 /* PreferredFPS.swift in Sources */,
 				DE31E28C2CEBA13400C0E405 /* AttractionRepulsion.swift in Sources */,
+				DE9065732CFE5D0B004FB58C /* SpriteKitFonts.swift in Sources */,
 				DE22B9EC2B95956400CC6BCB /* Easing.swift in Sources */,
 				DEAFED972BAA42FB0030857E /* GKPlayground.swift in Sources */,
 				DEB4ED442BB116C20097EEC0 /* HitDetection.swift in Sources */,
@@ -799,6 +886,7 @@
 				DE4292F82B5B23A2004326C9 /* SimulationSpeed.swift in Sources */,
 				DE4292FA2B5BADC0004326C9 /* StoreAndReset.swift in Sources */,
 				DE22B9FE2B95AA7300CC6BCB /* SKColor+Extensions.swift in Sources */,
+				DE31E2912CED6DD300C0E405 /* ConstraintsPlayground.swift in Sources */,
 				DE66AF402C1ACCD9006D78B1 /* ValueRotationInertia.swift in Sources */,
 				DE66AF482C1FECC2006D78B1 /* ModelObservation.swift in Sources */,
 				DE9E962D2BD66B15006B54C0 /* ActionsPlayground.swift in Sources */,
